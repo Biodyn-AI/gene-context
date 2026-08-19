@@ -1,0 +1,20 @@
+# Large extracted contextual-representation tensors (regenerable; ~9 GB)
+results/*.npz
+*.npz
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+# OS / editor
+.DS_Store
+._*
+# LaTeX build artefacts
+*.aux
+*.log
+*.out
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex.gz

@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this software or its results, please cite the following."
+title: "Single-cell foundation models represent genes in context, but the information is co-expression"
+authors:
+  - family-names: Kendiukhov
+    given-names: Ihor
+year: 2026
+repository-code: "https://github.com/Biodyn-AI/gene-context"
+license: MIT
+keywords:
+  - single-cell foundation models
+  - contextual gene representations
+  - mechanistic interpretability
+  - co-expression
+  - gene embeddings

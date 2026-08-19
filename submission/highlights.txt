@@ -1,0 +1,5 @@
+Single-cell models reshape each gene's representation according to cellular context.
+This context response is gene-specific, reproducible, learned, and causally used.
+It increases with model scale and depends strongly on the tokenisation scheme.
+Size-matched nulls show the organisation does not robustly exceed co-expression.
+Two probes for novel context-dependent gene function are null: a mapped ceiling.

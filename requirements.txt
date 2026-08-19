@@ -1,0 +1,10 @@
+# Analysis stack (all ctx_*.py analysis scripts)
+numpy>=1.26,<2.2
+scipy>=1.11
+scikit-learn>=1.3
+h5py>=3.10
+matplotlib>=3.8
+
+# Model extraction only (ctx_extract_*.py) — heavier, optional if reusing the released tensors
+torch>=2.2
+transformers>=4.40

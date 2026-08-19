@@ -1,0 +1,1101 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[
+  11pt,
+]{article}
+\usepackage{xcolor}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+% fallback for those not using the hyperref driver hyperxmp:
+\makeatletter
+\@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
+\makeatother
+\hypersetup{
+  pdftitle={Single-cell foundation models represent genes in context{,} but the information is co-expression},
+  pdfauthor={Ihor Kendiukhov · 2026},
+  colorlinks=true,
+  linkcolor={NavyBlue},
+  filecolor={Maroon},
+  citecolor={NavyBlue},
+  urlcolor={NavyBlue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Single-cell foundation models represent genes in context, but the
+information is co-expression}
+\author{Ihor Kendiukhov · 2026}
+\date{2026}
+
+\begin{document}
+\maketitle
+
+\subsection{Abstract}\label{abstract}
+
+A single-cell foundation model reads a cell as a sequence of its genes
+and produces, at each layer, a contextual representation of every gene
+--- the gene's vector given the other genes in that cell. Whether that
+representation carries usable information about a gene's role in a
+particular cell is unknown, and is the single-cell analogue of
+word-sense disambiguation in language models. We give a systematic
+answer. Across three architectures (MaxToki, scGPT, STATE) a gene's
+representation is reshaped by cellular context in a way that is
+gene-specific (cross-cell agreement 0.759 versus 0.001 for a
+gene-shuffled null), reproducible across independent cells, not an
+artefact of the gene's rank position (96\% survives rank control), and
+replicable on an independent developmental dataset. It is causally used:
+steering a functional direction into half a cell's genes shifts the
+model's own predictions for the other genes (p = 7×10⁻⁴). It is learned
+rather than architectural: an untrained model of the same architecture
+organises context far less (z = +3.8 versus +21 for the trained model).
+It also increases with model size, though this scaling increment is
+partly confounded by embedding width. The context modulation is
+organised along interpretable functional axes, but against size-matched
+co-expression nulls this organisation does not robustly exceed
+co-expression --- the strongest axis is only at the p = 0.05 border and
+the others are non-significant --- and two independent probes for novel
+context-dependent gene function are null. The useful, ceiling-immune
+output is a model metric: contextualisation and its functional
+organisation differ sharply by tokenisation (rank-based versus
+value-binned versus protein-sequence-token) and scale with size. We
+report the phenomenon, place a boundary on what it encodes, and give the
+metric.
+
+\textbf{Keywords:} single-cell foundation models; contextual gene
+representations; mechanistic interpretability; co-expression; gene
+embeddings; word-sense disambiguation; model characterisation.
+
+\subsection{1. Introduction}\label{introduction}
+
+A recurring theme in the interpretability of large language models is
+that a network trained on a narrow predictive task builds internal
+representations of structure it was never taught. Sequence models of
+Othello and chess build representations of the board and of latent
+variables such as player skill (Li et al. 2023; Nanda et al. 2023;
+Karvonen 2024); language models linearly encode space and time along
+identifiable directions (Gurnee and Tegmark 2024); and, in the best
+cases, these representations are not decorative but \emph{causally used}
+--- a claim one tests by intervening on the representation and measuring
+the effect on behaviour (Turner et al. 2023; Zou et al. 2023; Park et
+al. 2024).
+
+A closely related line concerns \emph{contextual} representations.
+Contextual word embeddings assign the same word a different vector in
+every sentence, and the geometry of those vectors encodes word sense:
+``bank'' near a river and ``bank'' in finance occupy separable regions
+(Peters et al. 2018; Ethayarajh 2019; Coenen et al. 2019). A cottage
+industry of methodological care surrounds these measurements, because
+representation spaces are strongly anisotropic (vectors cluster in a
+narrow cone rather than spreading evenly, so any two look similar) and a
+handful of ``rogue'' dimensions can dominate cosine similarity
+(Ethayarajh 2019; Mu et al. 2018; Cai et al. 2021; Timkey and Schijndel
+2021).
+
+Single-cell foundation models (SCFMs) offer a clean biological version
+of the same question (Theodoris et al. 2023; Cui et al. 2024; Hao et al.
+2024; Yang et al. 2022). They treat each gene as a token and each cell
+as a sequence of its expressed genes, and are trained by masked or
+autoregressive prediction over expression-ranked genes --- in effect,
+learning which genes tend to be active together. Their gene \emph{token}
+embeddings (one fixed vector per gene) have been studied; their
+\emph{contextual} gene representations (a gene's vector inside a
+particular cell) are used as features downstream (Hao et al. 2024; Bian
+et al. 2024) but have not been characterised as objects in their own
+right. Yet this is exactly where a model could, in principle, represent
+that a gene plays a different role in a macrophage than in a T cell ---
+the biological analogue of word sense, and, as W. Gilpin has noted, an
+open direction that the ``cell as a token'' framing invites but does not
+test (W 2025).
+
+We organise the question into two levels. \textbf{Level 1 (a
+model-fact):} is a gene's representation reshaped by context in a
+structured, gene-specific way, and is that reshaping learned and used?
+\textbf{Level 2 (biology):} does the reshaping reveal something
+\emph{biologically novel} about the gene's role in each context ---
+beyond what co-expression already tells us? We answer Level 1
+affirmatively and comprehensively, and Level 2 negatively and with
+matched-null rigour. The negative is not a failure to report but the
+paper's second contribution: it locates, precisely and with controls,
+the ceiling that a growing critical literature has found for SCFMs in
+other guises (Kedzierska et al. 2025; Boiarsky et al. 2024;
+Ahlmann-Eltze et al. 2025; Kendiukhov 2026e). The paper thus makes three
+contributions: (1) the Level-1 model-fact, characterised across
+architectures, scale, and a causal test; (2) the Level-2 co-expression
+ceiling, established with size-matched nulls; and (3) contextualisation
+as a model-characterisation metric that distinguishes tokenisation
+schemes (§4.7).
+
+\subsection{2. Related work}\label{related-work}
+
+\textbf{Contextual representations and word sense.} Our methods descend
+directly from the NLP interpretability literature on contextualised
+embeddings. Ethayarajh (Ethayarajh 2019) showed that representations are
+anisotropic in every layer, that same-word self-similarity falls in
+upper layers (they become more context-specific), and that a static
+vector explains little of a word's contextual variance --- and,
+crucially, that every cosine must be corrected against an anisotropy
+baseline. Timkey and van Schijndel (Timkey and Schijndel 2021) showed
+that a few rogue dimensions dominate similarity and that a scalar
+correction is insufficient; Mu et al. (Mu et al. 2018) and Cai et al.
+(Cai et al. 2021) give the standard postprocessing and the
+local-isotropy picture. Coenen et al. (Coenen et al. 2019) and Garí
+Soler and Apidianaki (Soler and Apidianaki 2021) show word senses form
+separable clusters and that polysemy level is itself readable. We import
+both the measurements and the controls.
+
+\textbf{Emergent, causally-used latent variables.} That a model
+represents and \emph{uses} structure it was never given is established
+for board games (Li et al. 2023; Nanda et al. 2023; Karvonen 2024) and
+for physical coordinates in language models (Gurnee and Tegmark 2024).
+We adopt this literature's evidentiary standard --- a probe shows only
+correlation, so a causal claim requires an intervention against a
+matched control --- and its steering machinery (Turner et al. 2023; Zou
+et al. 2023), of which the extraction and amplification of interpretable
+feature directions in production models (Templeton et al. 2024) is the
+large-scale instance. Our causal result is a steer-here/read-there test
+in this mould.
+
+\textbf{Single-cell foundation models and their representations.}
+Geneformer (Theodoris et al. 2023), scGPT (Cui et al. 2024),
+scFoundation (Hao et al. 2024), scBERT (Yang et al. 2022), UCE (Rosen et
+al. 2023) and STATE ({Adduri et al.} 2025) differ in tokenisation
+(rank-ordered gene identity, value-binned expression, or
+protein-sequence-initialised gene tokens), and the review of Bian et al.
+(Bian et al. 2024) defines the ``contextual gene embedding'' our work
+dissects. MaxToki ({Ortega et al.} 2026), the primary model here, is a
+Llama-architecture, Geneformer-lineage model at 217M and 1B scales.
+scGPT reports cell-state-specific gene networks via attention, the
+closest prior to a ``context changes the gene'' claim --- but
+operationalised as a pairwise network, never as a property of the
+representation vector, and without a decomposition or a null. The
+\emph{static} gene-embedding geometry of these models has been mapped
+--- its spectral structure (Kendiukhov 2026b), the topological and
+geometric structure it does and does not learn (Kendiukhov 2026g), and a
+decomposition of what a protein language model already supplies versus
+what single-cell pretraining adds (Kendiukhov 2026f) --- but the
+\emph{contextual} representation, the object here, has not.
+
+\textbf{What SCFMs do not capture.} A critical literature finds SCFMs
+often fail to beat simple baselines: on zero-shot tasks (Kedzierska et
+al. 2025), under deeper evaluation (Boiarsky et al. 2024), on
+perturbation prediction (Ahlmann-Eltze et al. 2025; Bendidi et al.
+2024), and across utilities (Liu et al. 2026); and sparse autoencoders
+find organised biological knowledge but minimal regulatory logic in
+these models (Kendiukhov 2026d), while SCFM attention re-expresses
+co-expression rather than unique regulatory signal (Kendiukhov 2026e).
+Our co-expression ceiling is the representation-geometry instance of
+this pattern, established with a matched null.
+
+\textbf{The biology of the ceiling.} Co-expression is the canonical
+guilt-by-association signal (Dam S et al. 2018), and gene-embedding
+methods from Gene2vec (Du et al. 2019) to GenePT (YT and J 2023) are
+built on it. Genuine context-dependent gene function exists ---
+moonlighting proteins (CJ 1999), lineage-determining transcription
+factors that select different enhancers with different partners by cell
+type (S et al. 2010) --- but much of it is post-transcriptional and so,
+we argue, structurally invisible to an expression-only model, which is
+why our Level-2 tests are informative negatives.
+
+\subsection{3. Methods}\label{methods}
+
+\textbf{Extraction.} We run cells from Tabula Sapiens (immune, kidney,
+lung (Tabula Sapiens Consortium 2022)) through a model and record, for
+each gene in a panel, its hidden state at that gene's token position,
+averaged over cells of one cell type. The headline MaxToki-217M
+extraction covers 12 cell types × 1000 cells, a 6000-gene panel, taps at
+layers 0, 4, 8, 11. Four design choices, each fixing a measured failure
+of a pilot: (1) \textbf{pairwise contexts}, not the all-context
+intersection, which leaves \textasciitilde65 housekeeping genes --- the
+``stopwords'' that are \emph{most} context-sensitive (Ethayarajh 2019)
+--- whereas pairwise comparison recovers \textasciitilde5,700 genes per
+pair; (2) \textbf{cell-level split halves}, each per-gene mean estimated
+twice from disjoint cells for an honest noise floor; (3) an
+\textbf{occurrence cap} (50 tokens per gene, context, partition),
+because a per-gene mean has standard error ∝1/√n and unequal counts
+inject context-dependent noise into any interaction term; (4)
+\textbf{per-dimension z-scoring} before any cosine, to remove the
+rogue-dimension inflation a scalar anisotropy correction misses (Timkey
+and Schijndel 2021).
+
+\textbf{Decomposition.} For gene \emph{g} in cell type \emph{c}, write
+\emph{v(g,c) = μ + a(g) + b(c) + E(g,c)}: gene main effect \emph{a(g)}
+(identity), context main effect \emph{b(c)} (the \textbf{averaging null}
+--- attention pools over the cell, so everything drifts together), and
+gene-specific interaction \emph{E(g,c)}, the only term where biology can
+live.
+
+\textbf{Contextualisation strength (EXCESS).} For a cell-type pair
+(c₀,c₁), the \emph{crowd-removed shift} of gene g is δ(g) = {[}v(g,c₁) −
+v(g,c₀){]} − mean\_g′{[}v(g′,c₁) − v(g′,c₀){]} --- the gene's own shift
+minus the average shift over all genes (the ``crowd'', i.e.~the context
+main effect). We compute δ twice, from two disjoint halves of the cells
+(δ₀, δ₁), and set EXCESS = mean\_g cos(δ₀(g), δ₁(g)) − mean\_g
+cos(δ₀(g), δ₁(perm g)): the same gene's shift agreeing across
+independent cells, minus a gene-shuffled control. EXCESS = 0 means pure
+averaging (no gene-specific context response); it is averaged over all
+cell-type pairs.
+
+\textbf{Functional axes and nulls.} A functional axis u is the unit
+vector separating two gene classes (from gene ontology) in the gene main
+effect: u ∝ mean(a(g)\textbar class A) − mean(a(g)\textbar class B). Its
+\textbf{reproducible interaction power} is: project each gene's two-way
+interaction term E(g,c) onto u to get a scalar per (gene, context), then
+average the product of the two cell-partitions' scalars over
+count-balanced (gene, context) cells --- a covariance that survives only
+if the modulation reproduces across independent cells. We compare this
+power for u against (i) matched \textbf{random-axis} nulls (random gene
+groupings of the same pole sizes); (ii) \textbf{size- and
+co-expression-matched} null gene-set pairs --- the decisive control,
+since functional gene sets are co-expressed --- where co-expression
+coherence is the mean pairwise Pearson correlation of expression across
+the extraction cells within the gene set, the null pairs are drawn to
+match the functional poles on both size and coherence, and the
+functional axis's power is reported as an empirical percentile among
+them (skew-robust, because the null power distribution is right-skewed);
+and (iii) a \textbf{representation-tightness-matched} null (tightness =
+mean cosine among the axis genes' own representations). Full parameters
+in §7.
+
+\subsection{4. Results}\label{results}
+
+Sections 4.1--4.3, 4.5 and 4.7--4.8 establish \textbf{Level 1} (the
+model-fact: contextualisation is real, not position, replicable, causal,
+learned, and scaling); §4.4 and §4.6 test \textbf{Level 2} (novel
+biology) and find the co-expression ceiling.
+
+\subsubsection{4.1 Genes are contextualised gene-specifically, and it
+peaks in the early-middle
+layers}\label{genes-are-contextualised-gene-specifically-and-it-peaks-in-the-early-middle-layers}
+
+The gene-specific context response is large and highly reproducible
+(Table 1, Fig. 1). At layer 4 the gene-specific EXCESS is
+\textbf{+0.758}: the same gene's crowd-removed shift agrees at cosine
++0.759 across independent cells, while a \emph{different} gene's agrees
+at \textbf{+0.001} --- the effect is entirely gene-specific. The context
+main effect replicates at +0.996, confirming the measurement works.
+Layer 0 (the context-free embedding output) returns \textbf{exactly
+0.000}, the sanity check that the pipeline reports nothing when there is
+nothing. A scan across layers 0, 4, 8 and 11 places the peak at layer 4,
+rising through the early layers and decaying toward the output.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Layer
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+EXCESS (same − diff)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+same-gene
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+diff-gene
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+main-effect replication
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0 (embedding) & \textbf{+0.000} & +0.000 & +0.000 & --- \\
+4 & \textbf{+0.758} & +0.759 & +0.001 & +0.996 \\
+8 & +0.665 & +0.666 & +0.001 & +0.996 \\
+11 & +0.627 & +0.628 & +0.001 & +0.997 \\
+\end{longtable}
+}
+
+\emph{Table 1. Gene-specific context response by layer (MaxToki-217M).
+66 cell-type pairs; \textasciitilde5,700 genes are shared per pair, of
+which a median \textasciitilde1,700 remain after the occurrence-cap
+count-balancing (§3); bootstrap CIs ±0.002.}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.62\linewidth,height=\textheight,keepaspectratio,alt={Figure 1. Gene-specific context response by layer. Same-gene agreement across independent cells (blue) far exceeds the gene-shuffled null (grey); layer 0, the context-free embedding, is exactly zero.}]{figures/ctx_fig1.pdf}
+\caption{\textbf{Figure 1.} Gene-specific context response by layer.
+Same-gene agreement across independent cells (blue) far exceeds the
+gene-shuffled null (grey); layer 0, the context-free embedding, is
+exactly zero.}
+\end{figure}
+
+\textbf{Metric validity (anisotropy).} These representations are
+anisotropic, as expected (Ethayarajh 2019): the mean cosine of random
+different-gene pairs is +0.45 to +0.53 at layers 4--11 (raw), and
+same-gene self-similarity falls with depth (+0.94 → +0.82 → +0.75) ---
+genes become more context-specific in upper layers, the single-cell echo
+of Ethayarajh's finding. Our per-dimension z-scoring drives anisotropy
+to \textasciitilde0.00 while keeping genes distinguishable (corrected
+self-similarity +0.89/+0.65/+0.53), and reduces the top-PC share
+(0.21→0.12 at layer 11), so the cosine-based metrics are computed in a
+corrected space.
+
+\subsubsection{4.2 It is not the gene's rank
+position}\label{it-is-not-the-genes-rank-position}
+
+MaxToki reads a cell as a rank-ordered gene list and encodes token
+position, so a gene ranking 5th in one cell type and 500th in another is
+an obvious confound. It is not the driver (Fig. 2). The gene-specific
+response is essentially identical for rank-stable genes (+0.759) and
+rank-moving genes (+0.755), and \textbf{96\%} survives regressing the
+projection on per-(gene, context) mean rank (+0.728 residualised at
+layer 4). Shift \emph{magnitude} correlates with rank change (ρ ≈ 0.35),
+but its \emph{direction} is largely orthogonal to rank.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.62\linewidth,height=\textheight,keepaspectratio,alt={Figure 2. The effect is not rank position: gene-specific response is identical for rank-stable and rank-moving genes and survives residualising on mean rank.}]{figures/ctx_fig2.pdf}
+\caption{\textbf{Figure 2.} The effect is not rank position:
+gene-specific response is identical for rank-stable and rank-moving
+genes and survives residualising on mean rank.}
+\end{figure}
+
+\subsubsection{4.3 It replicates on an independent
+dataset}\label{it-replicates-on-an-independent-dataset}
+
+All of the above is on one atlas. On an independent dataset --- Setty
+CD34+ bone-marrow hematopoiesis (the same lineage in which a recoverable
+manifold was found in scGPT (Kendiukhov 2026a)), with eight
+\emph{developmental states} rather than adult cell types as the context
+axis --- the phenomenon replicates: EXCESS \textbf{+0.640} (layer 2) and
+\textbf{+0.584} (layer 4), gene-shuffled null +0.004, functional-z
+\textbf{+9.1/+7.6}. Neither the contextualisation nor its functional
+organisation is a Tabula-Sapiens or adult-cell-type artefact.
+
+\subsubsection{4.4 The modulation is functionally organised --- but the
+organisation is
+co-expression}\label{the-modulation-is-functionally-organised-but-the-organisation-is-co-expression}
+
+Context modulates genes along interpretable functional axes far more
+than along random directions. Reported as raw z (rank-controlled in
+parentheses), the nuclear/transcriptional vs.~surface/secreted axis
+reaches z = \textbf{+21.9} (+20.2); mitochondrial vs.~cytoskeletal +10.3
+(+8.3); transcription vs.~transport +7.1 (+6.3); the abundance-neutral
+but weakly-separable cell-cycle-vs-differentiation axis is null, +0.7
+(−0.7) at AUC 0.54. The nuclear/surface axis is biologically valid ---
+cell types order sensibly, lymphocytes at the nuclear pole (CD8 T +4.1,
+CD4 T +3.7, B +3.4) and secretory/surface cells at the other (alveolar
+type-2 −5.3, type-1 −3.7, macrophage −3.2).
+
+The decisive control asks whether this exceeds \textbf{co-expression}
+(Fig. 3). Functional gene sets are co-regulated modules, so their genes
+co-vary across cells regardless of any ``understanding'' of function.
+The right null must match the functional poles on \textbf{both} their
+size and their co-expression: comparing a \textasciitilde1,880-gene
+functional axis against small random modules is invalid, because smaller
+sets reach higher coherence and different power. We therefore build null
+gene-set pairs of the \emph{same sizes} as the functional poles, matched
+on co-expression coherence, and --- because the null power distribution
+is heavily right-skewed --- report the functional axis's power as an
+empirical percentile among them. The nuclear/surface axis's power (5.32)
+sits at the \textbf{p = 0.05} border of size-matched co-expression
+modules (mean 2.22); the mitochondrial/cytoskeletal axis at p = 0.16 and
+the transcription/transport axis at p = 0.10 are not significant. So the
+functional organisation does \emph{not} robustly exceed co-expression
+--- the headline axis is at best marginal, the others indistinguishable.
+It does clear a representation-space \textbf{tightness}-matched null
+(mean cosine among the axis genes' own representations) and, by
+construction, the random-axis null (p \textless{} 0.001), so it is not
+merely a compact-gene-set artefact --- but co-expression is sufficient.
+This is the geometry instance of the field-wide pattern that SCFMs
+re-express co-expression (Kendiukhov 2026e; Kedzierska et al. 2025).
+
+\begin{figure}
+\centering
+\includegraphics[width=0.66\linewidth,height=\textheight,keepaspectratio,alt={Figure 3. The crux control. Random gene modules (grey) trace context-modulation power against co-expression coherence; the functional axes (red) sit on that curve, so the functional organisation is co-expression.}]{figures/ctx_fig3.pdf}
+\caption{\textbf{Figure 3.} The crux control. Random gene modules (grey)
+trace context-modulation power against co-expression coherence; the
+functional axes (red) sit on that curve, so the functional organisation
+is co-expression.}
+\end{figure}
+
+\subsubsection{4.5 The functional-context direction is causally
+used}\label{the-functional-context-direction-is-causally-used}
+
+Level 1 is a genuine model-fact, and it is \emph{used}, not decorative
+(Fig. 4). In a steer-here/read-there test we add a functional direction
+\emph{u} to a random half of a cell's genes and read the model's own
+output logits at the \emph{other}, untouched half. Nuclear-gene logits
+rise toward +\emph{u} (specific effect \textbf{+0.160}) and fall toward
+−\emph{u} (\textbf{−0.112}), a signed swing of \textbf{+0.272} versus
+\textbf{−0.015} for a norm-matched random push, dose-dependently across
+three strengths and beyond the random control on 24 of 30 cells
+(\emph{p} = 7×10⁻⁴). The functional-context direction propagates through
+attention and shifts the model's predictions.
+
+The effect is not specific to one axis or layer. It replicates for the
+same nuclear/surface direction injected at a deeper layer (layer 8:
+swing +0.566, 30/30 cells, \emph{p} = 9×10⁻¹⁰, stronger than at layer 4)
+and for an independent functional axis (mitochondrial vs.~cytoskeletal
+at layer 4: swing +0.321, \emph{p} = 0.02). It is null for the
+weakest-separated axis we tested causally (transcription vs.~transport,
+validity AUC 0.66: swing −0.226, \emph{p} = 1.0 --- in fact a reversal),
+consistent with a channel that exists for well-formed functional
+directions but not for every ontology contrast one can write down.
+Across the four causal configurations the p-values are raw; the two
+strongest (nuclear/surface at layers 4 and 8) survive Bonferroni
+correction for the four tests, while the mitochondrial axis (p = 0.02)
+becomes marginal.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.62\linewidth,height=\textheight,keepaspectratio,alt={Figure 4. Causal use. Steering a functional direction into half a cell's genes shifts the model's logits at the other genes with the sign of the push, dose-dependently, far beyond a norm-matched random push.}]{figures/ctx_fig4.pdf}
+\caption{\textbf{Figure 4.} Causal use. Steering a functional direction
+into half a cell's genes shifts the model's logits at the \emph{other}
+genes with the sign of the push, dose-dependently, far beyond a
+norm-matched random push.}
+\end{figure}
+
+\subsubsection{4.6 No novel context-dependent gene function (the
+co-expression
+ceiling)}\label{no-novel-context-dependent-gene-function-the-co-expression-ceiling}
+
+Two independent attempts to read \emph{context-appropriate or novel}
+gene function beyond co-expression are null. (1) \textbf{Directional
+congruence} --- does a gene move toward its own functional pole
+specifically in contexts sharing that character (a cross-validated
+non-additivity test)? Inside the co-expression null (empirical p ≈ 0.2);
+no signal. (2) \textbf{Placement near curated targets} --- are
+transcription factors positioned near their ChIP-seq / literature
+targets, context-appropriately (21 TFs)? Static excess +0.023 (\emph{p}
+= 0.19), activity-modulation ρ = +0.080 (\emph{p} = 0.33); no signal,
+even with real target ground truth. A third attempt (curated
+context-switching TFs) is uninformative rather than null: only one such
+TF (RUNX1) is well-sampled in the panel, because context- switching TFs
+are typically low-expressed --- itself an instance of the measurement
+wall. The boundary is consistent: an expression-only SCFM contextualises
+genes richly, but the information is co-expression, and does not resolve
+a gene's changed role in a new cell beyond it (the ceiling is quantified
+in Fig. 3).
+
+\subsubsection{4.7 Contextualisation as a model metric: architecture,
+scale, and learned
+vs.~architectural}\label{contextualisation-as-a-model-metric-architecture-scale-and-learned-vs.-architectural}
+
+The direction immune to the co-expression ceiling is to treat the
+phenomenon as a \textbf{model-quality metric} (Table 2, Fig. 5). Two
+findings. (1) \textbf{Contextualisation is universal and scales.} Every
+architecture strongly contextualises genes (EXCESS 0.70--0.88,
+main-effect replication \textgreater{} 0.93); on matched data (600
+cells, identical settings) it increases with size, MaxToki-217M +0.740 →
+1B +0.881, in line with the loss-scaling behaviour reported for these
+masked-reconstruction models (Kendiukhov 2026c). (2)
+\textbf{Architecture determines functional organisation.} Rank-based
+MaxToki organises context modulation along functional axes an order of
+magnitude more (z = 16--22) than value-binned scGPT (+2.7) or
+protein-sequence-initialised STATE (+1.3). STATE is telling: it moves
+genes strongly in context (EXCESS +0.835) but in no functionally
+coherent direction --- its ESM2-initialised gene tokens carry sequence
+identity, not co-expression. The gap is real, not low power (pole sizes
+366--1,390).
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  \textbf{The phenomenon is learned, not architectural.} An untrained,
+  random-init MaxToki of identical architecture and vocabulary --- the
+  decisive control, since attention mixes tokens regardless of training
+  --- contextualises genes far less (EXCESS \textbf{+0.274}
+  vs.~+0.74--0.76 trained) and organises that modulation functionally
+  far less (functional-z \textbf{+3.8} vs.~+21.2). This separates two
+  things cleanly. Contextualisation has a real architectural
+  \emph{floor} (+0.274: fixed random embeddings plus deterministic
+  attention mixing give a reproducible, gene-specific shift on their
+  own), but roughly two-thirds of the trained effect is learned. The
+  functional organisation is \emph{mostly} learned: the architecture
+  alone produces a significant amount (z = +3.8), which training then
+  amplifies \textasciitilde5.6× (to +21.2) --- so roughly 18\% of the
+  functional organisation is architectural and 82\% is built by
+  training, aligning context modulation with functional axes, and hence
+  with co-expression.
+\end{enumerate}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Model
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+tokenisation
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+contexts
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+genes
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+dim
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+EXCESS
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+functional-z
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+scGPT & value-binned & 8 & 5000 & 512 & +0.705 & +2.7 \\
+STATE-SE (state-embedding) & ESM2 gene tokens & 9 & 1840 & 2048 & +0.835
+& +1.3 \\
+MaxToki-217M & rank-based & 12 & 5000 & 1232 & +0.740 & +21.2 \\
+MaxToki-1B & rank-based & 12 & 5000 & 2304 & +0.881 & +16.4 \\
+MaxToki-217M (random init) & untrained control & 12 & 6000 & 1232 &
++0.274 & +3.8 \\
+\end{longtable}
+}
+
+\emph{Table 2. Cross-model comparison at layer 4. EXCESS =
+contextualisation strength; functional-z = organisation along the
+nuclear/surface axis vs.~a random-axis null. MaxToki-217M/1B use matched
+600-cell settings for a fair scaling comparison; the random-init row is
+the learned-vs-architectural control (§4.7); its 6000-gene panel vs. the
+5000 of the trained rows does not affect EXCESS, which is a within-panel
+cosine statistic.}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.92\linewidth,height=\textheight,keepaspectratio,alt={Figure 5. Contextualisation as a model metric across architecture, scale, and the random-weights control.}]{figures/ctx_fig5.pdf}
+\caption{\textbf{Figure 5.} Contextualisation as a model metric across
+architecture, scale, and the random-weights control.}
+\end{figure}
+
+\subsubsection{4.8 Context aids prediction, but not through the
+most-contextualised
+genes}\label{context-aids-prediction-but-not-through-the-most-contextualised-genes}
+
+If contextualisation served the autoregressive objective directly, the
+genes the model contextualises most should be the genes whose next-gene
+prediction most benefits from real context. It does not work that way.
+Using a chimeric-context intervention --- the model's log-probability of
+a target gene given its cell's true rank-ordered predecessors versus a
+random other cell's --- real context helps prediction enormously (mean
+benefit \textbf{+7.7 nats}, a nat being a natural-log unit of
+log-probability; i.e.~the true gene is roughly two-thousand-fold more
+probable under real than random context; 536 target genes). But the
+per-gene strength of that benefit does \textbf{not} track how much a
+gene is contextualised: the partial Spearman correlation, controlling
+for gene frequency, is \textbf{−0.087} (95\% CI {[}−0.168, −0.004{]})
+--- at best faintly negative, and with per-gene estimates noisy on both
+sides, best read as \emph{no positive link} rather than a firm negative
+one. Context is central to the model's objective, and contextualisation
+is real, but the two are not aligned per gene: contextualisation is not
+simply the model encoding its per-gene predictive reliance on context.
+
+\subsection{5. Discussion}\label{discussion}
+
+The result is a characterisation of \emph{how} SCFMs represent genes in
+context, and a proof of \emph{what} that representation carries.
+Positively: SCFMs reshape gene representations gene-specifically,
+reproducibly, causally, more with scale, and --- for rank-based
+tokenisation --- along co-expression-aligned functional axes. This is,
+to our knowledge, the first measurement for single-cell models of the
+``how contextual are contextualised representations'' question
+(Ethayarajh 2019), and the architecture/scale comparison is a usable
+interpretability metric that discriminates tokenisation schemes a
+downstream benchmark would not.
+
+Negatively, and equally a contribution: the modulation does not carry a
+gene's context-specific function beyond co-expression. The exciting
+version --- reading a gene's changed role in a new cell to generate
+hypotheses --- is not reachable for an expression-only model by either
+route we tried, each with a matched-null control. Why the ceiling exists
+is mechanistically coherent: the model's only inputs are which genes are
+co-expressed, so the richest thing its contextual geometry can encode
+about a gene is its co-expression neighbourhood; genuinely novel
+context-dependent function is frequently post-transcriptional (CJ 1999;
+S et al. 2010) and leaves no expression signature to latch onto. The
+finding therefore predicts where headroom is: multi-omic or
+sequence-aware models, not larger expression-only ones, are what a
+Level-2 result would require.
+
+\subsection{6. Limitations}\label{limitations}
+
+Cross-architecture EXCESS is confounded by occurrence cap (20 for
+scGPT/STATE vs.~50 for MaxToki) and dimensionality (higher-dimensional
+models show higher EXCESS), so the 217M→1B increment reflects size
+\emph{and} width, and even the cap-matched scaling pair still differs in
+width (dim 1232 vs.~2304) --- the width-robust comparison is the
+functional-z architecture gap, which has ample power. The functional-z
+gap itself is measured on non-identical context sets across models (12
+vs.~9 vs.~8 cell types); we did not re-run it on a common context set,
+so a residual context-composition confound remains. The causal test
+(§4.5) compares the functional direction only against a norm-matched
+\emph{random} push, not against co-expression-coherence-matched
+directions, so it shows the direction is used, not that its causal use
+exceeds co-expression. STATE is evaluated on immune cells only in this
+study, so its cross-architecture point rests on a narrower panel than
+the others. The co-expression ceiling is a null result: the headline
+axis sits at the p = 0.05 border of the size-matched co-expression null
+and the other axes are non-significant, which shows the organisation
+does not clearly exceed co-expression, not that the two are provably
+identical; the empirical p depends on the null-module construction. The
+Level-2 null is evidence of a ceiling, not proof of absence --- some
+context-dependent function is structurally invisible to an
+expression-only model, so those tests are weak by construction
+(pre-registered). Functional axes are built from one ontology file; the
+verdict is robust across three axes but specific z-scores depend on pole
+definitions.
+
+\subsection{7. Conclusions}\label{conclusions}
+
+Single-cell foundation models build contextual gene representations that
+are a genuine object of study: a gene's vector is reshaped by its
+cellular context in a gene-specific, reproducible, learned, and causally
+used way that grows with model scale and is shaped by tokenisation. This
+is the first systematic characterisation of the phenomenon for
+single-cell models, and it yields a usable model metric ---
+contextualisation strength and its functional organisation --- that
+distinguishes architectures a downstream benchmark would not. At the
+same time, matched-null controls place a firm boundary on what that
+contextualisation carries: it does not robustly exceed co-expression,
+and two independent probes for novel context-dependent gene function are
+null. The practical implication is that reading a gene's changed role in
+a new cell type --- the application that would make these
+representations a hypothesis-generation tool --- is not reachable with
+an expression-only model, and will require multi-omic or sequence-aware
+models rather than merely larger expression-trained ones.
+
+\subsection{8. Methods details and
+reproducibility}\label{methods-details-and-reproducibility}
+
+All analyses are deterministic (seed 0) and run on cached extractions.
+Extraction: \texttt{ctx\_extract\_maxtoki.py} (+ \texttt{\_scgpt},
+\texttt{\_state}, \texttt{\_devel}, \texttt{\_random}). Analyses:
+\texttt{ctx\_polysemy.py} (§4.1), \texttt{ctx\_anisotropy.py} (§4.1),
+\texttt{ctx\_layer\_curve.py} (§4.1),
+\texttt{ctx\_position\_confound.py} (§4.2), \texttt{ctx\_independent.py}
+(§4.3), \texttt{ctx\_functional\_axes.py},
+\texttt{ctx\_coexpr\_null\_v2.py}, \texttt{ctx\_tightness\_null.py}
+(§4.4), \texttt{ctx\_causal.py} across axes/layers (§4.5),
+\texttt{ctx\_directional\_probe.py} / \texttt{ctx\_curated\_targets.py}
+(§4.6), \texttt{ctx\_cross\_model.py} (§4.7),
+\texttt{ctx\_prediction\_link.py} (§4.8). Metric definitions: EXCESS as
+in §3; reproducible interaction power = mean over count-balanced (gene,
+context) of the product of the two partitions' two-way interaction terms
+along a unit axis; functional-z, its z-score against 200--300
+random-partition axes; co-expression coherence = mean within-set
+expression correlation. The co-expression null
+(\texttt{ctx\_coexpr\_null\_v2.py}) draws null gene-set pairs of the
+\emph{same sizes} as the functional poles, matched on coherence, and
+reports the functional axis's power as an empirical percentile among
+them (skew-robust). Result artefacts are the corresponding
+\texttt{results/ctx\_*.json}.
+
+\subsection{CRediT authorship contribution
+statement}\label{credit-authorship-contribution-statement}
+
+\textbf{Ihor Kendiukhov:} Conceptualization, Methodology, Software,
+Formal analysis, Investigation, Data curation, Writing -- original
+draft, Writing -- review \& editing, Visualization.
+
+\subsection{Declaration of competing
+interest}\label{declaration-of-competing-interest}
+
+The author declares that he has no known competing financial interests
+or personal relationships that could have appeared to influence the work
+reported in this paper.
+
+\subsection{Data and code
+availability}\label{data-and-code-availability}
+
+All analysis code is openly available at
+\url{https://github.com/Biodyn-AI/gene-context}, including every
+analysis script, the intermediate result artefacts
+(\texttt{results/ctx\_*.json}), the figure-generation code, and this
+manuscript with its bibliography. The study uses only publicly available
+models and data: the MaxToki-217M/1B checkpoints (Hugging Face,
+\texttt{theodoris-lab/MaxToki}); scGPT, Geneformer and STATE (public
+releases); the Tabula Sapiens atlas (Tabula Sapiens Consortium 2022) (CZ
+CELLxGENE); the Setty CD34+ bone-marrow dataset; and Gene Ontology
+annotations. The per-gene contextual representation tensors extracted
+from these models (the intermediate \texttt{.npz} files, several
+gigabytes) are not deposited because of their size, but are fully
+regenerable from the public inputs with the provided extraction scripts,
+and are available from the author on reasonable request. No new
+experimental data were generated.
+
+\subsection{Funding}\label{funding}
+
+This research did not receive any specific grant from funding agencies
+in the public, commercial, or not-for-profit sectors.
+
+\subsection{References}\label{references}
+
+\section*{References}\label{bibliography}
+\addcontentsline{toc}{section}{References}
+
+\protect\phantomsection\label{refs}
+\begin{CSLReferences}{1}{1}
+\bibitem[\citeproctext]{ref-state2025}
+{Adduri, Abhinav K., Dhruv Gautam, Beatrice Bevilacqua, et al.} 2025.
+{``Predicting Cellular Responses to Perturbation Across Diverse Contexts
+with State.''} \emph{bioRxiv (Preprint), Arc Institute}, ahead of print.
+\url{https://doi.org/10.1101/2025.06.26.661135}.
+
+\bibitem[\citeproctext]{ref-ahlmanneltze2025perturbation}
+Ahlmann-Eltze, Constantin, Wolfgang Huber, and Simon Anders. 2025.
+{``Deep-Learning-Based Gene Perturbation Effect Prediction Does Not yet
+Outperform Simple Linear Baselines.''} \emph{Nature Methods
+22(8):1657-1661 (Preprint bioRxiv 10.1101/2024.09.16.613342; PubMed
+40759747)}, ahead of print.
+\url{https://doi.org/10.1038/s41592-025-02772-6}.
+
+\bibitem[\citeproctext]{ref-bendidi2024pca}
+Bendidi, Ihab, Shawn Whitfield, Kian Kenyon-Dean, et al. 2024.
+{``Benchmarking Transcriptomics Foundation Models for Perturbation
+Analysis: One PCA Still Rules Them All.''} \emph{arXiv:2410.13956
+(NeurIPS 2024 Workshop Paper)}. \url{https://arxiv.org/abs/2410.13956}.
+
+\bibitem[\citeproctext]{ref-bian2024}
+Bian, Haiyang, Yixin Chen, Erpai Luo, et al. 2024. {``General-Purpose
+Pre-Trained Large Cellular Models for Single-Cell Transcriptomics.''}
+\emph{National Science Review 11(11):nwae340}, ahead of print.
+\url{https://doi.org/10.1093/nsr/nwae340}.
+
+\bibitem[\citeproctext]{ref-boiarsky2024deeper}
+Boiarsky, Rebecca, Nalini M. Singh, Alejandro Buendia, Ava P. Amini, Gad
+Getz, and David Sontag. 2024. {``Deeper Evaluation of a Single-Cell
+Foundation Model.''} \emph{Nature Machine Intelligence 6(12):1443-1446
+(Preprint: 'A Deep Dive into Single-Cell RNA Sequencing Foundation
+Models', bioRxiv 10.1101/2023.10.19.563100)}, ahead of print.
+\url{https://doi.org/10.1038/s42256-024-00949-w}.
+
+\bibitem[\citeproctext]{ref-cai2021}
+Cai, Xingyu, Jiaji Huang, Yuchen Bian, and Kenneth Church. 2021.
+{``Isotropy in the Contextual Embedding Space: Clusters and
+Manifolds.''} \emph{ICLR 2021 (International Conference on Learning
+Representations)}. \url{https://openreview.net/forum?id=xYGNO86OWDH}.
+
+\bibitem[\citeproctext]{ref-Jeffery1999Moonlighting}
+CJ, Jeffery. 1999. {``Moonlighting Proteins.''} \emph{Trends in
+Biochemical Sciences 24(1): 8-11}, ahead of print.
+\url{https://doi.org/10.1016/S0968-0004(98)01335-8}.
+
+\bibitem[\citeproctext]{ref-coenen2019}
+Coenen, Andy, Emily Reif, Ann Yuan, et al. 2019. {``Visualizing and
+Measuring the Geometry of BERT.''} \emph{NeurIPS 2019 (Advances in
+Neural Information Processing Systems 32)}.
+\url{https://arxiv.org/abs/1906.02715}.
+
+\bibitem[\citeproctext]{ref-scgpt2024}
+Cui, Haotian, Chloe Wang, Hassaan Maan, et al. 2024. {``scGPT: Toward
+Building a Foundation Model for Single-Cell Multi-Omics Using Generative
+AI.''} \emph{Nature Methods 21(8):1470-1480}, ahead of print.
+\url{https://doi.org/10.1038/s41592-024-02201-0}.
+
+\bibitem[\citeproctext]{ref-vanDam2018Coexpression}
+Dam S, van, Võsa U, van der Graaf A, Franke L, and de Magalhães JP.
+2018. {``Gene Co-Expression Analysis for Functional Classification and
+Gene-Disease Predictions.''} \emph{Briefings in Bioinformatics 19(4):
+575-592}, ahead of print. \url{https://doi.org/10.1093/bib/bbw139)}.
+
+\bibitem[\citeproctext]{ref-Du2019Gene2vec}
+Du, Jingcheng, Peilin Jia, Yulin Dai, Cui Tao, Zhongming Zhao, and Degui
+Zhi. 2019. {``Gene2vec: Distributed Representation of Genes Based on
+Co-Expression.''} \emph{BMC Genomics 20 (Suppl 1): 82}, ahead of print.
+\url{https://doi.org/10.1186/s12864-018-5370-x}.
+
+\bibitem[\citeproctext]{ref-ethayarajh2019}
+Ethayarajh, Kawin. 2019. {``How Contextual Are Contextualized Word
+Representations? Comparing the Geometry of BERT, ELMo, and GPT-2
+Embeddings.''} \emph{EMNLP-IJCNLP 2019 (Proceedings of the 2019
+Conference on Empirical Methods in Natural Language Processing)}, ahead
+of print. \url{https://doi.org/10.18653/v1/D19-1006}.
+
+\bibitem[\citeproctext]{ref-gurnee2024language}
+Gurnee, Wes, and Max Tegmark. 2024. {``Language Models Represent Space
+and Time.''} \emph{ICLR 2024 (arXiv:2310.02207)}.
+\url{https://arxiv.org/abs/2310.02207}.
+
+\bibitem[\citeproctext]{ref-scfoundation2024}
+Hao, Minsheng, Jing Gong, Xin Zeng, et al. 2024. {``Large-Scale
+Foundation Model on Single-Cell Transcriptomics.''} \emph{Nature Methods
+21(8):1481-1491}, ahead of print.
+\url{https://doi.org/10.1038/s41592-024-02305-7}.
+
+\bibitem[\citeproctext]{ref-karvonen2024emergent}
+Karvonen, Adam. 2024. {``Emergent World Models and Latent Variable
+Estimation in Chess-Playing Language Models.''} \emph{arXiv Preprint
+arXiv:2403.15498 (2024)}. \url{https://arxiv.org/abs/2403.15498}.
+
+\bibitem[\citeproctext]{ref-kedzierska2025zeroshot}
+Kedzierska, Kasia Z., Lorin Crawford, Ava P. Amini, and Alex X. Lu.
+2025. {``Zero-Shot Evaluation Reveals Limitations of Single-Cell
+Foundation Models.''} \emph{Genome Biology 26(1):101}, ahead of print.
+\url{https://doi.org/10.1186/s13059-025-03574-x}.
+
+\bibitem[\citeproctext]{ref-kend2026manifold}
+Kendiukhov, Ihor. 2026a. {``Discovery of a Hematopoietic Manifold in
+{scGPT} Yields a Method for Extracting Performant Algorithms from
+Biological Foundation Model Internals.''} \emph{arXiv Preprint
+arXiv:2603.10261}. \url{https://arxiv.org/abs/2603.10261}.
+
+\bibitem[\citeproctext]{ref-kend2026spectral}
+Kendiukhov, Ihor. 2026b. {``Multi-Dimensional Spectral Geometry of
+Biological Knowledge in Single-Cell Transformer Representations.''}
+\emph{arXiv Preprint arXiv:2602.22247}.
+\url{https://arxiv.org/abs/2602.22247}.
+
+\bibitem[\citeproctext]{ref-kend2026scaling}
+Kendiukhov, Ihor. 2026c. {``Scaling Laws for Masked-Reconstruction
+Transformers on Single-Cell Transcriptomics.''} \emph{Transactions on
+Machine Learning Research}.
+
+\bibitem[\citeproctext]{ref-kend2026sae}
+Kendiukhov, Ihor. 2026d. {``Sparse Autoencoders Reveal Organized
+Biological Knowledge but Minimal Regulatory Logic in Single-Cell
+Foundation Models: A Comparative Atlas of {Geneformer} and {scGPT}.''}
+\emph{arXiv Preprint arXiv:2603.02952}.
+\url{https://arxiv.org/abs/2603.02952}.
+
+\bibitem[\citeproctext]{ref-kendiukhov2026attention}
+Kendiukhov, Ihor. 2026e. {``Systematic Evaluation of Single-Cell
+Foundation Model Interpretability Reveals Attention Captures
+Co-Expression Rather Than Unique Regulatory Signal.''}
+\emph{arXiv:2602.17532}. \url{https://arxiv.org/abs/2602.17532}.
+
+\bibitem[\citeproctext]{ref-kend2026twoaxes}
+Kendiukhov, Ihor. 2026f. {``Two Axes in the Gene-Embedding Space of
+Single-Cell Foundation Models: What a Protein Language Model Already
+Knows, and What Requires Single-Cell Pretraining.''} \emph{SSRN Preprint
+6577900}.
+
+\bibitem[\citeproctext]{ref-kend2026topo141}
+Kendiukhov, Ihor. 2026g. {``What Topological and Geometric Structure Do
+Biological Foundation Models Learn? {Evidence} from 141 Hypotheses.''}
+\emph{PLOS ONE} 21 (7): e0344826.
+\url{https://doi.org/10.1371/journal.pone.0344826}.
+
+\bibitem[\citeproctext]{ref-li2023emergent}
+Li, Kenneth, Aspen K. Hopkins, David Bau, Fernanda Viégas, Hanspeter
+Pfister, and Martin Wattenberg. 2023. {``Emergent World Representations:
+Exploring a Sequence Model Trained on a Synthetic Task.''} \emph{ICLR
+2023 (arXiv:2210.13382)}. \url{https://arxiv.org/abs/2210.13382}.
+
+\bibitem[\citeproctext]{ref-liu2026sceval}
+Liu, Tianyu, Kexing Li, Yuge Wang, Hongyu Li, and Hongyu Zhao. 2026.
+{``Evaluating the Utilities of Foundation Models in Single-Cell Data
+Analysis.''} \emph{Advanced Science 13(27):e14490 (Preprint bioRxiv
+10.1101/2023.09.08.555192)}, ahead of print.
+\url{https://doi.org/10.1002/advs.202514490}.
+
+\bibitem[\citeproctext]{ref-muviswanath2018}
+Mu, Jiaqi, Suma Bhat, and Pramod Viswanath. 2018. {``All-but-the-Top:
+Simple and Effective Postprocessing for Word Representations.''}
+\emph{ICLR 2018 (International Conference on Learning Representations)}.
+\url{https://arxiv.org/abs/1702.01417}.
+
+\bibitem[\citeproctext]{ref-nanda2023emergent}
+Nanda, Neel, Andrew Lee, and Martin Wattenberg. 2023. {``Emergent Linear
+Representations in World Models of Self-Supervised Sequence Models.''}
+\emph{BlackboxNLP Workshop at EMNLP 2023 (arXiv:2309.00941)}.
+\url{https://arxiv.org/abs/2309.00941}.
+
+\bibitem[\citeproctext]{ref-maxtoki2026}
+{Ortega, Javier Gomez, Rangarajan D. Nadadur, Akira Kunitomi, et al.}
+2026. {``Temporal AI Model Predicts Drivers of Cell State Trajectories
+Across Human Aging.''} \emph{bioRxiv (Preprint), 2026.03.30.715396},
+ahead of print. \url{https://doi.org/10.64898/2026.03.30.715396}.
+
+\bibitem[\citeproctext]{ref-park2024linear}
+Park, Kiho, Yo Joong Choe, and Victor Veitch. 2024. {``The Linear
+Representation Hypothesis and the Geometry of Large Language Models.''}
+\emph{ICML 2024, PMLR V235, Pp. 39643--39666 (arXiv:2311.03658)}.
+\url{https://arxiv.org/abs/2311.03658}.
+
+\bibitem[\citeproctext]{ref-peters2018}
+Peters, Matthew E., Mark Neumann, Mohit Iyyer, et al. 2018. {``Deep
+Contextualized Word Representations.''} \emph{NAACL-HLT 2018
+(Proceedings of the 2018 Conference of the North American Chapter of the
+ACL); Best Paper}, ahead of print.
+\url{https://doi.org/10.18653/v1/N18-1202}.
+
+\bibitem[\citeproctext]{ref-uce2023}
+Rosen, Yanay, Yusuf Roohani, Ayush Agrawal, et al. 2023. {``Universal
+Cell Embeddings: A Foundation Model for Cell Biology.''} \emph{bioRxiv
+(Preprint); Later Published in Nature (2026)}, ahead of print.
+\url{https://doi.org/10.1101/2023.11.28.568918}.
+
+\bibitem[\citeproctext]{ref-Heinz2010LDTFs}
+S, Heinz, Benner C, Spann N, et al. 2010. {``Simple Combinations of
+Lineage-Determining Transcription Factors Prime Cis-Regulatory Elements
+Required for Macrophage and b Cell Identities.''} \emph{Molecular Cell
+38(4): 576-589}, ahead of print.
+\url{https://doi.org/10.1016/j.molcel.2010.05.004}.
+
+\bibitem[\citeproctext]{ref-garisoler2021}
+Soler, Aina Garí, and Marianna Apidianaki. 2021. {``Let's Play
+Mono-Poly: BERT Can Reveal Words' Polysemy Level and Partitionability
+into Senses.''} \emph{TACL 2021 (Transactions of the Association for
+Computational Linguistics, Vol. 9)}, ahead of print.
+\url{https://doi.org/10.1162/tacl_a_00400}.
+
+\bibitem[\citeproctext]{ref-tabulasapiens2022}
+Tabula Sapiens Consortium. 2022. {``The {Tabula Sapiens}: A
+Multiple-Organ, Single-Cell Transcriptomic Atlas of Humans.''}
+\emph{Science} 376 (6594): eabl4896.
+\url{https://doi.org/10.1126/science.abl4896}.
+
+\bibitem[\citeproctext]{ref-templeton2024scaling}
+Templeton, Adly, Tom Conerly, Jonathan Marcus, et al. 2024. {``Scaling
+Monosemanticity: Extracting Interpretable Features from Claude 3
+Sonnet.''} \emph{Transformer Circuits Thread (2024),
+Transformer-Circuits.pub}.
+\url{https://transformer-circuits.pub/2024/scaling-monosemanticity/}.
+
+\bibitem[\citeproctext]{ref-geneformer2023}
+Theodoris, Christina V., Ling Xiao, Anant Chopra, et al. 2023.
+{``Transfer Learning Enables Predictions in Network Biology.''}
+\emph{Nature 618(7965):616-624}, ahead of print.
+\url{https://doi.org/10.1038/s41586-023-06139-9}.
+
+\bibitem[\citeproctext]{ref-timkey2021}
+Timkey, William, and Marten van Schijndel. 2021. {``All Bark and No
+Bite: Rogue Dimensions in Transformer Language Models Obscure
+Representational Quality.''} \emph{EMNLP 2021 (Proceedings of the 2021
+Conference on Empirical Methods in Natural Language Processing)}, ahead
+of print. \url{https://doi.org/10.18653/v1/2021.emnlp-main.372}.
+
+\bibitem[\citeproctext]{ref-turner2023activation}
+Turner, Alexander Matt, Lisa Thiergart, Gavin Leech, et al. 2023.
+{``Activation Addition: Steering Language Models Without Optimization
+(ActAdd); Later Revised on arXiv as 'Steering Language Models with
+Activation Engineering'.''} \emph{arXiv Preprint arXiv:2308.10248
+(2023)}. \url{https://arxiv.org/abs/2308.10248}.
+
+\bibitem[\citeproctext]{ref-Gilpin2025CellToken}
+W, Gilpin. 2025. {``The Cell as a Token: High-Dimensional Geometry in
+Language Models and Cell Embeddings.''} \emph{Bioinformatics 41(11):
+Btaf595}, ahead of print.
+\url{https://doi.org/10.1093/bioinformatics/btaf595}.
+
+\bibitem[\citeproctext]{ref-scbert2022}
+Yang, Fan, Wenchuan Wang, Fang Wang, et al. 2022. {``scBERT as a
+Large-Scale Pretrained Deep Language Model for Cell Type Annotation of
+Single-Cell RNA-Seq Data.''} \emph{Nature Machine Intelligence
+4(10):852-866}, ahead of print.
+\url{https://doi.org/10.1038/s42256-022-00534-z}.
+
+\bibitem[\citeproctext]{ref-Chen2023GenePT}
+YT, Chen, and Zou J. 2023. {``GenePT: A Simple but Effective Foundation
+Model for Genes and Cells Built from ChatGPT (Preprint); Journal
+Version: Simple and Effective Embedding Model for Single-Cell Biology
+Built from ChatGPT.''} \emph{bioRxiv 2023.10.16.562533; Journal Version
+in Nature Biomedical Engineering (2025)}, ahead of print.
+\url{https://doi.org/10.1101/2023.10.16.562533}.
+
+\bibitem[\citeproctext]{ref-zou2023representation}
+Zou, Andy, Long Phan, Sarah Chen, et al. 2023. {``Representation
+Engineering: A Top-down Approach to AI Transparency.''} \emph{arXiv
+Preprint arXiv:2310.01405 (2023)}.
+\url{https://arxiv.org/abs/2310.01405}.
+
+\end{CSLReferences}
+
+\end{document}
