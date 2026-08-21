@@ -222,7 +222,7 @@ construction, the random-axis null (p < 0.001), so it is not merely a compact-ge
 co-expression is sufficient. This is the geometry instance of the field-wide pattern that SCFMs re-express
 co-expression [@kendiukhov2026attention; @kedzierska2025zeroshot].
 
-![**Figure 3.** The crux control. Random gene modules (grey) trace context-modulation power against co-expression coherence; the functional axes (red) sit on that curve, so the functional organisation is co-expression.](figures/ctx_fig3.pdf){width=66%}
+![**Figure 3.** The crux control. Each functional axis's context-modulation power (red) against its size-matched random-axis null (grey box) and size- and coherence-matched co-expression-module null (blue box), with the empirical p versus the co-expression null annotated: the functional axes clear the random null decisively but sit at the top edge of the co-expression null (p = 0.05, 0.16, 0.10), so the organisation does not robustly exceed co-expression.](figures/ctx_fig3.pdf){width=72%}
 
 ### 4.5 The functional-context direction is causally used
 
