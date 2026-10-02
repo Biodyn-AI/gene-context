@@ -288,7 +288,7 @@ Software availability:
 
 - Project name: gene-context
 - Project home page: <https://github.com/Biodyn-AI/gene-context>
-- Archived version: Zenodo archive of the submitted release, DOI [to be added before submission] (tag `bmc-submission-v2` in the project repository)
+- Archived version: Zenodo archive of the submitted release, DOI [to be added before submission] (tag `bmc-submission-v3` in the project repository)
 - Operating system(s): platform independent (developed and run on macOS, Apple silicon)
 - Programming language: Python 3.12
 - Other requirements: NumPy, SciPy, scikit-learn, h5py, matplotlib and openpyxl; for the extraction scripts, PyTorch (2.2 or later) and transformers (4.43 or later); for scGPT, a local copy of the scGPT source code and the whole-human checkpoint [@web_scgpt] (only its model file is imported) and tqdm; for STATE, the Arc Institute `state` package and anndata; versions used: PyTorch 2.12.1, transformers 5.13.0, NumPy 2.4

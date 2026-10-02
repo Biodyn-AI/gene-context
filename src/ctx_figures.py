@@ -16,7 +16,9 @@ import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 HERE = os.path.dirname(os.path.abspath(__file__)); RES = os.path.join(HERE, "results")
-FIG = os.environ.get("FIGDIR", os.path.join(HERE, "figures")); os.makedirs(FIG, exist_ok=True)
+if not os.path.isdir(RES):                       # in the public repository the scripts sit in src/, results in ../results
+    RES = os.path.join(os.path.dirname(HERE), "results")
+FIG = os.environ.get("FIGDIR", os.path.join(os.path.dirname(RES), "figures")); os.makedirs(FIG, exist_ok=True)
 TITLES = os.environ.get("FIG_TITLES", "1") == "1"      # FIG_TITLES=0: no titles inside the graphic (BMC style)
 MM = 1 / 25.4
 W1, W2 = 85 * MM, 170 * MM                               # BMC single- and double-column widths (inches)

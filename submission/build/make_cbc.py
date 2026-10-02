@@ -9,6 +9,8 @@ credit_author_statement.txt, declaration_of_interest.txt and title_page.md. Fail
 import os, re, sys, json
 HERE = os.path.dirname(os.path.abspath(__file__)); CBC = os.path.dirname(HERE); RG = os.path.dirname(CBC)
 BMC = os.path.join(RG, "bmc_submission")
+if not os.path.isdir(BMC):                       # public repository layout
+    BMC = os.path.join(RG, "submission_bmc_genomics")
 N = json.load(open(os.path.join(BMC, "build", "numbers.json")))
 
 

@@ -39,7 +39,7 @@ a limit is broken. So rebuild the BMC package first if any result changes.
    sparse-autoencoder atlas paper; confirm this manuscript is not a preprint and is not under consideration at BMC
    Genomics). Then delete the bracket.
 3. The archived-software DOI: the data availability statement still says "DOI [to be added before submission]".
-   Make a Zenodo release of the tag `bmc-submission-v2` of `Biodyn-AI/gene-context` and put the DOI in the BMC
+   Make a Zenodo release of the tag `bmc-submission-v3` of `Biodyn-AI/gene-context` and put the DOI in the BMC
    template, then rebuild both packages.
 4. The generative-AI declaration and the funding / competing-interest wording.
 

@@ -46,6 +46,24 @@ def rel(x, ref):
 
 
 # ---------------- extraction-level counts ----------------
+# These few numbers come from the large .npz tensors, which are not committed; when the tensors are present they are
+# also written to results/ctx_panel_stats.json, and a fresh clone without the tensors reads them from there.
+PANEL_KEYS = ("n_genes_all_ctx", "n_genes_pair_median", "n_genes_panel", "state_panel_genes", "scgpt_panel_genes")
+
+
+def _panel_stats_fallback():
+    p = os.path.join(RES, "ctx_panel_stats.json")
+    if os.path.exists(p):
+        for k, v in json.load(open(p)).items():
+            if k not in N: put(k, v)
+
+
+def _panel_stats_save():
+    have = {k: N[k] for k in PANEL_KEYS if k in N}
+    if len(have) == len(PANEL_KEYS):
+        json.dump(have, open(os.path.join(RES, "ctx_panel_stats.json"), "w"), indent=1)
+
+
 def _sec0():
     global N
     z = os.path.join(RES, "ctx_maxtoki_L04.npz")
@@ -585,6 +603,7 @@ try:
     _sec11()
 except Exception as e:
     print('section multi-model failed:', repr(e)[:200])
+_panel_stats_save(); _panel_stats_fallback()
 
 
 # ---------------- second-review additions (3 Oct 2026) ----------------

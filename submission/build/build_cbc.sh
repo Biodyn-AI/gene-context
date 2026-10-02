@@ -3,7 +3,7 @@
 # Review PDF: single column, 1.5 spacing, continuous line numbers, figures with captions, numbered references.
 set -e; cd "$(dirname "$0")/.."
 export PATH="/opt/homebrew/bin:/Library/TeX/texbin:$PATH"
-BMC=../bmc_submission
+BMC=../bmc_submission; [ -d $BMC ] || BMC=../submission_bmc_genomics   # working tree / public repository layout
 python3 build/make_cbc.py
 mkdir -p figures && cp $BMC/figures/Figure*.pdf figures/
 REFS="--citeproc --bibliography=$BMC/references_bmc.bib --csl=$BMC/build/biomed-central.csl"

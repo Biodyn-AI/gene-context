@@ -11,7 +11,8 @@ python3 build/fill_template.py manuscript_bmc.template.md manuscript_bmc.md
 python3 build/fill_template.py cover_letter_bmc.template.md cover_letter_bmc.md
 python3 build/compose_extra.py form
 # 3) figures (no titles inside the graphic, BMC widths) -> figures/Figure1..5.pdf
-(cd .. && FIGDIR=bmc_submission/figures FIG_TITLES=0 python3 ctx_figures.py >/dev/null)
+FIGPY=../ctx_figures.py; [ -f $FIGPY ] || FIGPY=../src/ctx_figures.py      # working tree / public repository layout
+FIGDIR="$PWD/figures" FIG_TITLES=0 python3 $FIGPY >/dev/null
 for n in 1 2 3 4 5; do mv -f figures/ctx_fig$n.pdf figures/Figure$n.pdf; done
 pandoc manuscript_bmc.md -f markdown -t docx $PANDOC_REFS --reference-doc=build/reference_bmc.docx -o build/_raw.docx
 python3 build/postprocess_docx.py build/_raw.docx manuscript_bmc.docx && rm build/_raw.docx
