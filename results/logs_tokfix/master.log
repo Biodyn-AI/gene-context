@@ -1,0 +1,54 @@
+[chain start] 2026-10-01 12:47:38
+[start] A1_extract_main 2026-10-01 12:47:38 (avail 10 GB)
+[end]   A1_extract_main 2026-10-01 13:51:36 exit 0
+[start] B_polysemy 2026-10-01 13:51:36 (avail 20 GB)
+[end]   B_polysemy 2026-10-01 13:51:56 exit 0
+[start] B_anisotropy 2026-10-01 13:51:56 (avail 20 GB)
+[end]   B_anisotropy 2026-10-01 13:52:17 exit 0
+[start] B_position 2026-10-01 13:52:17 (avail 20 GB)
+[end]   B_position 2026-10-01 13:54:58 exit 0
+[start] B_funcaxes 2026-10-01 13:54:58 (avail 17 GB)
+[end]   B_funcaxes 2026-10-01 14:06:51 exit 0
+[start] B_coexpr_v2 2026-10-01 14:06:51 (avail 15 GB)
+[end]   B_coexpr_v2 2026-10-01 14:10:04 exit 0
+[start] B_coexpr_v3 2026-10-01 14:10:04 (avail 18 GB)
+[end]   B_coexpr_v3 2026-10-01 14:14:32 exit 0
+[start] B_tightness 2026-10-01 14:14:32 (avail 16 GB)
+[end]   B_tightness 2026-10-01 14:24:33 exit 0
+[start] B_directional 2026-10-01 14:24:33 (avail 10 GB)
+[end]   B_directional 2026-10-01 14:57:30 exit 0
+[start] B_curated 2026-10-01 14:57:30 (avail 6 GB)
+[end]   B_curated 2026-10-01 15:03:22 exit 0
+[start] B_switcher 2026-10-01 15:03:22 (avail 10 GB)
+[end]   B_switcher 2026-10-01 15:07:55 exit 0
+[start] B_loadings 2026-10-01 15:07:55 (avail 8 GB)
+[end]   B_loadings 2026-10-01 15:08:23 exit 0
+[start] B_causal_nuc_L4 2026-10-01 15:08:23 (avail 8 GB)
+[end]   B_causal_nuc_L4 2026-10-01 15:13:09 exit 0
+[start] B_causal_nuc_L8 2026-10-01 15:13:09 (avail 14 GB)
+[end]   B_causal_nuc_L8 2026-10-01 15:15:06 exit 0
+[start] B_causal_mito_L4 2026-10-01 15:15:06 (avail 18 GB)
+[end]   B_causal_mito_L4 2026-10-01 15:16:08 exit 0
+[start] B_causal_trans_L4 2026-10-01 15:16:08 (avail 17 GB)
+[end]   B_causal_trans_L4 2026-10-01 15:17:00 exit 0
+[start] B_predlink 2026-10-01 15:17:00 (avail 16 GB)
+[end]   B_predlink 2026-10-01 15:24:05 exit 0
+[start] A3_extract_217m600 2026-10-01 15:24:05 (avail 18 GB)
+[end]   A3_extract_217m600 2026-10-01 15:46:32 exit 0
+[start] A4_extract_1b600 2026-10-01 15:46:32 (avail 19 GB)
+[end]   A4_extract_1b600 2026-10-01 17:57:30 exit 0
+[start] A5_extract_random 2026-10-01 17:57:30 (avail 19 GB)
+[end]   A5_extract_random 2026-10-01 18:31:50 exit 0
+[start] B_crossmodel 2026-10-01 18:31:50 (avail 12 GB)
+[end]   B_crossmodel 2026-10-01 18:37:12 exit 0
+[start] A6_extract_setty 2026-10-01 18:37:12 (avail 13 GB)
+[end]   A6_extract_setty 2026-10-01 19:00:23 exit 0
+[start] B_independent 2026-10-01 19:00:23 (avail 11 GB)
+[end]   B_independent 2026-10-01 19:04:07 exit 0
+[start] A2_scan_a 2026-10-01 19:04:07 (avail 13 GB)
+[end]   A2_scan_a 2026-10-01 19:42:05 exit 0
+[start] A2_scan_b 2026-10-01 19:42:05 (avail 19 GB)
+[end]   A2_scan_b 2026-10-01 20:28:53 exit 0
+[start] B_layercurve 2026-10-01 20:28:53 (avail 19 GB)
+[end]   B_layercurve 2026-10-01 20:29:14 exit 0
+[chain done] 2026-10-01 20:29:14

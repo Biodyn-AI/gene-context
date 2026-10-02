@@ -1,0 +1,13 @@
+  +4.67  CD8-positive, alpha-beta T cell
+  +4.41  CD4-positive, alpha-beta T cell
+  +3.91  B cell
+  +1.15  kidney epithelial cell
+  -0.66  capillary endothelial cell
+  -0.93  basal cell
+  -1.42  neutrophil
+  -1.76  intermediate monocyte
+  -1.78  classical monocyte
+  -2.78  macrophage
+  -3.19  pulmonary alveolar type 2 cell
+  -3.56  pulmonary alveolar type 1 cell
+[done] -> results/ctx_celltype_loadings.json

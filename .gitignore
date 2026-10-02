@@ -18,3 +18,6 @@ venv/
 *.fls
 *.fdb_latexmk
 *.synctex.gz
+
+# keep the re-run logs (provenance of every result file)
+!results/logs_tokfix/*.log

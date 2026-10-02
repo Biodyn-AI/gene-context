@@ -47,18 +47,18 @@ def tokenise(tok, n, rng):
         ens = np.array([e.split(".")[0] for e in ens])
         var_idx, token_ids, medians = tok.make_var_mapping(list(ens))
         pos = np.full(len(ens), -1, np.int64); pos[var_idx] = np.arange(len(var_idx))
-        X = f["X"]; N = int(X.attrs["shape"][0]); indptr = X["indptr"][:]
+        import ctx_tokenise as TK
+        X = TK.count_matrix(f); TK.check_counts(X); N = int(X.attrs["shape"][0]); indptr = X["indptr"][:]
         sel = np.sort(rng.choice(N, min(n, N), replace=False)); seqs = []
         for r in sel:
             s, e = int(indptr[r]), int(indptr[r + 1]); idx, val = X["indices"][s:e], X["data"][s:e].astype(np.float32)
             keep = pos[idx] >= 0
             if not keep.any():
                 continue
-            j = pos[idx[keep]]; en = np.log1p(val[keep] / (float(val.sum()) or 1.0) * 1e4); nz = en > 0
-            if nz.sum() < 60:
+            j = pos[idx[keep]]; order = TK.rank_order(val[keep], medians[j])
+            if len(order) < 60:
                 continue
-            norm = en[nz] / np.maximum(medians[j[nz]], 1e-9); order = np.argsort(-norm)[: MAX_LEN - 2]
-            seqs.append(token_ids[j[nz][order]].astype(np.int64))
+            seqs.append(token_ids[j[order[: MAX_LEN - 2]]].astype(np.int64))
     return seqs
 
 
@@ -98,18 +98,30 @@ def main():
         lp = torch.log_softmax(lg[-1], -1)
         return float(lp[int(target)])
 
+    n_skipped = 0
     for si, s in enumerate(seqs):
         if len(s) < 20:
             continue
         positions = rng.choice(np.arange(5, len(s)), min(POS_PER_CELL, len(s) - 5), replace=False)
-        other = seqs[rng.integers(0, len(seqs))]
         for p in positions:
             g = int(s[p])
             if g not in ctxal:
                 continue
+            # chimeric donor (fixed 1 Oct 2026): another cell with at least p genes whose first p genes do NOT
+            # include the target. Earlier versions padded short donors with the real cell's own genes and allowed
+            # the target inside the donor prefix (a repeated gene, which the model scores very low), both of which
+            # inflated the benefit.
+            oth = None
+            for _ in range(50):
+                cand = int(rng.integers(0, len(seqs)))
+                if cand == si or len(seqs[cand]) < p or g in set(seqs[cand][:p].tolist()):
+                    continue
+                oth = seqs[cand][:p]; break
+            if oth is None:
+                n_skipped += 1
+                continue
             real_lp = logprob(s[:p], g)
-            oth = other[:p] if len(other) >= p else np.concatenate([other, s[:p - len(other)]])
-            chim_lp = logprob(oth[:p], g)
+            chim_lp = logprob(oth, g)
             benefit.setdefault(g, []).append(real_lp - chim_lp)
             freq[g] = freq.get(g, 0) + 1
         if si % 25 == 0:
@@ -140,6 +152,8 @@ def main():
     print(f"[result] benefit ~ contextualisation: raw rho {raw:+.3f}; partial (control log-freq) {par:+.3f} "
           f"95% CI [{lo:+.3f},{hi:+.3f}]")
     out = dict(n_genes=len(genes), mean_context_benefit=float(all_ben.mean()),
+               median_context_benefit=float(np.median(all_ben)), n_comparisons=int(len(all_ben)),
+               n_positions_skipped_no_clean_donor=int(n_skipped),
                raw_rho=raw, partial_rho=par, partial_ci=[lo, hi], n_cells=len(seqs))
     out["verdict"] = (
         (f"CONTEXT HELPS PREDICTION (mean benefit {all_ben.mean():+.2f} nats) AND the model contextualises the "

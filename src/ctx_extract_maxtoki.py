@@ -50,18 +50,25 @@ FLOOR     = int(os.environ.get("FLOOR", 25))    # panel: gene must reach this in
 MAX_GENES = int(os.environ.get("MAXGENES", 6000))
 TAPS      = [int(x) for x in os.environ.get("TAPS", "0,4,8,11").split(",")]
 OUTPREFIX = os.environ.get("OUTPREFIX", "ctx_maxtoki")   # override so a layer-scan run won't clobber headline data
+# optional second, LOWER occurrence cap accumulated in the same pass (same cells, same order) -- e.g. EXTRA_CAP=20
+# EXTRA_TAPS=4 EXTRA_PREFIX=ctx217m_cap20 gives the cap-matched control without a second forward pass
+EXTRA_CAP = int(os.environ.get("EXTRA_CAP", 0))
+EXTRA_TAPS = [int(x) for x in os.environ.get("EXTRA_TAPS", "4").split(",")] if EXTRA_CAP else []
+EXTRA_PREFIX = os.environ.get("EXTRA_PREFIX", f"{OUTPREFIX}_cap{EXTRA_CAP}")
 BATCH, SEED, NPART = 4, 0, 2
 
 
 def stream_panel(path, tok):
-    """yield (token_ids_for_cell, cell_type) using MaxToki's exact tokenisation."""
+    """yield (token_ids_for_cell, cell_type) using MaxToki's rank-value encoding: raw counts / gene median,
+    descending (ctx_tokenise.py; fixed 1 Oct 2026 -- the old code double-log-transformed the log-normalised X)."""
+    import ctx_tokenise as TK
     with h5py.File(path, "r") as f:
         ens = np.array([x.decode() if isinstance(x, bytes) else x for x in f["var"]["_index"][:]]).astype(str)
         ens = np.array([e.split(".")[0] for e in ens])
         ctg = f["obs"]["cell_type"]
         cats = np.array([x.decode() if isinstance(x, bytes) else x for x in ctg["categories"][:]]).astype(str)
         ctypes = cats[ctg["codes"][:]]
-        X = f["X"]; n = int(X.attrs["shape"][0]); indptr = X["indptr"][:]
+        X = TK.count_matrix(f); TK.check_counts(X); n = int(X.attrs["shape"][0]); indptr = X["indptr"][:]
         var_idx, token_ids, medians = tok.make_var_mapping(list(ens))
         pos = np.full(len(ens), -1, np.int64); pos[var_idx] = np.arange(len(var_idx))
         for r in range(n):
@@ -71,13 +78,10 @@ def stream_panel(path, tok):
             if not keep.any():
                 continue
             j = pos[idx[keep]]
-            en = np.log1p(val[keep] / (float(val.sum()) or 1.0) * 1e4)
-            nz = en > 0
-            if not nz.any():
+            order = TK.rank_order(val[keep], medians[j])[: MAX_LEN - 2]
+            if not len(order):
                 continue
-            norm = en[nz] / np.maximum(medians[j[nz]], 1e-9)
-            order = np.argsort(-norm)[: MAX_LEN - 2]
-            yield token_ids[j[nz][order]].astype(np.int64), ctypes[r]
+            yield token_ids[j[order]].astype(np.int64), ctypes[r]
 
 
 def main():
@@ -121,6 +125,9 @@ def main():
     d = xt.model.config.hidden_size
     acc = {L: np.zeros((NPART, len(ctx_names), len(panel), d), np.float32) for L in TAPS}
     cnts = np.zeros((NPART, len(ctx_names), len(panel)), np.int32)
+    assert all(L in TAPS for L in EXTRA_TAPS) and (not EXTRA_CAP or EXTRA_CAP < CAP)
+    acc2 = {L: np.zeros((NPART, len(ctx_names), len(panel), d), np.float32) for L in EXTRA_TAPS}
+    cnts2 = np.zeros((NPART, len(ctx_names), len(panel)), np.int32)
     print(f"[pass 2] forward pass on {dev}; taps {TAPS}; accumulator "
           f"{sum(a.nbytes for a in acc.values())/2**30:.2f} GB", flush=True)
 
@@ -146,6 +153,10 @@ def main():
                 cnts[part, ci, gi] += 1
                 for L_ in TAPS:
                     acc[L_][part, ci, gi] += hs[L_][j, 1 + p_]
+                if EXTRA_CAP and cnts2[part, ci, gi] < EXTRA_CAP:   # the first EXTRA_CAP of the same occurrences
+                    cnts2[part, ci, gi] += 1
+                    for L_ in EXTRA_TAPS:
+                        acc2[L_][part, ci, gi] += hs[L_][j, 1 + p_]
         done += len(chunk)
         if done % 400 < BATCH:
             frac = float((cnts >= CAP).mean())
@@ -161,6 +172,13 @@ def main():
                             genes=np.array([tid2ens.get(g, str(g)) for g in panel]),
                             contexts=np.array(ctx_names), cap=CAP, max_len=MAX_LEN)
         print(f"  wrote {out}  M{M.shape}")
+    for L_ in EXTRA_TAPS:
+        M2 = acc2[L_] / np.maximum(cnts2[..., None], 1)
+        out = os.path.join(HERE, "results", f"{EXTRA_PREFIX}_L{L_:02d}.npz")
+        np.savez_compressed(out, M=M2.astype(np.float16), counts=cnts2,
+                            genes=np.array([tid2ens.get(g, str(g)) for g in panel]),
+                            contexts=np.array(ctx_names), cap=EXTRA_CAP, max_len=MAX_LEN)
+        print(f"  wrote {out}  M{M2.shape} (cap {EXTRA_CAP})")
     print(f"\n[done] {len(panel)} genes x {len(ctx_names)} contexts x {NPART} partitions x {len(TAPS)} taps; "
           f"{float((cnts >= CAP).mean()):.1%} of cells reached the {CAP}-occurrence cap")
 

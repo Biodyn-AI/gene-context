@@ -9,8 +9,15 @@ Design choices identical to the mature extraction: two independent cell partitio
 (gene, cluster, partition) so counts are balanced (kills heteroscedasticity); pairwise-comparable panel; taps at
 the layers where the effect lives (L2 peak, L4 where the functional axes validated).
 
-Genes are Setty symbols -> Ensembl (Geneformer name_id) -> MaxToki token. X is integer counts (verified), so the
-Geneformer log1p-CP10k / gene-median / rank tokenisation applies directly.
+Genes are Setty symbols -> Ensembl (Geneformer name_id) -> MaxToki token. X is integer counts (verified), ranked by
+counts / gene median (ctx_tokenise.rank_order) -- MaxToki's encoding, no log. (Fixed 1 Oct 2026: the earlier version
+applied log1p(CP10k) before dividing by the median, and read a 2515-cell subset cached from another project; it now
+reads the full 5780-cell scVelo distribution of the Setty et al. data.)
+
+COUNTS (reviewed 1 Oct 2026): this file's X is the velocyto SPLICED layer only (no raw group); unspliced molecules are
+40-57% of each cell's total. The Tabula Sapiens raw counts include intronic reads, so the default here is
+SETTY_COUNTS=total (spliced + unspliced, the closer match) -> ctx_devel_L*; SETTY_COUNTS=spliced -> ctx_devel_spliced_L*
+as a robustness variant. Only 14,319 pre-filtered genes are present (11,842 in the MaxToki vocabulary).
 
 Out: results/ctx_devel_L{tap}.npz  (M[part, cluster, gene, dim], counts, genes, clusters, pseudotime per cluster)
 """
@@ -22,7 +29,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 MSETUP = "/Volumes/Crucial X6/MacBook/Code/biomi_automation/projects/maxtoki/setup"
 sys.path.insert(0, MSETUP)
 NAME_ID = "/Volumes/Crucial X6/MacBook/Code/neuro-mechinterp/models/Geneformer/geneformer/gene_name_id_dict_gc104M.pkl"
-DATA = "/Volumes/Crucial X6/MacBook/Code/biomi_automation/projects/biotensor/data/branchpoint/setty_xstate.h5ad"
+DATA = "/Volumes/Crucial X6/MacBook/Code/biomi_automation/projects/biotensor/data/hematopoiesis/setty19_cd34_bm.h5ad"
 MDIR = f"{MSETUP}/MaxToki-217M-HF"
 
 MAX_LEN = 1024
@@ -31,21 +38,38 @@ CAP = 25
 FLOOR = 15
 MAX_GENES = 5000
 TAPS = [int(x) for x in os.environ.get("TAPS", "2,4").split(",")]
+COUNTS = os.environ.get("SETTY_COUNTS", "total")            # total = spliced + unspliced (default) | spliced
+OUTPREFIX = "ctx_devel" if COUNTS == "total" else f"ctx_devel_{COUNTS}"
 BATCH, SEED, NPART = 4, 0, 2
 
 
 def load():
+    import ctx_tokenise as TK
     with h5py.File(DATA, "r") as f:
         syms = np.array([x.decode() if isinstance(x, bytes) else x for x in f["var"]["index"][:]]).astype(str)
         cl = f["obs"]["clusters"]
-        cats = np.array([x.decode() if isinstance(x, bytes) else x for x in cl["categories"][:]]).astype(str)
-        clusters = cats[cl["codes"][:]]
+        if isinstance(cl, h5py.Group):                       # anndata >= 0.8 categorical
+            cats = np.array([x.decode() if isinstance(x, bytes) else x for x in cl["categories"][:]]).astype(str)
+            clusters = cats[cl["codes"][:]]
+        else:                                                # older anndata: codes + reference to the categories
+            cats = np.array([x.decode() if isinstance(x, bytes) else x for x in f[cl.attrs["categories"]][:]]).astype(str)
+            clusters = cats[cl[:]]
         pt = f["obs"]["palantir_pseudotime"][:]
-        X = f["X"]; n = int(X.attrs["shape"][0]); indptr = X["indptr"][:]
+        X = TK.count_matrix(f); TK.check_counts(X); n = int(X.attrs["shape"][0]); indptr = X["indptr"][:]
+        ng = int(X.attrs["shape"][1])
+        if COUNTS == "total":
+            S, U = f["layers"]["spliced"], f["layers"]["unspliced"]; TK.check_counts(S); TK.check_counts(U)
+            sip, uip = S["indptr"][:], U["indptr"][:]
         cells = []
         for r in range(n):
-            s, e = int(indptr[r]), int(indptr[r + 1])
-            cells.append((X["indices"][s:e], X["data"][s:e].astype(np.float32)))
+            if COUNTS == "total":
+                v = np.zeros(ng, np.float32)
+                v[S["indices"][sip[r]:sip[r + 1]]] += S["data"][sip[r]:sip[r + 1]]
+                v[U["indices"][uip[r]:uip[r + 1]]] += U["data"][uip[r]:uip[r + 1]]
+                nz = np.nonzero(v)[0]; cells.append((nz, v[nz]))
+            else:
+                s, e = int(indptr[r]), int(indptr[r + 1])
+                cells.append((X["indices"][s:e], X["data"][s:e].astype(np.float32)))
     return syms, cells, clusters, pt
 
 
@@ -55,6 +79,7 @@ def main():
     name_id = {k.upper(): v for k, v in pickle.load(open(NAME_ID, "rb")).items()}
     rng = np.random.default_rng(SEED)
 
+    import ctx_tokenise as TK
     syms, cells, clusters, pt = load()
     ens = [name_id.get(s.upper()) for s in syms]                       # symbol -> ensembl (None if unmapped)
     var_idx, token_ids, medians = tok.make_var_mapping(ens)            # positions within var that map to vocab
@@ -75,13 +100,10 @@ def main():
         if not keep.any():
             continue
         j = pos[idx[keep]]
-        en = np.log1p(val[keep] / (float(val.sum()) or 1.0) * 1e4)
-        nz = en > 0
-        if not nz.any():
+        order = TK.rank_order(val[keep], medians[j])[: MAX_LEN - 2]
+        if not len(order):
             continue
-        norm = en[nz] / np.maximum(medians[j[nz]], 1e-9)
-        order = np.argsort(-norm)[: MAX_LEN - 2]
-        seqs.append(token_ids[j[nz][order]].astype(np.int64)); cell_ctx.append(c)
+        seqs.append(token_ids[j[order]].astype(np.int64)); cell_ctx.append(c)
     cidx = {c: i for i, c in enumerate(keep_clusters)}
     print(f"[setup] {len(seqs)} cells tokenised", flush=True)
 
@@ -134,7 +156,7 @@ def main():
     tokmap = json.load(open(f"{MSETUP}/token_dictionary.json")); tid2ens = {int(v): k for k, v in tokmap.items()}
     for L_ in TAPS:
         M = acc[L_] / np.maximum(cnts[..., None], 1)
-        out = os.path.join(HERE, "results", f"ctx_devel_L{L_:02d}.npz")
+        out = os.path.join(HERE, "results", f"{OUTPREFIX}_L{L_:02d}.npz")
         np.savez_compressed(out, M=M.astype(np.float16), counts=cnts,
                             genes=np.array([tid2ens.get(g, str(g)) for g in panel]),
                             clusters=np.array(keep_clusters),

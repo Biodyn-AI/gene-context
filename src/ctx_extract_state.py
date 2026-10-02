@@ -45,7 +45,7 @@ import anndata as ad
 import torch
 
 HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE.parent / "route_state"))
+sys.path.insert(0, str(HERE.parent / "route_state")); sys.path.insert(1, str(HERE))   # state_loader.py: ../route_state or alongside
 from state_loader import load_state_se, load_protein_embeds  # noqa: E402
 
 # ---- data (same TS tissues as ts_extract.py) --------------------------------------------------------------

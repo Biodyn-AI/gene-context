@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software or its results, please cite the following."
-title: "Single-cell foundation models represent genes in context, but the information is co-expression"
+title: "Single-cell foundation models represent genes in context, but reveal no context-specific gene function beyond co-expression"
 authors:
   - family-names: Kendiukhov
     given-names: Ihor

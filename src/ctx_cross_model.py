@@ -19,8 +19,10 @@ Two metrics, both model-facts, computed identically on every model's own gene vo
      surface, built from GO) more than matched RANDOM-partition axes. z over the random-axis null.
 
 FAIRNESS. Caps differ (MaxToki cap 50; scGPT/STATE cap 20) and vocabularies differ, so cross-ARCHITECTURE
-numbers are compared with that caveat. The clean SCALING comparison is ctx217m600 vs ctx1b: same cells, same
-600-cell/cap-50 settings, differing only in model size. Per-dimension z-scoring (Timkey) before any projection.
+numbers are compared with that caveat. The SCALING comparison is ctx217m600 vs ctx1b: same cells, same
+600-cell/cap-50 settings. The two models differ in size, width (1232 vs 2304) AND depth (11 vs 20 blocks), so the
+headline `scaling` block compares them at matched RELATIVE depth (217M layer 4 = 0.36 vs 1B layer 7 = 0.35; also
+217M layer 2 = 0.18 vs 1B layer 4 = 0.20). Per-dimension z-scoring (Timkey) before any projection.
 
 Reads results/<prefix>_L{tap}.npz. Out: results/ctx_cross_model.json
 """
@@ -41,6 +43,10 @@ MODELS = [   # (label, prefix, tap, note)
     ("MaxToki-217M-1k",  "ctx_maxtoki", 4, "1000-cell headline"),
     ("MaxToki-217M-random", "ctxrand",  4, "RANDOM-INIT control (untrained, same arch)"),
     ("MaxToki-217M-cap20", "ctx217m_cap20", 4, "cap-matched to scGPT/STATE (cap 20)"),
+    # depth-matched scaling pair (217M has 11 blocks, 1B has 20): layer 4 of 217M is at relative depth 4/11=0.36,
+    # layer 7 of 1B at 7/20=0.35; layer 2 of 217M (0.18) pairs with layer 4 of 1B (0.20)
+    ("MaxToki-217M-L2", "ctx217m600", 2, "600-cell matched; depth-matched to 1B layer 4"),
+    ("MaxToki-1B-L7", "ctx1b", 7, "600-cell matched; depth-matched to 217M layer 4"),
 ]
 AXES = {"nuclear_vs_surface": (["GO:0005634", "GO:0000785", "GO:0003677"],
                                ["GO:0005886", "GO:0005576", "GO:0005615"])}
@@ -63,7 +69,7 @@ def analyse(prefix, tap, ens2sym, g2g, rng):
     Mz = (M - mu) / sd
 
     # ---- EXCESS (contextualisation) over context pairs ----
-    same_all, diff_all, main_rep = [], [], []
+    same_all, diff_all, main_rep, gid_all = [], [], [], []
     for c1, c2 in itertools.combinations(range(nC), 2):
         keep = full[c1] & full[c2]
         if keep.sum() < MIN_GENES:
@@ -73,12 +79,11 @@ def analyse(prefix, tap, ens2sym, g2g, rng):
         main_rep.append(float(np.dot(b0, b1) / (np.linalg.norm(b0) * np.linalg.norm(b1) + 1e-9)))
         d0, d1 = D0 - b0, D1 - b1
         same_all.append(cos_rows(d0, d1))
-        diff_all.append(cos_rows(d0, d1[rng.permutation(len(d1))]))
+        diff_all.append(cos_rows(d0, d1[rng.permutation(len(d1))])); gid_all.append(np.where(keep)[0])
     S, Dg = np.concatenate(same_all), np.concatenate(diff_all)
     excess = float(S.mean() - Dg.mean())
-    bs = [float(S[rng.integers(0, len(S), len(S))].mean() - Dg[rng.integers(0, len(Dg), len(Dg))].mean())
-          for _ in range(1000)]
-    ci = [float(np.percentile(bs, 2.5)), float(np.percentile(bs, 97.5))]
+    from ctx_stats import gene_bootstrap_ci                # resample GENES (entries of a gene are correlated)
+    ci = gene_bootstrap_ci(S, Dg, np.concatenate(gid_all), rng, 2000)
 
     # ---- FUNC-Z (functional organisation vs random-axis null) ----
     a_space = np.full((nG, d), np.nan, np.float32)
@@ -143,10 +148,20 @@ def main():
     # scaling verdict from the matched pair
     a, b = out.get("MaxToki-217M"), out.get("MaxToki-1B")
     if a and b and "error" not in a and "error" not in b:
-        out["scaling"] = dict(excess_217m=a["excess"], excess_1b=b["excess"],
-                              delta=b["excess"] - a["excess"])
-        print(f"\nSCALING (matched 600-cell): EXCESS 217M {a['excess']:+.4f} -> 1B {b['excess']:+.4f} "
-              f"(Δ {b['excess']-a['excess']:+.4f})")
+        out["scaling_same_layer_index"] = dict(excess_217m_L4=a["excess"], excess_1b_L4=b["excess"],
+                                               delta=b["excess"] - a["excess"],
+                                               note="same layer index = different relative depth (0.36 vs 0.20)")
+        c2, b7 = out.get("MaxToki-217M-L2"), out.get("MaxToki-1B-L7")
+        if c2 and b7 and "error" not in c2 and "error" not in b7:
+            fz = lambda r: (r["func_z"].get("nuclear_vs_surface") or {}).get("z")
+            out["scaling"] = dict(
+                rel_depth_0p36=dict(excess_217m_L4=a["excess"], excess_1b_L7=b7["excess"],
+                                    funcz_217m_L4=fz(a), funcz_1b_L7=fz(b7)),
+                rel_depth_0p2=dict(excess_217m_L2=c2["excess"], excess_1b_L4=b["excess"],
+                                   funcz_217m_L2=fz(c2), funcz_1b_L4=fz(b)))
+            print(f"DEPTH-MATCHED: rel.depth~0.36 217M L4 {a['excess']:+.4f} vs 1B L7 {b7['excess']:+.4f}; "
+                  f"rel.depth~0.2 217M L2 {c2['excess']:+.4f} vs 1B L4 {b['excess']:+.4f}")
+        print(f"\nSAME LAYER INDEX 4 (different relative depth): EXCESS 217M {a['excess']:+.4f} -> 1B {b['excess']:+.4f}")
     json.dump(out, open(os.path.join(RES, "ctx_cross_model.json"), "w"), indent=1)
     print("\n[done] -> results/ctx_cross_model.json")
 

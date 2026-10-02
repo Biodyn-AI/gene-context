@@ -1,5 +1,11 @@
 # Submission package — Computational Biology and Chemistry (Elsevier)
 
+> **SUPERSEDED (1–2 Oct 2026).** This Elsevier package predates a wrong MaxToki input encoding that was found and fixed
+> while preparing the BMC Genomics version (every MaxToki result was re-run, and several conclusions changed), as well
+> as corrections to the co-expression nulls, the layer peak, STATE's cell types and the references. Do not submit
+> these files; use `submission_bmc_genomics/` or regenerate from the corrected manuscript.
+
+
 Manuscript: *Single-cell foundation models represent genes in context, but the information is co-expression*
 (I. Kendiukhov). Prepared under Elsevier's "Your Paper Your Way" (free-format initial submission).
 

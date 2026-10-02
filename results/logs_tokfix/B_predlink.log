@@ -1,0 +1,23 @@
+Loading weights:   0%|          | 0/102 [00:00<?, ?it/s]Loading weights: 100%|██████████| 102/102 [00:00<00:00, 5859.01it/s]
+[setup] 350 cells
+[setup] contextualisation for 3762 genes
+    cell 0/350
+    cell 25/350
+    cell 50/350
+    cell 75/350
+    cell 100/350
+    cell 125/350
+    cell 150/350
+    cell 175/350
+    cell 200/350
+    cell 225/350
+    cell 250/350
+    cell 275/350
+    cell 300/350
+    cell 325/350
+
+[result] 558 target genes; mean context benefit (logP real - chimeric) = +11.990 (positive => real context helps prediction)
+[result] benefit ~ contextualisation: raw rho +0.173; partial (control log-freq) +0.161 95% CI [+0.083,+0.239]
+
+VERDICT: CONTEXT HELPS PREDICTION (mean benefit +11.99 nats) AND the model contextualises the genes it helps most (partial rho +0.161, CI [+0.083,+0.239] controlling frequency). Contextualisation serves the objective: the model encodes the co-expression it predicts from — unifying the representation phenomenon, the co-expression ceiling, and the training objective.
+[done] -> results/ctx_prediction_link.json

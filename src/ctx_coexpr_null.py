@@ -71,7 +71,8 @@ def coexpr_matrix(genes_ens):
             for pj, vr in enumerate(take):
                 if vr >= 0:
                     vcol[vr] = pj
-            X = f["X"]; n = int(X.attrs["shape"][0]); indptr = X["indptr"][:]
+            import ctx_tokenise as TK                       # raw counts -> log1p(CP10k) (X itself is already log)
+            X = TK.count_matrix(f); TK.check_counts(X); n = int(X.attrs["shape"][0]); indptr = X["indptr"][:]
             sel = np.sort(np.random.default_rng(SEED).choice(n, min(COEXPR_CELLS // 2, n), replace=False))
             E = np.zeros((len(sel), G), np.float32)
             for i, r in enumerate(sel):
@@ -80,7 +81,7 @@ def coexpr_matrix(genes_ens):
                 pj = vcol[ii]; keep = pj >= 0
                 if not keep.any():
                     continue
-                E[i, pj[keep]] = np.log1p(vv[keep] / (float(vv.sum()) or 1.0) * 1e4)   # vectorised scatter
+                E[i, pj[keep]] = TK.log_cp10k(vv[keep], vv.sum())   # total over ALL genes of the raw row
             rows.append(E)
     Z = np.vstack(rows)
     Z = Z - Z.mean(0); Z = Z / (Z.std(0) + 1e-8)

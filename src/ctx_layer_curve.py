@@ -37,7 +37,7 @@ def excess_for(path, rng):
     mu = flat.reshape(-1, d).mean(0); sd = flat.reshape(-1, d).std(0) + 1e-6
     Mz = (M - mu) / sd
     top_dim = float(((sd ** 2).max()) / (sd ** 2).sum())
-    same_all, diff_all, main = [], [], []
+    same_all, diff_all, main, gid_all = [], [], [], []
     for c1, c2 in itertools.combinations(range(nC), 2):
         keep = full[c1] & full[c2]
         if keep.sum() < MIN_GENES:
@@ -47,13 +47,14 @@ def excess_for(path, rng):
         main.append(float(np.dot(b0, b1) / (np.linalg.norm(b0) * np.linalg.norm(b1) + 1e-9)))
         d0, d1 = D0 - b0, D1 - b1
         same_all.append(cos_rows(d0, d1)); diff_all.append(cos_rows(d0, d1[rng.permutation(len(d1))]))
+        gid_all.append(np.where(keep)[0])
     if not same_all:
         return None
     S = np.concatenate(same_all); Dg = np.concatenate(diff_all)
     excess = float(S.mean() - Dg.mean())
-    bs = [float(S[rng.integers(0, len(S), len(S))].mean() - Dg[rng.integers(0, len(Dg), len(Dg))].mean())
-          for _ in range(1000)]
-    return dict(excess=excess, ci=[float(np.percentile(bs, 2.5)), float(np.percentile(bs, 97.5))],
+    from ctx_stats import gene_bootstrap_ci                # resample GENES (entries of a gene are correlated)
+    return dict(excess=excess, ci=gene_bootstrap_ci(S, Dg, np.concatenate(gid_all), rng, 2000),
+                same=float(S.mean()), diff=float(Dg.mean()),
                 main_effect_replication=float(np.mean(main)), n_pairs=len(same_all), top_dim_share=top_dim)
 
 
@@ -79,8 +80,11 @@ def main():
                           "L0 is the context-free embedding (~0 by construction), the response rises through the "
                           "early layers and decays toward the output.")
         print(f"\n{out['verdict']}")
-    json.dump(out, open(os.path.join(RES, "ctx_layer_curve.json"), "w"), indent=1)
-    print("[done] -> results/ctx_layer_curve.json")
+    # a non-default PREFIX (e.g. ctx_scgpt) writes its own file, so it cannot overwrite the MaxToki scan
+    name = "ctx_layer_curve.json" if PREFIX == "ctxscan" else f"ctx_layer_curve_{PREFIX}.json"
+    out["prefix"] = PREFIX
+    json.dump(out, open(os.path.join(RES, name), "w"), indent=1)
+    print(f"[done] -> results/{name}")
 
 
 if __name__ == "__main__":

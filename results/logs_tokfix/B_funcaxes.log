@@ -1,0 +1,25 @@
+axis mito_vs_cytoskeleton         poleA=685  poleB=165
+axis nuclear_vs_surface           poleA=1828 poleB=1194
+axis cellcycle_vs_diff            poleA=145  poleB=169
+axis transcription_vs_transport   poleA=330  poleB=89
+
+=== layer 4 — 5924 genes with a(g); 1047 balanced in >=9 contexts ===
+  mito_vs_cytoskeleton         AUC=0.784  z_raw= +8.7  rank ρ=+0.39  ||  z_RANK-CONTROLLED= +6.4  (power +0.267 vs null +0.096)
+  nuclear_vs_surface           AUC=0.767  z_raw=+16.6  rank ρ=+0.46  ||  z_RANK-CONTROLLED=+13.3  (power +0.501 vs null +0.095)
+  cellcycle_vs_diff            AUC=0.573  z_raw= +2.0  rank ρ=+0.19  ||  z_RANK-CONTROLLED= +0.9  (power +0.117 vs null +0.094)
+  transcription_vs_transport   AUC=0.694  z_raw= +2.9  rank ρ=+0.13  ||  z_RANK-CONTROLLED= +4.3  (power +0.205 vs null +0.092)
+
+=== layer 8 — 5924 genes with a(g); 1047 balanced in >=9 contexts ===
+  mito_vs_cytoskeleton         AUC=0.744  z_raw=+12.7  rank ρ=+0.53  ||  z_RANK-CONTROLLED= +8.4  (power +1.934 vs null +0.373)
+  nuclear_vs_surface           AUC=0.728  z_raw= +7.8  rank ρ=+0.61  ||  z_RANK-CONTROLLED= +6.5  (power +1.674 vs null +0.387)
+  cellcycle_vs_diff            AUC=0.567  z_raw= +2.9  rank ρ=+0.35  ||  z_RANK-CONTROLLED= +1.7  (power +0.709 vs null +0.385)
+  transcription_vs_transport   AUC=0.638  z_raw= +1.0  rank ρ=+0.22  ||  z_RANK-CONTROLLED= +1.3  (power +0.659 vs null +0.383)
+
+=== layer 11 — 5924 genes with a(g); 1047 balanced in >=9 contexts ===
+  mito_vs_cytoskeleton         AUC=0.742  z_raw=+10.4  rank ρ=+0.49  ||  z_RANK-CONTROLLED= +6.9  (power +2.517 vs null +0.493)
+  nuclear_vs_surface           AUC=0.723  z_raw= +6.1  rank ρ=+0.57  ||  z_RANK-CONTROLLED= +6.0  (power +2.182 vs null +0.517)
+  cellcycle_vs_diff            AUC=0.579  z_raw= +2.6  rank ρ=+0.32  ||  z_RANK-CONTROLLED= +1.9  (power +1.046 vs null +0.517)
+  transcription_vs_transport   AUC=0.629  z_raw= +0.8  rank ρ=+0.25  ||  z_RANK-CONTROLLED= +0.8  (power +0.759 vs null +0.525)
+
+VERDICT: L04/nuclear_vs_surface: validity AUC 0.77. Raw modulation z +16.6 but RANK-CONTROLLED z +13.3. Across valid axes, 6 beat the null raw, 7 survive rank control. POSITIVE — functional modulation survives abundance/rank control on at least one valid axis: genes move preferentially along a functional direction beyond what abundance explains.
+[done] -> results/ctx_functional_axes.json

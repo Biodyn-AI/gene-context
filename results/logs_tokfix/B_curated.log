@@ -1,0 +1,15 @@
+[1/3] per-context mean rank (target-activity + abundance)
+[2/3] co-expression matrix (for the matched control)
+
+=== layer 4: 26 measurable TFs with >= 15 measurable targets ===
+  (A) STATIC excess closeness to curated targets vs co-expression-matched controls:
+        mean +0.0212 over 26 TFs; 77% of TFs positive (sign p=4.7e-03)
+  (B) CONTEXT modulation: excess closeness vs target activity, mean rho +0.073 over 26 TFs; 65% positive (sign p=0.08)
+
+=== layer 8: 26 measurable TFs with >= 15 measurable targets ===
+  (A) STATIC excess closeness to curated targets vs co-expression-matched controls:
+        mean +0.0050 over 26 TFs; 58% of TFs positive (sign p=2.8e-01)
+  (B) CONTEXT modulation: excess closeness vs target activity, mean rho +0.135 over 26 TFs; 65% positive (sign p=0.08)
+
+VERDICT: L4: (A) static excess +0.0212 (sign p 4.7e-03); (B) activity modulation rho +0.073 (sign p 0.08). PARTIAL — TFs sit closer to curated targets than co-expression-matched controls (A positive) but the effect is NOT modulated by where the programme is active (B null): near-targets, but not context-appropriately so.
+[done] -> results/ctx_curated_targets.json

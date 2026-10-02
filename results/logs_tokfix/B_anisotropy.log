@@ -1,0 +1,5 @@
+L00: RAW anisotropy +0.005 self-sim +1.000 (corrected +0.995) topPC 0.01 || Z-SCORED anisotropy +0.000 self-sim +1.000 (corrected +1.000) topPC 0.01
+L04: RAW anisotropy +0.292 self-sim +0.916 (corrected +0.623) topPC 0.02 || Z-SCORED anisotropy +0.001 self-sim +0.885 (corrected +0.884) topPC 0.02
+L08: RAW anisotropy +0.616 self-sim +0.856 (corrected +0.240) topPC 0.07 || Z-SCORED anisotropy +0.003 self-sim +0.654 (corrected +0.652) topPC 0.06
+L11: RAW anisotropy +0.201 self-sim +0.692 (corrected +0.491) topPC 0.07 || Z-SCORED anisotropy +0.003 self-sim +0.619 (corrected +0.616) topPC 0.07
+[done] -> results/ctx_anisotropy.json

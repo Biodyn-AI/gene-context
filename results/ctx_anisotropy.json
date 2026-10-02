@@ -1,44 +1,44 @@
 {
  "layers": {
   "L00": {
-   "anisotropy_raw": 0.009311351925134659,
+   "anisotropy_raw": 0.005308559630066156,
    "selfsim_raw": 1.0,
-   "corrected_selfsim_raw": 0.9906886480748653,
-   "top_pc_raw": 0.007409414276480675,
-   "anisotropy_zscored": -0.00022245876607485116,
+   "corrected_selfsim_raw": 0.9946914403699338,
+   "top_pc_raw": 0.005596783943474293,
+   "anisotropy_zscored": 0.00017990123888012022,
    "selfsim_zscored": 1.0,
-   "corrected_selfsim_zscored": 1.0002224587660749,
-   "top_pc_zscored": 0.007458603009581566
+   "corrected_selfsim_zscored": 0.9998200987611199,
+   "top_pc_zscored": 0.005646147299557924
   },
   "L04": {
-   "anisotropy_raw": 0.4640323519706726,
-   "selfsim_raw": 0.9384103417396545,
-   "corrected_selfsim_raw": 0.47437798976898193,
-   "top_pc_raw": 0.04781418293714523,
-   "anisotropy_zscored": -0.001607814454473555,
-   "selfsim_zscored": 0.8927059769630432,
-   "corrected_selfsim_zscored": 0.8943137914175168,
-   "top_pc_zscored": 0.04554075375199318
+   "anisotropy_raw": 0.29231148958206177,
+   "selfsim_raw": 0.9156689047813416,
+   "corrected_selfsim_raw": 0.6233574151992798,
+   "top_pc_raw": 0.022638464346528053,
+   "anisotropy_zscored": 0.0014642508467659354,
+   "selfsim_zscored": 0.8851221203804016,
+   "corrected_selfsim_zscored": 0.8836578695336357,
+   "top_pc_zscored": 0.019282637163996696
   },
   "L08": {
-   "anisotropy_raw": 0.5254582762718201,
-   "selfsim_raw": 0.8213267922401428,
-   "corrected_selfsim_raw": 0.29586851596832275,
-   "top_pc_raw": 0.08686991780996323,
-   "anisotropy_zscored": 0.003653329098597169,
-   "selfsim_zscored": 0.650810182094574,
-   "corrected_selfsim_zscored": 0.6471568529959768,
-   "top_pc_zscored": 0.07466410100460052
+   "anisotropy_raw": 0.6158639192581177,
+   "selfsim_raw": 0.8562212586402893,
+   "corrected_selfsim_raw": 0.24035733938217163,
+   "top_pc_raw": 0.06619463115930557,
+   "anisotropy_zscored": 0.0027119789738208055,
+   "selfsim_zscored": 0.654475748538971,
+   "corrected_selfsim_zscored": 0.6517637695651501,
+   "top_pc_zscored": 0.06012735143303871
   },
   "L11": {
-   "anisotropy_raw": 0.4532334804534912,
-   "selfsim_raw": 0.745479941368103,
-   "corrected_selfsim_raw": 0.2922464609146118,
-   "top_pc_raw": 0.2078646421432495,
-   "anisotropy_zscored": 0.0016220383113250136,
-   "selfsim_zscored": 0.530002236366272,
-   "corrected_selfsim_zscored": 0.528380198054947,
-   "top_pc_zscored": 0.11956309527158737
+   "anisotropy_raw": 0.20104239881038666,
+   "selfsim_raw": 0.6922083497047424,
+   "corrected_selfsim_raw": 0.4911659508943558,
+   "top_pc_raw": 0.07321829348802567,
+   "anisotropy_zscored": 0.002965370425954461,
+   "selfsim_zscored": 0.6185342073440552,
+   "corrected_selfsim_zscored": 0.6155688369181007,
+   "top_pc_zscored": 0.07362154126167297
   }
  },
  "note": "High raw anisotropy with much lower self-sim-minus-anisotropy is exactly Ethayarajh's finding; our per-dimension z-scoring lowers anisotropy and keeps genes distinguishable, validating the cosine-based EXCESS/functional metrics computed on z-scored representations."

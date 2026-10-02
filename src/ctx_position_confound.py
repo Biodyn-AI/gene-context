@@ -38,7 +38,10 @@ from scipy.stats import spearmanr
 
 
 def mean_ranks(ctx_names):
-    """per (context, token) mean rank position, replicating the extractor's tokenisation exactly."""
+    """per (context, token) mean rank position, replicating the extractor's tokenisation AND its cell selection
+    exactly (same encoding via ctx_tokenise; same per-context shuffle order and seed as ctx_extract_maxtoki, so the
+    ranks come from the same CELLS_CTX cells per context that the representations were averaged over)."""
+    import ctx_tokenise as TK
     from maxtoki_adapter import MaxTokiTokenizer
     tok = MaxTokiTokenizer(model_input_size=MAX_LEN)
     rng = np.random.default_rng(SEED)
@@ -53,7 +56,7 @@ def mean_ranks(ctx_names):
             ctg = f["obs"]["cell_type"]
             cats = np.array([x.decode() if isinstance(x, bytes) else x for x in ctg["categories"][:]]).astype(str)
             ctypes = cats[ctg["codes"][:]]
-            X = f["X"]; n = int(X.attrs["shape"][0]); indptr = X["indptr"][:]
+            X = TK.count_matrix(f); TK.check_counts(X); n = int(X.attrs["shape"][0]); indptr = X["indptr"][:]
             var_idx, token_ids, medians = tok.make_var_mapping(list(ens))
             pos = np.full(len(ens), -1, np.int64); pos[var_idx] = np.arange(len(var_idx))
             for r in range(n):
@@ -65,15 +68,15 @@ def mean_ranks(ctx_names):
                 if not keep.any():
                     continue
                 j = pos[idx[keep]]
-                en = np.log1p(val[keep] / (float(val.sum()) or 1.0) * 1e4)
-                nz = en > 0
-                if not nz.any():
+                order = TK.rank_order(val[keep], medians[j])[: MAX_LEN - 2]
+                if not len(order):
                     continue
-                norm = en[nz] / np.maximum(medians[j[nz]], 1e-9)
-                order = np.argsort(-norm)[: MAX_LEN - 2]
-                cells[ctypes[r]].append(token_ids[j[nz][order]].astype(np.int64))
+                cells[ctypes[r]].append(token_ids[j[order]].astype(np.int64))
     acc = {}
-    for c in ctx_names:
+    # Same order as the extractor: contexts by descending cell count (stable sort over first appearance). This makes
+    # the result independent of PYTHONHASHSEED (iterating a set made it vary between runs) and reuses the extractor's
+    # exact per-context shuffles, so the cells match.
+    for c in sorted(cells.keys(), key=lambda c: -len(cells[c])):
         rng.shuffle(cells[c])
         s = collections.Counter(); n = collections.Counter()
         for toks in cells[c][:CELLS_CTX]:

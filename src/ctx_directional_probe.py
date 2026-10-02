@@ -19,10 +19,10 @@ NO CIRCULARITY: f, h (hence the predictor f*h) are built from ONE cell partition
 on the OTHER partition; beta averages the two cross-directions. A predictor fit on one half cannot manufacture
 correlation with an independent half's residual.
 
-CONTROLS: projection rank-residualised (abundance); and the decisive one -- functional u is compared against
-CO-EXPRESSION-MODULE axes spanning the coherence range (as in ctx_coexpr_null). If functional beta sits ABOVE
-the coherence-beta curve, the directional congruence is beyond co-expression -> Level 2 has a spark. If it sits
-on the curve, the direction is co-expression and Level 2 is not reachable this way.
+CONTROLS: projection rank-residualised (abundance); and the decisive one -- functional beta is compared against 300
+null axes whose poles match the functional poles on SIZE and average co-expression (coherence within 10%), as in
+ctx_coexpr_null_v3; empirical one-sided p. (Rewritten 1 Oct 2026: the earlier version used 400-gene null poles and a
+fitted beta-vs-coherence curve, i.e. not size-matched.)
 
 Reads the headline ctx_maxtoki_L*.npz. Out: results/ctx_directional_probe.json
 """
@@ -38,6 +38,8 @@ G2G = "/Volumes/Crucial X6/MacBook/biomechinterp/biodyn-work/single_cell_mechint
 TAPS = [4, 8]   # headline ctx_maxtoki set has L0/L4/L8/L11; L4 is where the null comparisons were run
 MIN_CTX = 9
 N_NULL = 300
+TOL = 0.10
+MAX_TRIES = 40
 SEED = 0
 from scipy.stats import spearmanr
 
@@ -120,51 +122,73 @@ def main():
 
         pool = np.where(gene_ok)[0]
 
-        def module(size, loose):
-            seed = rng.choice(pool); nb = pool[np.argsort(-C[seed, pool])]
-            top = nb[: min(len(nb), int(size * loose))]
-            return rng.choice(top, min(size, len(top)), replace=False)
+        def mixed(seed, n, k, base):
+            """the k genes nearest/most co-expressed to `seed` plus (n-k) random genes, all from `base`"""
+            top = base[np.argsort(-C[seed, base])][:k]
+            rest = np.setdiff1d(base, top)
+            return np.concatenate([top, rng.choice(rest, n - k, replace=False)])
 
-        # co-expression-module beta curve
-        nx, nb_ = [], []
-        for _ in range(N_NULL):
-            loose = rng.choice([1, 1, 2, 3, 5, 8, 15, 40, 120])
-            ga, gb = module(400, loose), module(400, loose)
-            nx.append(0.5 * (coherence(C, ga) + coherence(C, gb))); nb_.append(beta(axis(ga, gb)))
-        nx, nb_ = np.array(nx), np.array(nb_)
-        A = np.column_stack([np.ones_like(nx), nx, nx ** 2]); coef, *_ = np.linalg.lstsq(A, nb_, rcond=None)
-        rsd = float((nb_ - A @ coef).std())
-        print(f"\n=== layer {tap}: null beta {nb_.mean():+.3f}±{nb_.std():.3f}; coherence~beta rho "
-              f"{spearmanr(nx, nb_).statistic:+.2f} ===")
+        def matched(n, target, excl=None):
+            """size-n set, disjoint from `excl`, with SCORE within TOL of target; returns (genes, score, below_random)
+            or None. If even a purely random set (k=0) scores above the target, a random set is returned and flagged
+            (the pole is less coherent/tight than random genes; power rises with the score, so this is conservative)."""
+            base = pool if excl is None else np.setdiff1d(pool, excl)
+            for _ in range(MAX_TRIES):
+                sd_ = rng.choice(base); lo, hi = 0, n; best = None
+                for _ in range(12):
+                    k = (lo + hi) // 2; g = mixed(sd_, n, k, base); t = coherence(C, list(g))
+                    if best is None or abs(t - target) < abs(best[1] - target):
+                        best = (g, t)
+                    if t < target: lo = k + 1
+                    else: hi = k
+                    if lo > hi: break
+                if abs(best[1] - target) <= TOL * max(abs(target), 1e-3):
+                    return best[0], best[1], False
+                if hi == 0:
+                    g = rng.choice(base, n, replace=False); return g, coherence(C, list(g)), True
+            return None
 
-        out["taps"][f"L{tap:02d}"] = {"null_beta_mean": float(nb_.mean()), "axes": {}}
+        def draw_pair(nA, tA, nB, tB):
+            ga = matched(nA, tA)
+            if ga is None: return None
+            gb = matched(nB, tB, excl=ga[0])
+            return None if gb is None else (ga, gb)
+
+        out["taps"][f"L{tap:02d}"] = {"axes": {}}
+        print(f"\n=== layer {tap}: beta vs {N_NULL} size- and co-expression-matched null axes per functional axis ===",
+              flush=True)
         for name, (Ag, Bg) in AXES.items():
             ia = [i for i, s in enumerate(syms) if gene_ok[i] and s in g2g and g2g[s] & set(Ag)]
             ib = [i for i, s in enumerate(syms) if gene_ok[i] and s in g2g and g2g[s] & set(Bg)]
             both = set(ia) & set(ib); ia = [i for i in ia if i not in both]; ib = [i for i in ib if i not in both]
-            u = axis(ia, ib); bt = beta(u)
-            coh = 0.5 * (coherence(C, ia) + coherence(C, ib))
-            pred = float(np.array([1, coh, coh ** 2]) @ coef); zc = (bt - pred) / (rsd + 1e-9)
-            znull = (bt - nb_.mean()) / (nb_.std() + 1e-9)
-            print(f"   {name:<28} beta={bt:+.3f}  null={nb_.mean():+.3f}  z_vs_null={znull:+.1f}  "
-                  f"z_above_coexpr_curve={zc:+.1f}")
-            out["taps"][f"L{tap:02d}"]["axes"][name] = dict(beta=bt, z_vs_null=float(znull),
-                                                            z_above_coexpr=float(zc), coherence=coh)
+            bt = beta(axis(ia, ib)); tA, tB = coherence(C, ia), coherence(C, ib)
+            nb_, n_fail = [], 0
+            for _ in range(N_NULL):
+                pr = draw_pair(len(ia), tA, len(ib), tB)
+                if pr is None: n_fail += 1; continue
+                nb_.append(beta(axis(pr[0][0], pr[1][0])))
+            nb_ = np.array(nb_)
+            if len(nb_) < 50:
+                raise SystemExit(f"{name}: only {len(nb_)} matched null axes ({n_fail} failures)")
+            n_ge = int((nb_ >= bt).sum()); p_m = (n_ge + 1) / (len(nb_) + 1)
+            print(f"   {name:<28} beta={bt:+.3f}  matched null {nb_.mean():+.3f} (sd {nb_.std():.3f}, 95th "
+                  f"{np.percentile(nb_, 95):+.3f})  {n_ge}/{len(nb_)} >= functional  p = {p_m:.4f}", flush=True)
+            out["taps"][f"L{tap:02d}"]["axes"][name] = dict(
+                beta=bt, nA=len(ia), nB=len(ib), coherence_A=tA, coherence_B=tB, null_n=int(len(nb_)),
+                null_mean=float(nb_.mean()), null_sd=float(nb_.std()), null_p95=float(np.percentile(nb_, 95)),
+                n_ge=n_ge, p=p_m, null_failures=n_fail, null_beta=nb_.tolist())
 
     allc = [(t, n, d) for t, tv in out["taps"].items() for n, d in tv["axes"].items()]
-    best = max(allc, key=lambda x: x[2]["z_above_coexpr"])
-    t, n, d = best
+    n_tests = len(allc); srt = sorted(allc, key=lambda x: x[2]["p"]); sig = []
+    for i_, x in enumerate(srt):                      # Holm step-down over all axes x layers, positive beta only
+        if x[2]["p"] * (n_tests - i_) < 0.05 and x[2]["beta"] > 0: sig.append(x)
+        else: break
+    t, n, d = (sig or srt)[0]
+    out["holm_n_tests"] = n_tests; out["holm_significant"] = [f"{a}/{b}" for a, b, _ in sig]
     out["verdict"] = (
-        f"strongest: {t}/{n} beta={d['beta']:+.3f}, {d['z_above_coexpr']:+.1f} sigma above the "
-        f"co-expression-beta curve (z_vs_null {d['z_vs_null']:+.1f}). " +
-        ("SPARK — genes move toward their OWN functional pole more in contexts that share that function, beyond "
-         "co-expression. Level 2 (context-appropriate directional readout) has a measurable signal; a curated "
-         "directional test + re-extraction is now justified."
-         if d["z_above_coexpr"] > 3 and d["beta"] > 0 else
-         "NO SPARK — the directional congruence does not exceed co-expression (or is absent). The movement is "
-         "functionally organised (Level 1) but not context-APPROPRIATE beyond co-expression. Level 2 likely "
-         "not reachable for this expression-only model; do NOT spend the re-extraction.")
-    )
+        f"smallest empirical p: {t}/{n} beta={d['beta']:+.3f} vs matched null {d['null_mean']:+.3f} "
+        f"(sd {d['null_sd']:.3f}), p={d['p']:.4f}; Holm-corrected over {n_tests} tests: " +
+        (f"SIGNAL in {len(sig)} test(s)." if sig else "NO SIGNAL beyond size- and co-expression-matched null axes."))
     print(f"\nVERDICT: {out['verdict']}")
     json.dump(out, open(os.path.join(RES, "ctx_directional_probe.json"), "w"), indent=1)
     print("[done] -> results/ctx_directional_probe.json")

@@ -1,0 +1,21 @@
+[1/4] per-context mean rank (abundance covariate)
+[2/4] neighbourhood divergence (co-expression control covariate)
+[3/4] per-gene lability, layer 4
+
+=== layer 4: 1 switchers on panel (RUNX1) ===
+   vs_all_genes                               Δlability +0.024  p=0.4471  (n_ctrl 1046)
+   vs_abundance_matched                       Δlability -7.000  p=0.3311  (n_ctrl 5)
+   vs_abundance_plus_neighdiv_matched         Δlability +2.953  p=0.3361  (n_ctrl 5)
+   vs_other_TFs_abundance_matched             Δlability +0.810  p=0.6855  (n_ctrl 5)
+   neighbourhood divergence  switchers 0.296 vs all 0.363
+[3/4] per-gene lability, layer 8
+
+=== layer 8: 1 switchers on panel (RUNX1) ===
+   vs_all_genes                               Δlability +8.762  p=0.2651  (n_ctrl 1046)
+   vs_abundance_matched                       Δlability -0.736  p=0.4977  (n_ctrl 5)
+   vs_abundance_plus_neighdiv_matched         Δlability +5.551  p=0.3361  (n_ctrl 5)
+   vs_other_TFs_abundance_matched             Δlability +8.013  p=0.3465  (n_ctrl 5)
+   neighbourhood divergence  switchers 0.296 vs all 0.363
+
+VERDICT: UNDERPOWERED / MEASUREMENT WALL, not a result. Only 1 of 14 documented context-switching TFs are count-balanced in >=9 contexts on this panel (they are low-abundance regulators; only 3 reach the 6000-gene panel at all). A group comparison with family-blocking on n<5 is meaningless. This is NOT evidence switchers do or do not move more -- the class is simply not adequately sampled in a 12-cell-type, abundance-selected panel. A real test needs a targeted re-extraction that forces the switcher genes + a matched control pool into the panel with more cells per context so low-expressed TFs reach the count floor in enough contexts.
+[done] -> results/ctx_switcher_test.json

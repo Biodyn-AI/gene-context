@@ -100,7 +100,7 @@ def main():
             s = rng.choice(pool); ga = comod(s, nA, +1); gb = comod(s, nB, -1)
             nc.append(power(axis(ga, gb))); nc_cross.append(cross(list(ga), list(gb)))
         nc = np.array(nc)
-        pct = lambda nul: float((nul >= pf).mean())      # empirical one-sided p (fraction of null >= functional)
+        pct = lambda nul: float(((nul >= pf).sum() + 1) / (len(nul) + 1))   # Monte Carlo one-sided p (never 0)
         rec = dict(power=pf, nA=nA, nB=nB, coh_A=f_cohA, coh_B=f_cohB, cross_AB=f_cross,
                    random_mean=float(na.mean()), random_p=pct(na),
                    indep_coexpr_mean=float(nb_.mean()), indep_coexpr_p=pct(nb_),
@@ -113,19 +113,13 @@ def main():
         print(f"  (b) indep co-expr      mean {nb_.mean():.3f}   empirical p = {pct(nb_):.3f}")
         print(f"  (c) ANTI-CORR blocks   mean {nc.mean():.3f}   cross {np.mean(nc_cross):+.3f}   empirical p = {pct(nc):.3f}  <-- DECISIVE")
 
-    # VERDICT from the correct, most-conservative null (b): size- AND coherence-matched co-expression modules.
-    # Null (c) turned out WEAKER than (b) (genes do not anti-correlate enough to draw strong blocks; the
-    # functional poles' cross-correlation is ~+0.02, i.e. not anti-correlated), so (b) is the right test.
-    h = out["axes"]["nuclear_vs_surface"]
-    p_b = h["indep_coexpr_p"]; ps = {k: v["indep_coexpr_p"] for k, v in out["axes"].items()}
-    out["verdict"] = (
-        f"vs size+coherence-matched co-expression modules (null b): nuclear/surface empirical p = {p_b:.3f}, "
-        f"mito p = {ps['mito_vs_cytoskeleton']:.3f}, transcription p = {ps['transcription_vs_transport']:.3f}. " +
-        ("NOT ROBUSTLY BEYOND CO-EXPRESSION — the headline axis is at the p=0.05 border and the other two are "
-         "non-significant, so the functional organisation does not clearly exceed size-matched co-expression "
-         "modules. The paper's ceiling claim STANDS (this reconciles with the original +1.7sigma ~ p 0.045)."
-         if p_b >= 0.04 else
-         "BEYOND CO-EXPRESSION on the headline axis (p<0.04) — revise the ceiling claim."))
+    # Null (b) is the STRONG null (modules of the genes most co-expressed with a seed; more co-expressed than the
+    # functional poles, see ctx_coexpr_null_v3.py, which adds the null matched on size AND average co-expression).
+    ps = {k: v["indep_coexpr_p"] for k, v in out["axes"].items()}
+    out["verdict"] = ("Strong co-expression null (b), size-matched: " +
+                      ", ".join(f"{k} p={v:.3f}" for k, v in ps.items()) +
+                      f"; {sum(v < 0.05 for v in ps.values())}/{len(ps)} axes exceed it at p<0.05. "
+                      "Random-axis null: " + ", ".join(f"{k} p={v['random_p']:.4f}" for k, v in out["axes"].items()) + ".")
     print(f"\nVERDICT: {out['verdict']}")
     json.dump(out, open(os.path.join(RES, "ctx_coexpr_null_v2.json"), "w"), indent=1)
     print("[done] -> results/ctx_coexpr_null_v2.json")

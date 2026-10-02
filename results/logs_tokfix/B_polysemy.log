@@ -1,0 +1,48 @@
+
+=== layer 0 — 6000 genes x 12 contexts, cap 50 ===
+    top single dimension carried 0.1% of raw variance before standardising (Timkey rogue-dimension check)
+    context pairs scored: 66 (median 1391 balanced genes each)
+    POSITIVE CONTROL — context main effect replicates across cells: cos = +0.000
+    same gene, independent halves : +0.0000
+    different gene, same halves   : +0.0000
+    EXCESS (the test)             : +0.0000   95% CI [+0.0000, +0.0000]   INCLUDES 0
+      strongest pair: macrophage vs pulmonary alveolar type 2   excess +0.0000 (n=1347)
+      strongest pair: macrophage vs kidney epithelial cell  excess +0.0000 (n=953)
+      strongest pair: macrophage vs capillary endothelial cell  excess +0.0000 (n=1354)
+
+=== layer 4 — 6000 genes x 12 contexts, cap 50 ===
+    top single dimension carried 1.0% of raw variance before standardising (Timkey rogue-dimension check)
+    context pairs scored: 66 (median 1391 balanced genes each)
+    POSITIVE CONTROL — context main effect replicates across cells: cos = +0.996
+    same gene, independent halves : +0.7586
+    different gene, same halves   : +0.0009
+    EXCESS (the test)             : +0.7578   95% CI [+0.7557, +0.7599]   excludes 0
+      strongest pair: pulmonary alveolar type 2  vs capillary endothelial cell  excess +0.9266 (n=1214)
+      strongest pair: pulmonary alveolar type 2  vs CD8-positive, alpha-beta T  excess +0.9262 (n=1236)
+      strongest pair: pulmonary alveolar type 2  vs neutrophil  excess +0.9118 (n=925)
+
+=== layer 8 — 6000 genes x 12 contexts, cap 50 ===
+    top single dimension carried 1.0% of raw variance before standardising (Timkey rogue-dimension check)
+    context pairs scored: 66 (median 1391 balanced genes each)
+    POSITIVE CONTROL — context main effect replicates across cells: cos = +0.996
+    same gene, independent halves : +0.7115
+    different gene, same halves   : +0.0001
+    EXCESS (the test)             : +0.7114   95% CI [+0.7092, +0.7137]   excludes 0
+      strongest pair: kidney epithelial cell vs neutrophil  excess +0.8772 (n=564)
+      strongest pair: pulmonary alveolar type 2  vs capillary endothelial cell  excess +0.8590 (n=1214)
+      strongest pair: pulmonary alveolar type 1  vs neutrophil  excess +0.8556 (n=934)
+
+=== layer 11 — 6000 genes x 12 contexts, cap 50 ===
+    top single dimension carried 2.0% of raw variance before standardising (Timkey rogue-dimension check)
+    context pairs scored: 66 (median 1391 balanced genes each)
+    POSITIVE CONTROL — context main effect replicates across cells: cos = +0.997
+    same gene, independent halves : +0.6501
+    different gene, same halves   : +0.0007
+    EXCESS (the test)             : +0.6495   95% CI [+0.6467, +0.6523]   excludes 0
+      strongest pair: kidney epithelial cell vs neutrophil  excess +0.8439 (n=564)
+      strongest pair: pulmonary alveolar type 1  vs neutrophil  excess +0.8284 (n=934)
+      strongest pair: pulmonary alveolar type 2  vs neutrophil  excess +0.8239 (n=925)
+
+VERDICT: L04: gene-specific context response EXCESS = +0.7578, CI [+0.7557, +0.7599]. POSITIVE — a gene's departure from the crowd reproduces across independent cells, so context response is gene-specific and not merely the averaging null. Next: does it track FUNCTION?
+
+[done] -> results/ctx_polysemy.json

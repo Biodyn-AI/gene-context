@@ -6,39 +6,52 @@
  ],
  "site": 3,
  "n_cells": 30,
+ "resid_norm": 15.177458763122559,
+ "push_size_raw": [
+  3.7943646907806396,
+  7.588729381561279,
+  15.177458763122559
+ ],
+ "natural_movement_along_axis": {
+  "n_genes": 5433,
+  "median_sd_across_contexts": 1.0347216129302979,
+  "median_range_across_contexts": 2.624962568283081,
+  "p95_range_across_contexts": 4.57398567199707,
+  "pole_centroid_distance": 1.5585341453552246
+ },
  "n_nuclear_tokens": 4844,
  "n_surface_tokens": 5520,
  "signed": {
   "alpha_0.25": {
-   "spec_plus": 0.07485165678195276,
-   "spec_minus": -0.013211982062274174,
-   "func_swing": 0.08806363884422691,
-   "func_swing_sem": 0.018041100416640966,
-   "rand_swing": -0.010676947638826727,
+   "spec_plus": 0.04054979528647429,
+   "spec_minus": -0.03861694297954148,
+   "func_swing": 0.07916673826601575,
+   "func_swing_sem": 0.01815656106344921,
+   "rand_swing": 0.003114681145529367,
    "func_gt_rand": 23,
    "n": 30,
    "sign_p": 0.002611439675092697
   },
   "alpha_0.5": {
-   "spec_plus": 0.15965513010872492,
-   "spec_minus": -0.11175870961958165,
-   "func_swing": 0.27141383972830657,
-   "func_swing_sem": 0.04687465887021862,
-   "rand_swing": -0.015017147157761186,
-   "func_gt_rand": 24,
+   "spec_plus": 0.0852075852559015,
+   "spec_minus": -0.0967721129510722,
+   "func_swing": 0.18197969820697368,
+   "func_swing_sem": 0.040207115714228775,
+   "rand_swing": 0.0007598425553855777,
+   "func_gt_rand": 22,
    "n": 30,
-   "sign_p": 0.000715453177690506
+   "sign_p": 0.008062400855123997
   },
   "alpha_1.0": {
-   "spec_plus": 0.28466511121236,
-   "spec_minus": -0.5302101303582601,
-   "func_swing": 0.81487524157062,
-   "func_swing_sem": 0.08135414462773072,
-   "rand_swing": -0.02487152244545305,
-   "func_gt_rand": 28,
+   "spec_plus": 0.12206508745262822,
+   "spec_minus": -0.06223871758171155,
+   "func_swing": 0.1843038050343398,
+   "func_swing_sem": 0.058229458336611105,
+   "rand_swing": -0.023253348267156318,
+   "func_gt_rand": 20,
    "n": 30,
-   "sign_p": 4.33996319770813e-07
+   "sign_p": 0.04936857335269451
   }
  },
- "verdict": "at 0.5xResid: spec(+u)=+0.160, spec(-u)=-0.112, signed swing +0.2714 (random -0.0150), func>rand 24/30 p=7.2e-04. CAUSALLY USED \u2014 the readout FLIPS with the sign of the functional push (nuclear-gene logits rise toward +u, fall toward -u) at disjoint positions, dose-dependently, far beyond the sign-independent random control. Level 1 upgrades from 'represented' to 'represented AND causally used'."
+ "verdict": "at 0.5xResid: spec(+u)=+0.085, spec(-u)=-0.097, signed swing +0.1820 (random +0.0008), func>rand 22/30 p=8.1e-03. CAUSALLY USED \u2014 the readout FLIPS with the sign of the functional push (nuclear-gene logits rise toward +u, fall toward -u) at disjoint positions, dose-dependently, far beyond the sign-independent random control. Level 1 upgrades from 'represented' to 'represented AND causally used'."
 }

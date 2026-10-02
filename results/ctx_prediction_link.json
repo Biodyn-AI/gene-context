@@ -1,12 +1,15 @@
 {
- "n_genes": 536,
- "mean_context_benefit": 7.7084951068121565,
- "raw_rho": -0.09304906055011843,
- "partial_rho": -0.08681029666059095,
+ "n_genes": 558,
+ "mean_context_benefit": 11.989657675599169,
+ "median_context_benefit": 12.878716111183167,
+ "n_comparisons": 2266,
+ "n_positions_skipped_no_clean_donor": 0,
+ "raw_rho": 0.17323413162363924,
+ "partial_rho": 0.1614918644728162,
  "partial_ci": [
-  -0.16809092917780694,
-  -0.004457416494593852
+  0.08339619006405642,
+  0.23884579788681734
  ],
  "n_cells": 350,
- "verdict": "Context helps prediction (mean benefit +7.71) but its per-gene strength does NOT track contextualisation once frequency is controlled (partial rho -0.087, CI [-0.168,-0.004]). Contextualisation and context-benefit are separate; do not claim the objective link."
+ "verdict": "CONTEXT HELPS PREDICTION (mean benefit +11.99 nats) AND the model contextualises the genes it helps most (partial rho +0.161, CI [+0.083,+0.239] controlling frequency). Contextualisation serves the objective: the model encodes the co-expression it predicts from \u2014 unifying the representation phenomenon, the co-expression ceiling, and the training objective."
 }

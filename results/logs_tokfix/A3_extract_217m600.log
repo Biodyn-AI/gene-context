@@ -1,0 +1,41 @@
+[pass 1] tokenising to choose contexts and gene panel
+  tabula_sapiens_immune_subset_20000.h5ad: 20000 cells
+  tabula_sapiens_kidney.h5ad: 11376 cells
+  tabula_sapiens_lung.h5ad: 65847 cells
+[pass 1] 12 contexts x 7200 cells; panel = 5000 genes reaching 25 in >=2 contexts
+      600 cells  macrophage
+      600 cells  pulmonary alveolar type 2 cell
+      600 cells  kidney epithelial cell
+      600 cells  capillary endothelial cell
+      600 cells  CD4-positive, alpha-beta T cell
+      600 cells  CD8-positive, alpha-beta T cell
+      600 cells  B cell
+      600 cells  basal cell
+      600 cells  pulmonary alveolar type 1 cell
+      600 cells  intermediate monocyte
+      600 cells  neutrophil
+      600 cells  classical monocyte
+Loading weights:   0%|          | 0/102 [00:00<?, ?it/s]Loading weights: 100%|██████████| 102/102 [00:00<00:00, 12274.25it/s]
+[pass 2] forward pass on mps; taps [2, 4]; accumulator 1.10 GB
+    400/7200 cells | 0.0% of (gene,ctx,part) cells at cap
+    800/7200 cells | 0.0% of (gene,ctx,part) cells at cap
+    1200/7200 cells | 0.2% of (gene,ctx,part) cells at cap
+    1600/7200 cells | 1.2% of (gene,ctx,part) cells at cap
+    2000/7200 cells | 2.9% of (gene,ctx,part) cells at cap
+    2400/7200 cells | 4.8% of (gene,ctx,part) cells at cap
+    2800/7200 cells | 6.5% of (gene,ctx,part) cells at cap
+    3200/7200 cells | 8.5% of (gene,ctx,part) cells at cap
+    3600/7200 cells | 10.6% of (gene,ctx,part) cells at cap
+    4000/7200 cells | 12.6% of (gene,ctx,part) cells at cap
+    4400/7200 cells | 14.8% of (gene,ctx,part) cells at cap
+    4800/7200 cells | 17.0% of (gene,ctx,part) cells at cap
+    5200/7200 cells | 19.2% of (gene,ctx,part) cells at cap
+    5600/7200 cells | 21.4% of (gene,ctx,part) cells at cap
+    6000/7200 cells | 23.6% of (gene,ctx,part) cells at cap
+    6400/7200 cells | 25.7% of (gene,ctx,part) cells at cap
+    6800/7200 cells | 27.9% of (gene,ctx,part) cells at cap
+    7200/7200 cells | 30.1% of (gene,ctx,part) cells at cap
+  wrote /Volumes/Crucial X6/MacBook/Code/biomi_automation/projects/biotensor/codebase/route_genemanifold/results/ctx217m600_L02.npz  M(2, 12, 5000, 1232)
+  wrote /Volumes/Crucial X6/MacBook/Code/biomi_automation/projects/biotensor/codebase/route_genemanifold/results/ctx217m600_L04.npz  M(2, 12, 5000, 1232)
+
+[done] 5000 genes x 12 contexts x 2 partitions x 2 taps; 30.1% of cells reached the 50-occurrence cap

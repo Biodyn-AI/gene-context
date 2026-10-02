@@ -90,7 +90,7 @@ def main():
         print(f"    top single dimension carried {top_dim_share:.1%} of raw variance before standardising "
               f"(Timkey rogue-dimension check)")
 
-        rows, same_all, diff_all, main_all = [], [], [], []
+        rows, same_all, diff_all, main_all, gid_all = [], [], [], [], []
         for c1, c2 in itertools.combinations(range(nC), 2):
             keep = full[c1] & full[c2]
             if keep.sum() < MIN_GENES:
@@ -107,15 +107,14 @@ def main():
             rows.append(dict(c1=ctxs[c1], c2=ctxs[c2], n=int(keep.sum()),
                              same=float(same.mean()), diff=float(diff.mean()),
                              excess=float(same.mean() - diff.mean())))
-            same_all.append(same); diff_all.append(diff)
+            same_all.append(same); diff_all.append(diff); gid_all.append(np.where(keep)[0])
 
         if not rows:
             print("    no context pair had enough count-balanced genes"); continue
         S = np.concatenate(same_all); Dg = np.concatenate(diff_all)
         excess = float(S.mean() - Dg.mean())
-        bs = [float(S[rng.integers(0, len(S), len(S))].mean() - Dg[rng.integers(0, len(Dg), len(Dg))].mean())
-              for _ in range(2000)]
-        lo, hi = float(np.percentile(bs, 2.5)), float(np.percentile(bs, 97.5))
+        from ctx_stats import gene_bootstrap_ci            # resample GENES (entries of a gene are correlated)
+        lo, hi = gene_bootstrap_ci(S, Dg, np.concatenate(gid_all), rng, 2000)
         mainrep = float(np.mean(main_all))
         print(f"    context pairs scored: {len(rows)} (median {int(np.median([r['n'] for r in rows]))} "
               f"balanced genes each)")

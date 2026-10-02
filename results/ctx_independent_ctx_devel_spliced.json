@@ -1,0 +1,77 @@
+{
+ "dataset": "Setty CD34+ bone marrow (developmental states)",
+ "taps": {
+  "L02": {
+   "n_ctx": 9,
+   "n_genes": 5000,
+   "contexts": [
+    "HSC_1",
+    "HSC_2",
+    "Precursors",
+    "Mono_2",
+    "Ery_1",
+    "Mono_1",
+    "CLP",
+    "DCs",
+    "Ery_2"
+   ],
+   "pairs_scored": 36,
+   "excess": 0.6977455019950867,
+   "excess_ci": [
+    0.6939660013608829,
+    0.7015945489939412
+   ],
+   "diff_null": 0.0023238742724061012,
+   "main_rep": 0.9888874789079031,
+   "func_z": {
+    "nuclear_vs_surface": {
+     "z": 12.303667423682144,
+     "poleA": 1639,
+     "poleB": 822
+    },
+    "mito_vs_cytoskeleton": {
+     "z": 13.3329124608125,
+     "poleA": 590,
+     "poleB": 96
+    }
+   }
+  },
+  "L04": {
+   "n_ctx": 9,
+   "n_genes": 5000,
+   "contexts": [
+    "HSC_1",
+    "HSC_2",
+    "Precursors",
+    "Mono_2",
+    "Ery_1",
+    "Mono_1",
+    "CLP",
+    "DCs",
+    "Ery_2"
+   ],
+   "pairs_scored": 36,
+   "excess": 0.702019453048706,
+   "excess_ci": [
+    0.698716429211853,
+    0.7054164072364825
+   ],
+   "diff_null": 0.003516711061820388,
+   "main_rep": 0.9916248818238577,
+   "func_z": {
+    "nuclear_vs_surface": {
+     "z": 9.263099491278023,
+     "poleA": 1639,
+     "poleB": 822
+    },
+    "mito_vs_cytoskeleton": {
+     "z": 12.097971772539946,
+     "poleA": 590,
+     "poleB": 96
+    }
+   }
+  }
+ },
+ "prefix": "ctx_devel_spliced",
+ "verdict": "REPLICATES on the Setty data: EXCESS +0.702 (CI lower +0.699), diff-null +0.0035, functional-z +9.3."
+}

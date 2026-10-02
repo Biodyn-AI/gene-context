@@ -1,0 +1,16 @@
+Loading weights:   0%|          | 0/102 [00:00<?, ?it/s]Loading weights: 100%|██████████| 102/102 [00:00<00:00, 16820.75it/s]
+[setup] 4844 nuclear-pole tokens, 5520 surface-pole tokens
+[setup] axis from 1800 nuclear / 1188 surface genes; ||u_raw||=1.56
+[setup] 30 cells
+[setup] residual norm at layer 3 ~ 15.2; alphas x that = [0.0, 3.7943646907806396, 7.588729381561279, 15.177458763122559, 30.354917526245117]
+    cell 0/30
+    cell 10/30
+    cell 20/30
+
+alpha    spec(+u)     spec(-u)     FUNC swing           RAND swing         func>rand
+  0.25   +0.041       -0.039       +0.0792±0.0182     +0.0031          23/30 p=2.6e-03
+  0.5    +0.085       -0.097       +0.1820±0.0402     +0.0008          22/30 p=8.1e-03
+  1.0    +0.122       -0.062       +0.1843±0.0582     -0.0233          20/30 p=4.9e-02
+
+VERDICT: at 0.5xResid: spec(+u)=+0.085, spec(-u)=-0.097, signed swing +0.1820 (random +0.0008), func>rand 22/30 p=8.1e-03. CAUSALLY USED — the readout FLIPS with the sign of the functional push (nuclear-gene logits rise toward +u, fall toward -u) at disjoint positions, dose-dependently, far beyond the sign-independent random control. Level 1 upgrades from 'represented' to 'represented AND causally used'.
+[done] -> results/ctx_causal.json

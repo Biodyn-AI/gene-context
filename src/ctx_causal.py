@@ -57,7 +57,8 @@ def tokenise_cells(tok, n):
         ens = np.array([e.split(".")[0] for e in ens])
         var_idx, token_ids, medians = tok.make_var_mapping(list(ens))
         pos = np.full(len(ens), -1, np.int64); pos[var_idx] = np.arange(len(var_idx))
-        X = f["X"]; N = int(X.attrs["shape"][0]); indptr = X["indptr"][:]
+        import ctx_tokenise as TK
+        X = TK.count_matrix(f); TK.check_counts(X); N = int(X.attrs["shape"][0]); indptr = X["indptr"][:]
         sel = np.sort(np.random.default_rng(SEED).choice(N, n, replace=False))
         seqs = []
         for r in sel:
@@ -66,12 +67,10 @@ def tokenise_cells(tok, n):
             if not keep.any():
                 continue
             j = pos[idx[keep]]
-            en = np.log1p(val[keep] / (float(val.sum()) or 1.0) * 1e4); nz = en > 0
-            if nz.sum() < 40:
+            order = TK.rank_order(val[keep], medians[j])
+            if len(order) < 40:
                 continue
-            norm = en[nz] / np.maximum(medians[j[nz]], 1e-9)
-            order = np.argsort(-norm)[: MAX_LEN - 2]
-            seqs.append(token_ids[j[nz][order]].astype(np.int64))
+            seqs.append(token_ids[j[order[: MAX_LEN - 2]]].astype(np.int64))
     return seqs
 
 
@@ -107,7 +106,21 @@ def main():
     gsym = [ens2sym.get(g) for g in genes]
     ia = [i for i, s in enumerate(gsym) if np.isfinite(araw[i, 0]) and s in g2g and g2g[s] & set(NUC)]
     ib = [i for i, s in enumerate(gsym) if np.isfinite(araw[i, 0]) and s in g2g and g2g[s] & set(SURF)]
+    both_g = set(ia) & set(ib); ia = [i for i in ia if i not in both_g]; ib = [i for i in ib if i not in both_g]
     u = araw[ia].mean(0) - araw[ib].mean(0)
+    # how far does CONTEXT naturally move genes along this direction? (to compare with the push sizes below)
+    uhat = u / (np.linalg.norm(u) + 1e-12)
+    P = np.tensordot(M, uhat, axes=([3], [0])).mean(0)            # (n_ctx, n_gene) raw projection, partition-mean
+    nat_sd, nat_rng = [], []
+    for gi in range(len(genes)):
+        cs = np.where(full[:, gi])[0]
+        if len(cs) >= 2:
+            nat_sd.append(float(P[cs, gi].std())); nat_rng.append(float(np.ptp(P[cs, gi])))
+    natural = dict(n_genes=len(nat_sd), median_sd_across_contexts=float(np.median(nat_sd)),
+                   median_range_across_contexts=float(np.median(nat_rng)),
+                   p95_range_across_contexts=float(np.percentile(nat_rng, 95)),
+                   pole_centroid_distance=float(np.linalg.norm(u)))
+    del P
     d_func = SL.Direction(vec=u, name=f"{AXIS}@L{SITE+1}", basis=f"ctx_L{SITE+1}")
     d_rand = SL.random_direction(st.xt, seed=1, name="random")
     print(f"[setup] axis from {len(ia)} nuclear / {len(ib)} surface genes; ||u_raw||={np.linalg.norm(u):.2f}", flush=True)
@@ -147,7 +160,8 @@ def main():
             print(f"    cell {si}/{len(seqs)}", flush=True)
 
     from math import comb
-    out = {"alphas_xResidNorm": alphas_s, "site": SITE, "n_cells": len(seqs),
+    out = {"alphas_xResidNorm": alphas_s, "site": SITE, "n_cells": len(seqs), "resid_norm": resnorm,
+           "push_size_raw": [float(a) for a in au], "natural_movement_along_axis": natural,
            "n_nuclear_tokens": len(nuc_tok), "n_surface_tokens": len(surf_tok), "signed": {}}
     print(f"\n{'alpha':<8} {'spec(+u)':<12} {'spec(-u)':<12} {'FUNC swing':<20} {'RAND swing':<18} {'func>rand'}")
     for a in alphas_s:

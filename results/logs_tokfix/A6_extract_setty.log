@@ -1,0 +1,22 @@
+[setup] 9 branch clusters (pseudotime-ordered): HSC_1(0.11), HSC_2(0.34), Precursors(0.47), Mono_2(0.54), Ery_1(0.55), Mono_1(0.57), CLP(0.63), DCs(0.73), Ery_2(0.82)
+[setup] 5719 cells tokenised
+[setup] panel = 5000 genes reaching 15 in >=2 clusters
+Loading weights:   0%|          | 0/102 [00:00<?, ?it/s]Loading weights: 100%|██████████| 102/102 [00:00<00:00, 29911.14it/s]
+    0/5719 cells | 0.0% at cap
+    400/5719 cells | 0.4% at cap
+    800/5719 cells | 4.1% at cap
+    1200/5719 cells | 10.9% at cap
+    1600/5719 cells | 19.2% at cap
+    2000/5719 cells | 27.4% at cap
+    2400/5719 cells | 34.7% at cap
+    2800/5719 cells | 41.3% at cap
+    3200/5719 cells | 47.2% at cap
+    3600/5719 cells | 52.1% at cap
+    4000/5719 cells | 56.9% at cap
+    4400/5719 cells | 60.9% at cap
+    4800/5719 cells | 64.7% at cap
+    5200/5719 cells | 67.7% at cap
+    5600/5719 cells | 70.3% at cap
+  wrote /Volumes/Crucial X6/MacBook/Code/biomi_automation/projects/biotensor/codebase/route_genemanifold/results/ctx_devel_L02.npz  M(2, 9, 5000, 1232)
+  wrote /Volumes/Crucial X6/MacBook/Code/biomi_automation/projects/biotensor/codebase/route_genemanifold/results/ctx_devel_L04.npz  M(2, 9, 5000, 1232)
+[done] 5000 genes x 9 clusters x 2 partitions x 2 taps; 70.9% at cap

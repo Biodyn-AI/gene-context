@@ -1,0 +1,16 @@
+Loading weights:   0%|          | 0/102 [00:00<?, ?it/s]Loading weights: 100%|██████████| 102/102 [00:00<00:00, 15387.51it/s]
+[setup] 873 nuclear-pole tokens, 334 surface-pole tokens
+[setup] axis from 326 nuclear / 89 surface genes; ||u_raw||=2.26
+[setup] 30 cells
+[setup] residual norm at layer 3 ~ 15.2; alphas x that = [0.0, 3.7943646907806396, 7.588729381561279, 15.177458763122559, 30.354917526245117]
+    cell 0/30
+    cell 10/30
+    cell 20/30
+
+alpha    spec(+u)     spec(-u)     FUNC swing           RAND swing         func>rand
+  0.25   -0.027       +0.112       -0.1394±0.0184     -0.0033          2/30 p=1.0e+00
+  0.5    -0.027       +0.241       -0.2675±0.0330     -0.0090          2/30 p=1.0e+00
+  1.0    -0.014       +0.664       -0.6779±0.0450     -0.0230          0/30 p=1.0e+00
+
+VERDICT: at 0.5xResid: spec(+u)=-0.027, spec(-u)=+0.241, signed swing -0.2675 (random -0.0090), func>rand 2/30 p=1.0e+00. NOT cleanly causal — the readout does not flip with the sign of the functional direction beyond the random control, so the earlier apparent effect was the baseline nuclear/surface asymmetry under generic perturbation. Level 1 stands as a representation result only.
+[done] -> results/ctx_causal.json

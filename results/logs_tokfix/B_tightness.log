@@ -1,0 +1,14 @@
+[1/2] per-context mean rank (abundance control)
+
+=== layer 4: size- and tightness-matched null (300 axes per functional axis) ===
+   nuclear_vs_surface           poles 1800/1188 tightness +0.0010/+0.0045 (random +0.0007)  power 0.501  matched null mean 0.185 95th 0.308  1/300 >= functional  p = 0.0066  (poles below random [0, 0])
+   mito_vs_cytoskeleton         poles 675/165 tightness +0.0095/+0.0063 (random +0.0006)  power 0.267  matched null mean 0.150 95th 0.208  6/300 >= functional  p = 0.0233  (poles below random [0, 0])
+   transcription_vs_transport   poles 326/89 tightness +0.0012/+0.0057 (random +0.0005)  power 0.205  matched null mean 0.112 95th 0.169  3/300 >= functional  p = 0.0133  (poles below random [0, 0])
+
+=== layer 8: size- and tightness-matched null (300 axes per functional axis) ===
+   nuclear_vs_surface           poles 1800/1188 tightness +0.0014/+0.0085 (random +0.0013)  power 1.674  matched null mean 1.182 95th 2.172  69/300 >= functional  p = 0.2326  (poles below random [0, 0])
+   mito_vs_cytoskeleton         poles 675/165 tightness +0.0291/+0.0099 (random +0.0014)  power 1.934  matched null mean 0.814 95th 1.941  17/300 >= functional  p = 0.0598  (poles below random [0, 0])
+   transcription_vs_transport   poles 326/89 tightness +0.0012/+0.0091 (random +0.0013)  power 0.659  matched null mean 0.358 95th 0.880  29/300 >= functional  p = 0.0997  (poles below random [11, 0])
+
+VERDICT: Empirical p of each functional axis against size- and tightness-matched null axes: L04/nuclear_vs_surface p=0.007, L04/mito_vs_cytoskeleton p=0.023, L04/transcription_vs_transport p=0.013, L08/nuclear_vs_surface p=0.233, L08/mito_vs_cytoskeleton p=0.060, L08/transcription_vs_transport p=0.100. (Replaces the earlier 400-gene, not size-matched tightness curve, 1 Oct 2026.)
+[done] -> results/ctx_tightness_null.json

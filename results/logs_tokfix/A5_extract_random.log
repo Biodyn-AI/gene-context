@@ -1,0 +1,24 @@
+[pass 1] tokenise + choose panel/contexts (identical to trained extraction)
+[pass 1] 12 contexts, 5000 genes
+[model] RANDOM-INIT LlamaForCausalLM on mps, 11 layers, d=1232
+    400/7200 cells
+    800/7200 cells
+    1200/7200 cells
+    1600/7200 cells
+    2000/7200 cells
+    2400/7200 cells
+    2800/7200 cells
+    3200/7200 cells
+    3600/7200 cells
+    4000/7200 cells
+    4400/7200 cells
+    4800/7200 cells
+    5200/7200 cells
+    5600/7200 cells
+    6000/7200 cells
+    6400/7200 cells
+    6800/7200 cells
+    7200/7200 cells
+  wrote /Volumes/Crucial X6/MacBook/Code/biomi_automation/projects/biotensor/codebase/route_genemanifold/results/ctxrand_L04.npz
+  wrote /Volumes/Crucial X6/MacBook/Code/biomi_automation/projects/biotensor/codebase/route_genemanifold/results/ctxrand_L08.npz
+[done] random-weights control; 30.1% of cells at cap

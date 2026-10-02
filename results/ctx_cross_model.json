@@ -7,14 +7,14 @@
   "pairs_scored": 28,
   "excess": 0.7050105929374695,
   "excess_ci": [
-   0.7000763073563576,
-   0.7102110475301743
+   0.6984862356325638,
+   0.7114347430311423
   ],
   "main_effect_replication": 0.9370136388710567,
   "anisotropy": null,
   "func_z": {
    "nuclear_vs_surface": {
-    "z": 2.7371568476380785,
+    "z": 3.22411158023946,
     "poleA": 1390,
     "poleB": 951
    }
@@ -27,16 +27,16 @@
   "dim": 2048,
   "cap": 20,
   "pairs_scored": 14,
-  "excess": 0.8346787691116333,
+  "excess": 0.8278397917747498,
   "excess_ci": [
-   0.8264729648828506,
-   0.8434277534484863
+   0.818483859259858,
+   0.8372074108772275
   ],
   "main_effect_replication": 0.9634991373334613,
   "anisotropy": null,
   "func_z": {
    "nuclear_vs_surface": {
-    "z": 1.3140439214256716,
+    "z": 1.119252904685787,
     "poleA": 366,
     "poleB": 616
    }
@@ -49,18 +49,18 @@
   "dim": 1232,
   "cap": 50,
   "pairs_scored": 66,
-  "excess": 0.7400756478309631,
+  "excess": 0.7400317788124084,
   "excess_ci": [
-   0.7371150776743889,
-   0.7434624344110489
+   0.7366173686300318,
+   0.7434358975306884
   ],
-  "main_effect_replication": 0.9906195655013575,
+  "main_effect_replication": 0.9927813049518701,
   "anisotropy": null,
   "func_z": {
    "nuclear_vs_surface": {
-    "z": 21.166367740712968,
-    "poleA": 1364,
-    "poleB": 801
+    "z": 14.347863718406066,
+    "poleA": 1300,
+    "poleB": 956
    }
   },
   "note": "600-cell matched"
@@ -71,18 +71,18 @@
   "dim": 2304,
   "cap": 50,
   "pairs_scored": 66,
-  "excess": 0.8812310695648193,
+  "excess": 0.7665733098983765,
   "excess_ci": [
-   0.878880649805069,
-   0.8833832934498786
+   0.7629416766174963,
+   0.7705635425088423
   ],
-  "main_effect_replication": 0.9913436418229883,
+  "main_effect_replication": 0.9885795215765635,
   "anisotropy": null,
   "func_z": {
    "nuclear_vs_surface": {
-    "z": 16.42554691301968,
-    "poleA": 1364,
-    "poleB": 801
+    "z": 18.44312119988639,
+    "poleA": 1300,
+    "poleB": 956
    }
   },
   "note": "600-cell matched"
@@ -93,40 +93,40 @@
   "dim": 1232,
   "cap": 50,
   "pairs_scored": 66,
-  "excess": 0.7566878795623779,
+  "excess": 0.7583860158920288,
   "excess_ci": [
-   0.7549820244312286,
-   0.7585426434874535
+   0.7562186374718334,
+   0.7605678920629833
   ],
-  "main_effect_replication": 0.9956762528780735,
+  "main_effect_replication": 0.9956224325931433,
   "anisotropy": null,
   "func_z": {
    "nuclear_vs_surface": {
-    "z": 26.605735433173567,
-    "poleA": 1883,
-    "poleB": 991
+    "z": 22.739155944363066,
+    "poleA": 1800,
+    "poleB": 1188
    }
   },
   "note": "1000-cell headline"
  },
  "MaxToki-217M-random": {
   "n_ctx": 12,
-  "n_genes": 6000,
+  "n_genes": 5000,
   "dim": 1232,
   "cap": 50,
   "pairs_scored": 66,
-  "excess": 0.27430516481399536,
+  "excess": 0.4407150447368622,
   "excess_ci": [
-   0.27281304597854616,
-   0.27578708082437514
+   0.4366211960808343,
+   0.444702821331675
   ],
-  "main_effect_replication": 0.8334194496273994,
+  "main_effect_replication": 0.9367511778166799,
   "anisotropy": null,
   "func_z": {
    "nuclear_vs_surface": {
-    "z": 3.833368046739587,
-    "poleA": 1504,
-    "poleB": 916
+    "z": 4.704823771320648,
+    "poleA": 1300,
+    "poleB": 956
    }
   },
   "note": "RANDOM-INIT control (untrained, same arch)"
@@ -137,25 +137,84 @@
   "dim": 1232,
   "cap": 20,
   "pairs_scored": 66,
-  "excess": 0.616011917591095,
+  "excess": 0.6203082203865051,
   "excess_ci": [
-   0.6144948303699493,
-   0.6174974337220192
+   0.6182432662277546,
+   0.6222949829964447
   ],
-  "main_effect_replication": 0.9883908502983324,
+  "main_effect_replication": 0.9929004483150713,
   "anisotropy": null,
   "func_z": {
    "nuclear_vs_surface": {
-    "z": 26.850041289846427,
-    "poleA": 1893,
-    "poleB": 998
+    "z": 28.019378464958077,
+    "poleA": 1828,
+    "poleB": 1194
    }
   },
   "note": "cap-matched to scGPT/STATE (cap 20)"
  },
+ "MaxToki-217M-L2": {
+  "n_ctx": 12,
+  "n_genes": 5000,
+  "dim": 1232,
+  "cap": 50,
+  "pairs_scored": 66,
+  "excess": 0.8306775689125061,
+  "excess_ci": [
+   0.8272892604899148,
+   0.8339565554727713
+  ],
+  "main_effect_replication": 0.9924403844457684,
+  "anisotropy": null,
+  "func_z": {
+   "nuclear_vs_surface": {
+    "z": 18.397852510277783,
+    "poleA": 1300,
+    "poleB": 956
+   }
+  },
+  "note": "600-cell matched; depth-matched to 1B layer 4"
+ },
+ "MaxToki-1B-L7": {
+  "n_ctx": 12,
+  "n_genes": 5000,
+  "dim": 2304,
+  "cap": 50,
+  "pairs_scored": 66,
+  "excess": 0.7672339081764221,
+  "excess_ci": [
+   0.7641274622453395,
+   0.7703659238942727
+  ],
+  "main_effect_replication": 0.9917863986708901,
+  "anisotropy": null,
+  "func_z": {
+   "nuclear_vs_surface": {
+    "z": 8.090898791436484,
+    "poleA": 1300,
+    "poleB": 956
+   }
+  },
+  "note": "600-cell matched; depth-matched to 217M layer 4"
+ },
+ "scaling_same_layer_index": {
+  "excess_217m_L4": 0.7400317788124084,
+  "excess_1b_L4": 0.7665733098983765,
+  "delta": 0.026541531085968018,
+  "note": "same layer index = different relative depth (0.36 vs 0.20)"
+ },
  "scaling": {
-  "excess_217m": 0.7400756478309631,
-  "excess_1b": 0.8812310695648193,
-  "delta": 0.1411554217338562
+  "rel_depth_0p36": {
+   "excess_217m_L4": 0.7400317788124084,
+   "excess_1b_L7": 0.7672339081764221,
+   "funcz_217m_L4": 14.347863718406066,
+   "funcz_1b_L7": 8.090898791436484
+  },
+  "rel_depth_0p2": {
+   "excess_217m_L2": 0.8306775689125061,
+   "excess_1b_L4": 0.7665733098983765,
+   "funcz_217m_L2": 18.397852510277783,
+   "funcz_1b_L4": 18.44312119988639
+  }
  }
 }

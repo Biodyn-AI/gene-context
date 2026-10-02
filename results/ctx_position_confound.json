@@ -1,23 +1,23 @@
 {
  "taps": {
   "L04": {
-   "rho_mag_vs_rank": 0.35508975451242203,
-   "excess_rank_stable": 0.7589366436004639,
-   "excess_rank_moving": 0.755103588104248,
-   "excess_residualised": 0.727527997348743
+   "rho_mag_vs_rank": 0.25884948525267176,
+   "excess_rank_stable": 0.7491623759269714,
+   "excess_rank_moving": 0.766784131526947,
+   "excess_residualised": 0.7493056019510792
   },
   "L08": {
-   "rho_mag_vs_rank": 0.3128197747738465,
-   "excess_rank_stable": 0.6739479899406433,
-   "excess_rank_moving": 0.6579867601394653,
-   "excess_residualised": 0.6274491555923405
+   "rho_mag_vs_rank": 0.2605444025000637,
+   "excess_rank_stable": 0.7072056531906128,
+   "excess_rank_moving": 0.7152448296546936,
+   "excess_residualised": 0.6955559245277358
   },
   "L11": {
-   "rho_mag_vs_rank": 0.3527543156705064,
-   "excess_rank_stable": 0.6205354332923889,
-   "excess_rank_moving": 0.6312349438667297,
-   "excess_residualised": 0.549574112242712
+   "rho_mag_vs_rank": 0.31231421664363895,
+   "excess_rank_stable": 0.6415953636169434,
+   "excess_rank_moving": 0.6582666039466858,
+   "excess_residualised": 0.627713139510659
   }
  },
- "verdict": "residualised EXCESS +0.7275. SURVIVES rank control \u2014 the gene-specific context response is not merely token-position encoding."
+ "verdict": "residualised EXCESS +0.7493. SURVIVES rank control \u2014 the gene-specific context response is not merely token-position encoding."
 }

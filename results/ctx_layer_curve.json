@@ -1,36 +1,151 @@
 {
  "layers": {
   "L00": {
-   "excess": 0.6191871166229248,
+   "excess": 0.0,
    "ci": [
-    0.6138064533472061,
-    0.6247365429997445
+    0.0,
+    0.0
    ],
-   "main_effect_replication": 0.9364181054489953,
-   "n_pairs": 28,
-   "top_dim_share": 0.00880383886396885
+   "same": 0.0,
+   "diff": 0.0,
+   "main_effect_replication": 0.0,
+   "n_pairs": 66,
+   "top_dim_share": 0.0011936323717236519
+  },
+  "L01": {
+   "excess": 0.8474165201187134,
+   "ci": [
+    0.8450954378390968,
+    0.8496514011958889
+   ],
+   "same": 0.8484290838241577,
+   "diff": 0.001012585125863552,
+   "main_effect_replication": 0.9960886258067507,
+   "n_pairs": 66,
+   "top_dim_share": 0.006770686712116003
+  },
+  "L02": {
+   "excess": 0.8350144028663635,
+   "ci": [
+    0.8326996636021785,
+    0.8370207928250865
+   ],
+   "same": 0.8357893228530884,
+   "diff": 0.0007749462965875864,
+   "main_effect_replication": 0.9955072222333966,
+   "n_pairs": 66,
+   "top_dim_share": 0.006803498603403568
+  },
+  "L03": {
+   "excess": 0.790684700012207,
+   "ci": [
+    0.7886491307033289,
+    0.792699744622395
+   ],
+   "same": 0.791666567325592,
+   "diff": 0.000981889315880835,
+   "main_effect_replication": 0.995658921472954,
+   "n_pairs": 66,
+   "top_dim_share": 0.006663646083325148
   },
   "L04": {
-   "excess": 0.7084202170372009,
+   "excess": 0.761407732963562,
    "ci": [
-    0.7029326662421227,
-    0.7135565474629402
+    0.7592436241258165,
+    0.7635998127822986
    ],
-   "main_effect_replication": 0.9370136388710567,
-   "n_pairs": 28,
-   "top_dim_share": 0.009706779383122921
+   "same": 0.7613414525985718,
+   "diff": -6.628157279919833e-05,
+   "main_effect_replication": 0.9955269893010458,
+   "n_pairs": 66,
+   "top_dim_share": 0.009786885231733322
+  },
+  "L05": {
+   "excess": 0.7710763216018677,
+   "ci": [
+    0.769012645037607,
+    0.7730865485366596
+   ],
+   "same": 0.7715786099433899,
+   "diff": 0.0005022828700020909,
+   "main_effect_replication": 0.9949944199937762,
+   "n_pairs": 66,
+   "top_dim_share": 0.009410501457750797
+  },
+  "L06": {
+   "excess": 0.7538095116615295,
+   "ci": [
+    0.7516838063305802,
+    0.756007314753647
+   ],
+   "same": 0.7536402344703674,
+   "diff": -0.00016928148397710174,
+   "main_effect_replication": 0.9952931539578871,
+   "n_pairs": 66,
+   "top_dim_share": 0.014950564131140709
+  },
+  "L07": {
+   "excess": 0.7465705871582031,
+   "ci": [
+    0.7442894791623538,
+    0.7488199878777654
+   ],
+   "same": 0.7466185092926025,
+   "diff": 4.7933128371369094e-05,
+   "main_effect_replication": 0.9958601494630178,
+   "n_pairs": 66,
+   "top_dim_share": 0.0279528871178627
   },
   "L08": {
-   "excess": 0.6737761497497559,
+   "excess": 0.7128106951713562,
    "ci": [
-    0.6684017360210419,
-    0.6791267901659012
+    0.7103784918309187,
+    0.7150586818545354
    ],
-   "main_effect_replication": 0.9185087228459972,
-   "n_pairs": 28,
-   "top_dim_share": 0.02042163535952568
+   "same": 0.7131829857826233,
+   "diff": 0.0003723202971741557,
+   "main_effect_replication": 0.9957405897704038,
+   "n_pairs": 66,
+   "top_dim_share": 0.01083170622587204
+  },
+  "L09": {
+   "excess": 0.7056589126586914,
+   "ci": [
+    0.7030616478425313,
+    0.7081172944579284
+   ],
+   "same": 0.7054299712181091,
+   "diff": -0.00022893783170729876,
+   "main_effect_replication": 0.996039915265459,
+   "n_pairs": 66,
+   "top_dim_share": 0.007684537675231695
+  },
+  "L10": {
+   "excess": 0.6875913143157959,
+   "ci": [
+    0.6849156197163273,
+    0.6902063156106111
+   ],
+   "same": 0.6881494522094727,
+   "diff": 0.0005581383593380451,
+   "main_effect_replication": 0.996348550825408,
+   "n_pairs": 66,
+   "top_dim_share": 0.008348803035914898
+  },
+  "L11": {
+   "excess": 0.6512488126754761,
+   "ci": [
+    0.6484422308782481,
+    0.654295060272655
+   ],
+   "same": 0.6515063643455505,
+   "diff": 0.00025752303190529346,
+   "main_effect_replication": 0.9968128935857252,
+   "n_pairs": 66,
+   "top_dim_share": 0.018592895939946175
   }
  },
- "peak_layer": "L04",
- "verdict": "gene-specific context response peaks at L04 (EXCESS +0.708); L0 is the context-free embedding (~0 by construction), the response rises through the early layers and decays toward the output."
+ "peak_layer": "L01",
+ "verdict": "gene-specific context response peaks at L01 (EXCESS +0.847); L0 is the context-free embedding (~0 by construction), the response rises through the early layers and decays toward the output.",
+ "prefix": "ctxscan"
 }

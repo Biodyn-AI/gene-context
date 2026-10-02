@@ -92,7 +92,8 @@ def neighbourhood_divergence(genes_ens, syms, use):
             ctg = f["obs"]["cell_type"]
             cats = np.array([x.decode() if isinstance(x, bytes) else x for x in ctg["categories"][:]]).astype(str)
             ctypes = cats[ctg["codes"][:]]
-            X = f["X"]; n = int(X.attrs["shape"][0]); indptr = X["indptr"][:]
+            import ctx_tokenise as TK                       # raw counts -> log1p(CP10k) (X itself is already log)
+            X = TK.count_matrix(f); TK.check_counts(X); n = int(X.attrs["shape"][0]); indptr = X["indptr"][:]
             for r in range(n):
                 c = ctypes[r]
                 if c not in ctset or len(percx[c]) >= 800:
@@ -100,7 +101,7 @@ def neighbourhood_divergence(genes_ens, syms, use):
                 s, e = int(indptr[r]), int(indptr[r + 1]); ii, vv = X["indices"][s:e], X["data"][s:e].astype(np.float32)
                 pj = v2p[ii]; keep = pj >= 0
                 row = np.zeros(len(genes_ens), np.float32)
-                row[pj[keep]] = np.log1p(vv[keep] / (float(vv.sum()) or 1.0) * 1e4)
+                row[pj[keep]] = TK.log_cp10k(vv[keep], vv.sum())
                 percx[c].append(row)
     # landmark genes = most variable among `use` genes (pooled)
     pooled = np.vstack([np.array(v) for c in ctxs for v in percx[c][:200]])

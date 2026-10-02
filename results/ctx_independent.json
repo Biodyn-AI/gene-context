@@ -2,51 +2,76 @@
  "dataset": "Setty CD34+ bone marrow (developmental states)",
  "taps": {
   "L02": {
-   "n_ctx": 8,
+   "n_ctx": 9,
    "n_genes": 5000,
-   "excess": 0.6404270529747009,
-   "excess_ci": [
-    0.6346863895654679,
-    0.6460352882742881
+   "contexts": [
+    "HSC_1",
+    "HSC_2",
+    "Precursors",
+    "Mono_2",
+    "Ery_1",
+    "Mono_1",
+    "CLP",
+    "DCs",
+    "Ery_2"
    ],
-   "diff_null": 0.004423223901540041,
-   "main_rep": 0.9752847243238378,
+   "pairs_scored": 36,
+   "excess": 0.7128641605377197,
+   "excess_ci": [
+    0.7098856677218675,
+    0.7158310862860823
+   ],
+   "diff_null": 0.003552362322807312,
+   "main_rep": 0.9908852130174637,
    "func_z": {
     "nuclear_vs_surface": {
-     "z": 9.086407453007583,
-     "poleA": 1101,
-     "poleB": 539
+     "z": 5.049769669289847,
+     "poleA": 1707,
+     "poleB": 737
     },
     "mito_vs_cytoskeleton": {
-     "z": 8.382210691764051,
-     "poleA": 437,
-     "poleB": 68
+     "z": 16.136760280061907,
+     "poleA": 608,
+     "poleB": 90
     }
    }
   },
   "L04": {
-   "n_ctx": 8,
+   "n_ctx": 9,
    "n_genes": 5000,
-   "excess": 0.5840902328491211,
-   "excess_ci": [
-    0.5791253969073296,
-    0.5889997854828835
+   "contexts": [
+    "HSC_1",
+    "HSC_2",
+    "Precursors",
+    "Mono_2",
+    "Ery_1",
+    "Mono_1",
+    "CLP",
+    "DCs",
+    "Ery_2"
    ],
-   "diff_null": 0.0033671772107481956,
-   "main_rep": 0.9834616250462003,
+   "pairs_scored": 36,
+   "excess": 0.7133608460426331,
+   "excess_ci": [
+    0.7105014446143709,
+    0.7161789252805224
+   ],
+   "diff_null": 0.003911525942385197,
+   "main_rep": 0.9924761967526542,
    "func_z": {
     "nuclear_vs_surface": {
-     "z": 7.6280517103999195,
-     "poleA": 1101,
-     "poleB": 539
+     "z": 5.039848196953713,
+     "poleA": 1707,
+     "poleB": 737
     },
     "mito_vs_cytoskeleton": {
-     "z": 9.536062730045117,
-     "poleA": 437,
-     "poleB": 68
+     "z": 8.750047406154678,
+     "poleA": 608,
+     "poleB": 90
     }
    }
   }
  },
- "verdict": "REPLICATES on an independent dataset (Setty bone marrow, developmental states): EXCESS +0.584 (TS was +0.758), diff-null +0.0034, functional-z +7.6. Contextualisation + functional organisation are not a Tabula-Sapiens or adult-cell-type artefact."
+ "prefix": "ctx_devel",
+ "verdict": "REPLICATES on the Setty data: EXCESS +0.713 (CI lower +0.711), diff-null +0.0039, functional-z +5.0."
 }

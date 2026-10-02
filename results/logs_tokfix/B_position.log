@@ -1,0 +1,23 @@
+[1/2] recomputing per-gene mean rank per context (tokenisation only)
+      rank table filled for 98.8% of (context, gene) cells
+
+=== layer 4 ===
+  shift magnitude vs |rank change|        rho = +0.259
+  EXCESS, rank-STABLE genes (below median) : +0.7492
+  EXCESS, rank-MOVING genes (above median) : +0.7668
+  EXCESS after residualising on rank       : +0.7493   <-- the honest number
+
+=== layer 8 ===
+  shift magnitude vs |rank change|        rho = +0.261
+  EXCESS, rank-STABLE genes (below median) : +0.7072
+  EXCESS, rank-MOVING genes (above median) : +0.7152
+  EXCESS after residualising on rank       : +0.6956   <-- the honest number
+
+=== layer 11 ===
+  shift magnitude vs |rank change|        rho = +0.312
+  EXCESS, rank-STABLE genes (below median) : +0.6416
+  EXCESS, rank-MOVING genes (above median) : +0.6583
+  EXCESS after residualising on rank       : +0.6277   <-- the honest number
+
+VERDICT: residualised EXCESS +0.7493. SURVIVES rank control — the gene-specific context response is not merely token-position encoding.
+[done] -> results/ctx_position_confound.json

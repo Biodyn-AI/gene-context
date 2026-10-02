@@ -27,7 +27,9 @@ sys.path.insert(0, MSETUP)
 TS = "/Volumes/Crucial X6/MacBook/biomechinterp/biodyn-work/single_cell_mechinterp/data/raw"
 PANELS = ["tabula_sapiens_immune_subset_20000.h5ad", "tabula_sapiens_kidney.h5ad", "tabula_sapiens_lung.h5ad"]
 MDIR = f"{MSETUP}/MaxToki-217M-HF"
-MAX_LEN, N_CTX, CELLS_CTX, CAP, FLOOR, MAX_GENES = 1024, 12, 600, 50, 25, 6000
+# MAX_GENES 5000 (was 6000) so cells AND gene panel are identical to the trained comparator ctx217m600
+# (CELLSCTX=600 MAXGENES=5000); the selection code below is the same and uses the same seed.
+MAX_LEN, N_CTX, CELLS_CTX, CAP, FLOOR, MAX_GENES = 1024, 12, 600, 50, 25, 5000
 TAPS = [4, 8]
 BATCH, SEED, NPART = 4, 0, 2
 

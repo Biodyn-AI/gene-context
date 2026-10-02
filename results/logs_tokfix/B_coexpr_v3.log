@@ -1,0 +1,36 @@
+
+=== nuclear_vs_surface poles 1800/1188  power 0.501  coherence 0.0278/0.0424
+  matched null (n=300): coherence 0.0278/0.0424  mean power 0.399  95th 0.680  94/300 >= functional  p = 0.3156  (poles below random: [0, 0])
+  v2 strong modules: coherence 0.1042/0.1375 (x3.7/x3.2 the functional poles); random sets 0.0253
+  curve f=0.0  coherence 0.0254/0.0250  power mean 0.097  max 0.163
+  curve f=0.1  coherence 0.0272/0.0275  power mean 0.177  max 0.443
+  curve f=0.2  coherence 0.0318/0.0319  power mean 0.311  max 0.600
+  curve f=0.35 coherence 0.0391/0.0426  power mean 0.469  max 0.842
+  curve f=0.5  coherence 0.0510/0.0529  power mean 0.554  max 0.897
+  curve f=0.75 coherence 0.0658/0.0831  power mean 0.723  max 1.130
+  curve f=1.0  coherence 0.1051/0.1223  power mean 0.750  max 1.154
+
+=== mito_vs_cytoskeleton poles 675/165  power 0.267  coherence 0.0637/0.0377
+  matched null (n=300): coherence 0.0638/0.0377  mean power 0.247  95th 0.449  112/300 >= functional  p = 0.3754  (poles below random: [0, 0])
+  v2 strong modules: coherence 0.1974/0.3382 (x3.1/x9.0 the functional poles); random sets 0.0252
+  curve f=0.0  coherence 0.0253/0.0255  power mean 0.091  max 0.161
+  curve f=0.1  coherence 0.0287/0.0299  power mean 0.123  max 0.252
+  curve f=0.2  coherence 0.0366/0.0413  power mean 0.163  max 0.424
+  curve f=0.35 coherence 0.0523/0.0706  power mean 0.243  max 0.594
+  curve f=0.5  coherence 0.0820/0.1206  power mean 0.291  max 0.559
+  curve f=0.75 coherence 0.1341/0.1731  power mean 0.390  max 0.732
+  curve f=1.0  coherence 0.1885/0.3279  power mean 0.396  max 0.952
+
+=== transcription_vs_transport poles 326/89  power 0.205  coherence 0.0400/0.0377
+  matched null (n=300): coherence 0.0400/0.0377  mean power 0.126  95th 0.228  24/300 >= functional  p = 0.0831  (poles below random: [0, 0])
+  v2 strong modules: coherence 0.2775/0.4080 (x6.9/x10.8 the functional poles); random sets 0.0250
+  curve f=0.0  coherence 0.0256/0.0251  power mean 0.095  max 0.131
+  curve f=0.1  coherence 0.0281/0.0296  power mean 0.092  max 0.168
+  curve f=0.2  coherence 0.0393/0.0396  power mean 0.125  max 0.297
+  curve f=0.35 coherence 0.0659/0.0697  power mean 0.183  max 0.396
+  curve f=0.5  coherence 0.1015/0.1182  power mean 0.223  max 0.526
+  curve f=0.75 coherence 0.1630/0.2282  power mean 0.346  max 0.620
+  curve f=1.0  coherence 0.2717/0.3378  power mean 0.400  max 0.675
+
+VERDICT: Matched null (size + average co-expression): 0/3 functional axes exceed it at p<0.05 (nuclear_vs_surface p=0.3156, mito_vs_cytoskeleton p=0.3754, transcription_vs_transport p=0.0831). Strong null (v2 null b, modules of the most co-expressed genes; 3.1-10.8x the functional poles' coherence): 0/3 axes exceed it at p<0.05 (nuclear_vs_surface p=0.701, mito_vs_cytoskeleton p=0.757, transcription_vs_transport p=0.804).
+[done] -> results/ctx_coexpr_null_v3.json

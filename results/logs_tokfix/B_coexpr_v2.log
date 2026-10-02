@@ -1,0 +1,18 @@
+
+=== nuclear_vs_surface  (poles 1800/1188; power 0.501; within-coh 0.028/0.042; cross +0.025) ===
+  (a) random axis        mean 0.098   empirical p(null>=func) = 0.003
+  (b) indep co-expr      mean 0.672   empirical p = 0.701
+  (c) ANTI-CORR blocks   mean 0.820   cross -0.062   empirical p = 0.877  <-- DECISIVE
+
+=== mito_vs_cytoskeleton  (poles 675/165; power 0.267; within-coh 0.064/0.038; cross +0.010) ===
+  (a) random axis        mean 0.095   empirical p(null>=func) = 0.003
+  (b) indep co-expr      mean 0.459   empirical p = 0.757
+  (c) ANTI-CORR blocks   mean 0.627   cross -0.168   empirical p = 0.990  <-- DECISIVE
+
+=== transcription_vs_transport  (poles 326/89; power 0.205; within-coh 0.040/0.038; cross +0.027) ===
+  (a) random axis        mean 0.096   empirical p(null>=func) = 0.010
+  (b) indep co-expr      mean 0.385   empirical p = 0.804
+  (c) ANTI-CORR blocks   mean 0.541   cross -0.211   empirical p = 0.983  <-- DECISIVE
+
+VERDICT: Strong co-expression null (b), size-matched: nuclear_vs_surface p=0.701, mito_vs_cytoskeleton p=0.757, transcription_vs_transport p=0.804; 0/3 axes exceed it at p<0.05. Random-axis null: nuclear_vs_surface p=0.0033, mito_vs_cytoskeleton p=0.0033, transcription_vs_transport p=0.0100.
+[done] -> results/ctx_coexpr_null_v2.json

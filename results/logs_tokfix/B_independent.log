@@ -1,0 +1,4 @@
+L2: EXCESS +0.7129 CI[+0.710,+0.716] diff +0.0036 mainrep +0.991 | FUNC-z(nuc/surf) +5.0
+L4: EXCESS +0.7134 CI[+0.711,+0.716] diff +0.0039 mainrep +0.992 | FUNC-z(nuc/surf) +5.0
+VERDICT: REPLICATES on the Setty data: EXCESS +0.713 (CI lower +0.711), diff-null +0.0039, functional-z +5.0.
+[done] -> results/ctx_independent.json

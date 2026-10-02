@@ -5,56 +5,56 @@
  "taps": {
   "L04": {
    "n_switchers": 1,
-   "median_L_switchers": 89.42604382832845,
+   "median_L_switchers": 41.48479175567627,
    "vs_all_genes": {
-    "delta": 45.24068612766516,
-    "p": 0.010997800439912017,
-    "n_ctrl": 1392
+    "delta": 0.024390371065450722,
+    "p": 0.4471105778844231,
+    "n_ctrl": 1046
    },
    "vs_abundance_matched": {
-    "delta": 26.58926327175564,
-    "p": 0.16276744651069786,
+    "delta": -6.999715875567816,
+    "p": 0.3311337732453509,
     "n_ctrl": 5
    },
    "vs_abundance_plus_neighdiv_matched": {
-    "delta": -8.307800091637517,
-    "p": 0.5072985402919417,
+    "delta": 2.9525232546257243,
+    "p": 0.33613277344531095,
     "n_ctrl": 5
    },
    "vs_other_TFs_abundance_matched": {
-    "delta": 17.757243335511944,
-    "p": 0.34653069386122776,
+    "delta": 0.8099943832435983,
+    "p": 0.6854629074185163,
     "n_ctrl": 5
    },
-   "neighdiv_switchers": 0.33521103858947754,
-   "neighdiv_all": 0.4405286908149719
+   "neighdiv_switchers": 0.2960798144340515,
+   "neighdiv_all": 0.3628113865852356
   },
   "L08": {
    "n_switchers": 1,
-   "median_L_switchers": 125.52292717827692,
+   "median_L_switchers": 83.79067459106446,
    "vs_all_genes": {
-    "delta": 29.202891100070886,
-    "p": 0.14237152569486103,
-    "n_ctrl": 1392
+    "delta": 8.761802618882584,
+    "p": 0.26514697060587883,
+    "n_ctrl": 1046
    },
    "vs_abundance_matched": {
-    "delta": -0.4772537231445142,
-    "p": 0.5018996200759848,
+    "delta": -0.7361260893850528,
+    "p": 0.4977004599080184,
     "n_ctrl": 5
    },
    "vs_abundance_plus_neighdiv_matched": {
-    "delta": -59.05973214043513,
-    "p": 1.0,
+    "delta": 5.551202357899058,
+    "p": 0.33613277344531095,
     "n_ctrl": 5
    },
    "vs_other_TFs_abundance_matched": {
-    "delta": -6.135636306338824,
-    "p": 0.8288342331533693,
+    "delta": 8.012939460060807,
+    "p": 0.34653069386122776,
     "n_ctrl": 5
    },
-   "neighdiv_switchers": 0.33521103858947754,
-   "neighdiv_all": 0.4405286908149719
+   "neighdiv_switchers": 0.2960798144340515,
+   "neighdiv_all": 0.3628113865852356
   }
  },
- "verdict": "L4 switchers vs abundance+neighbourhood-matched controls: \u0394 -8.308, p=0.5073. NOT beyond co-expression \u2014 any switcher signal is explained once abundance and co-expression-neighbourhood change are matched. Per pre-registered asymmetry this null is WEAK evidence: the switch may be post-translational and invisible to an expression-only model. The axis-level result (ctx_coexpr_null) remains the stronger positive."
+ "verdict": "UNDERPOWERED / MEASUREMENT WALL, not a result. Only 1 of 14 documented context-switching TFs are count-balanced in >=9 contexts on this panel (they are low-abundance regulators; only 3 reach the 6000-gene panel at all). A group comparison with family-blocking on n<5 is meaningless. This is NOT evidence switchers do or do not move more -- the class is simply not adequately sampled in a 12-cell-type, abundance-selected panel. A real test needs a targeted re-extraction that forces the switcher genes + a matched control pool into the panel with more cells per context so low-expressed TFs reach the count floor in enough contexts."
 }
