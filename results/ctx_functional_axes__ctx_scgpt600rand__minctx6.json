@@ -1,0 +1,80 @@
+{
+ "axes_defined": {
+  "mito_vs_cytoskeleton": {
+   "poleA": 565,
+   "poleB": 137
+  },
+  "nuclear_vs_surface": {
+   "poleA": 1535,
+   "poleB": 1003
+  },
+  "cellcycle_vs_diff": {
+   "poleA": 129,
+   "poleB": 138
+  },
+  "transcription_vs_transport": {
+   "poleA": 273,
+   "poleB": 74
+  }
+ },
+ "taps": {
+  "L04": {
+   "mito_vs_cytoskeleton": {
+    "validity_auc": 0.5655389530214215,
+    "power": 0.001923655392602086,
+    "z_raw": 4.227691206548712,
+    "power_resid": 0.001379161374643445,
+    "z_rank_controlled": 0.1018605980800877,
+    "null_mean": 0.000611651597864693,
+    "null_resid_mean": 0.0012920344677695538,
+    "rank_confound_rho": 0.015340771935383557,
+    "poleA": 463,
+    "poleB": 131
+   },
+   "nuclear_vs_surface": {
+    "validity_auc": 0.508238050055031,
+    "power": 0.0014154851669445634,
+    "z_raw": 2.6740498951028884,
+    "power_resid": 0.0011616582050919533,
+    "z_rank_controlled": -0.13262832141430445,
+    "null_mean": 0.0006133692748456573,
+    "null_resid_mean": 0.0012658823245631841,
+    "rank_confound_rho": 0.016047105496551174,
+    "poleA": 1221,
+    "poleB": 903
+   },
+   "cellcycle_vs_diff": {
+    "validity_auc": 0.5274703557312252,
+    "power": 0.0006705428240820765,
+    "z_raw": 0.11278404490963642,
+    "power_resid": 0.004427327308803797,
+    "z_rank_controlled": 3.3598417390635595,
+    "null_mean": 0.0006333062376264328,
+    "null_resid_mean": 0.001357981062901672,
+    "rank_confound_rho": -0.036946278388517585,
+    "poleA": 110,
+    "poleB": 114
+   },
+   "transcription_vs_transport": {
+    "validity_auc": 0.5553030303030303,
+    "power": 0.0004582952242344618,
+    "z_raw": -0.5838852238572361,
+    "power_resid": 0.0007259047124534845,
+    "z_rank_controlled": -0.7212750456850466,
+    "null_mean": 0.000667925436234024,
+    "null_resid_mean": 0.0013155396617851997,
+    "rank_confound_rho": -0.002659615579154929,
+    "poleA": 223,
+    "poleB": 71
+   }
+  }
+ },
+ "verdict": "No axis reached validity AUC > 0.65 \u2014 cannot test functional modulation.",
+ "provenance": {
+  "prefix": "ctx_scgpt600rand",
+  "cells": 600,
+  "covariate": "rank",
+  "min_ctx": 6,
+  "outtag": "ctx_scgpt600rand__minctx6"
+ }
+}

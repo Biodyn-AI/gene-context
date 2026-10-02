@@ -1,35 +1,46 @@
 # Submission package — Computational Biology and Chemistry (Elsevier)
 
-> **SUPERSEDED (1–2 Oct 2026).** This Elsevier package predates a wrong MaxToki input encoding that was found and fixed
-> while preparing the BMC Genomics version (every MaxToki result was re-run, and several conclusions changed), as well
-> as corrections to the co-expression nulls, the layer peak, STATE's cell types and the references. Do not submit
-> these files; use `submission_bmc_genomics/` or regenerate from the corrected manuscript.
+Manuscript: *Single-cell foundation models represent genes in context, but reveal no context-specific gene function
+beyond co-expression* (I. Kendiukhov). Prepared under Elsevier's "Your Paper Your Way" (free-format initial
+submission). Rebuilt on 3 Oct 2026 from the same text and numbers as the BMC Genomics package.
 
+**This is an alternative to `../bmc_submission/`, not an addition.** Both packages describe the same study. Submit
+only one of them at a time; the cover letters say the manuscript is not under consideration elsewhere.
 
-Manuscript: *Single-cell foundation models represent genes in context, but the information is co-expression*
-(I. Kendiukhov). Prepared under Elsevier's "Your Paper Your Way" (free-format initial submission).
+## How it is built
+
+`bash cbc_submission/build/build_cbc.sh` (run from `route_genemanifold/`) takes the rendered BMC manuscript
+(`../bmc_submission/manuscript_bmc.md`, itself built from the result files) and changes only what Elsevier needs:
+a one-paragraph abstract of at most 250 words (`cbc_abstract.template.md`), 3–5 highlights of at most 85 characters
+(`highlights.template.txt`), 7 keywords, "Introduction" instead of "Background", Elsevier end statements (CRediT,
+competing interests, generative-AI declaration, data availability, funding) in place of BMC's Declarations, the
+supplement as "Supplementary Table S1", and figures placed with their captions for the review PDF. The build fails if
+a limit is broken. So rebuild the BMC package first if any result changes.
 
 ## Files and what to upload where
 
 | File | Editorial Manager item |
 |---|---|
-| `manuscript.pdf` | Manuscript (review PDF: continuous line numbers, figures + captions inline, references) |
+| `manuscript.pdf` | Manuscript (review PDF: continuous line numbers, figures with captions, references) |
 | `manuscript.tex` | LaTeX source (optional at initial submission; required at revision) |
-| `title_page.docx` / `title_page.pdf` | Title page (separate from the anonymised-able manuscript) |
+| `title_page.docx` / `title_page.pdf` | Title page |
 | `cover_letter.docx` / `cover_letter.pdf` | Cover letter |
-| `highlights.txt` | Highlights (5 bullets, each ≤ 85 characters — verified) |
+| `highlights.txt` | Highlights (5 bullets, each ≤ 85 characters, checked at build) |
 | `title_abstract_keywords.txt` | Title / abstract / keywords for the submission form (one per line) |
 | `declaration_of_interest.txt` | Declaration of interests |
 | `credit_author_statement.txt` | CRediT authorship statement |
 | `figures/Figure1..5.pdf` | Separate figure files (vector PDF) |
+| `Supplementary_Table_S1.xlsx` | Supplementary material (the full multi-model results; same file as the BMC Additional file 1) |
 
-## Statements already inside the manuscript
+## Before submitting — fill in or confirm
 
-Keywords; Conclusions; CRediT; Declaration of competing interest; Data and code availability
-(https://github.com/Biodyn-AI/gene-context); Funding. Line numbering is continuous (`lineno`).
+1. The date in the cover letter, and your ORCID in the submission system.
+2. The bracketed instruction at the end of the cover letter's editorial-policies paragraph (status of the
+   sparse-autoencoder atlas paper; confirm this manuscript is not a preprint and is not under consideration at BMC
+   Genomics). Then delete the bracket.
+3. The archived-software DOI: the data availability statement still says "DOI [to be added before submission]".
+   Make a Zenodo release of the tag `bmc-submission-v2` of `Biodyn-AI/gene-context` and put the DOI in the BMC
+   template, then rebuild both packages.
+4. The generative-AI declaration and the funding / competing-interest wording.
 
-## Before submitting — fill in
-
-1. Affiliation address, ORCID, postal address on the title page (placeholders marked in grey).
-2. The date in the cover letter.
-3. Reconfirm the funding / competing-interest wording if Biodyn-AI is a formal affiliation.
+See `../bmc_submission/README_SUBMISSION.md` for what changed since the 1 Oct version.

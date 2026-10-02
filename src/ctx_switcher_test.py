@@ -266,12 +266,13 @@ def main():
 
     l4 = out["taps"].get("L04", {})
     n_sw = l4.get("n_switchers", 0)
+    n_panel = sum(s_ in sidx for s_ in SWITCHERS); out["n_switchers_in_panel"] = n_panel
     dec = l4.get("vs_abundance_plus_neighdiv_matched", {})
     if n_sw < 5:
         out["verdict"] = (
             f"UNDERPOWERED / MEASUREMENT WALL, not a result. Only {n_sw} of {len(SWITCHERS)} documented "
             "context-switching TFs are count-balanced in >=9 contexts on this panel (they are low-abundance "
-            "regulators; only 3 reach the 6000-gene panel at all). A group comparison with family-blocking on "
+            f"regulators; {n_panel} of {len(SWITCHERS)} are in the gene panel at all). A group comparison with family-blocking on "
             "n<5 is meaningless. This is NOT evidence switchers do or do not move more -- the class is simply "
             "not adequately sampled in a 12-cell-type, abundance-selected panel. A real test needs a targeted "
             "re-extraction that forces the switcher genes + a matched control pool into the panel with more "

@@ -1,0 +1,111 @@
+{
+ "model": "217m",
+ "extraction": "ctx_maxtoki",
+ "alpha_unit": "raw",
+ "resid_norm_raw": 15.177458763122559,
+ "resid_norm_centred": 13.661394309997558,
+ "alphas_xResidNorm": [
+  0.25,
+  0.5,
+  1.0
+ ],
+ "site": 3,
+ "n_cells": 30,
+ "resid_norm": 15.177458763122559,
+ "push_size_raw": [
+  3.7943646907806396,
+  7.588729381561279,
+  15.177458763122559
+ ],
+ "natural_movement_along_axis": {
+  "n_genes": 5433,
+  "median_sd_across_contexts": 0.6871979832649231,
+  "median_range_across_contexts": 1.7699230909347534,
+  "p95_range_across_contexts": 2.9740891456603986,
+  "pole_centroid_distance": 2.258416175842285,
+  "massive_dims": [
+   289,
+   552
+  ],
+  "axis_share_in_massive_dims": 0.06257310509681702
+ },
+ "n_nuclear_tokens": 873,
+ "n_surface_tokens": 334,
+ "signed": {
+  "alpha_0.25": {
+   "spec_plus": -0.027049411122315802,
+   "spec_minus": 0.11230897988953623,
+   "func_swing": -0.139358391011852,
+   "func_swing_sem": 0.0184246800593286,
+   "rand_swing": -0.00328348542545354,
+   "func_gt_rand": 2,
+   "n": 30,
+   "sign_p": 0.9999999711290002
+  },
+  "alpha_0.5": {
+   "spec_plus": -0.0267669349324469,
+   "spec_minus": 0.24074133614504264,
+   "func_swing": -0.2675082710774896,
+   "func_swing_sem": 0.033040801011975124,
+   "rand_swing": -0.008964654828598246,
+   "func_gt_rand": 2,
+   "n": 30,
+   "sign_p": 0.9999999711290002
+  },
+  "alpha_1.0": {
+   "spec_plus": -0.01430446771624813,
+   "spec_minus": 0.6635694806004138,
+   "func_swing": -0.677873948316662,
+   "func_swing_sem": 0.044951398692297785,
+   "rand_swing": -0.022983620603100156,
+   "func_gt_rand": 0,
+   "n": 30,
+   "sign_p": 1.0
+  }
+ },
+ "verdict": "at 0.5xResid: spec(+u)=-0.027, spec(-u)=+0.241, signed swing -0.2675 (random -0.0090), func>rand 2/30 p=1.0e+00. NOT cleanly causal \u2014 the readout does not flip with the sign of the functional direction beyond the random control, so the earlier apparent effect was the baseline nuclear/surface asymmetry under generic perturbation. Level 1 stands as a representation result only.",
+ "split_null": {
+  "n_splits": 30,
+  "alpha": 0.5,
+  "func_mean_swing": -0.2675082710774896,
+  "split_mean_swings": [
+   -0.06186218842571854,
+   -0.031646836723377536,
+   0.06361338486079297,
+   0.06838498112812538,
+   0.06599800970819261,
+   0.13249470225541415,
+   0.11269720393068651,
+   0.07545686366560021,
+   -0.010557852166345727,
+   0.039151977781766385,
+   -0.01094772054479017,
+   0.05604628164783802,
+   0.11299778679032729,
+   -0.0954300634611666,
+   0.026155825812442576,
+   0.06428866746378879,
+   0.14827419254320123,
+   -0.0026958054888481984,
+   0.05129301172455939,
+   -0.11688213393579118,
+   -0.05255806623136299,
+   -0.0683515559857577,
+   -0.048974697324964726,
+   0.05611298157498727,
+   -0.012081190813211096,
+   0.04730196141729168,
+   -0.11047638958965246,
+   0.01035292285719729,
+   0.04751967538805571,
+   0.03031934582330046
+  ],
+  "split_abs_mean": 0.06103080923548516,
+  "split_abs_sd": 0.037793811045241134,
+  "n_splits_abs_ge_func": 0,
+  "p_abs": 0.03225806451612903,
+  "z_abs": 5.463261209338668,
+  "n_splits_ge_func_signed": 30,
+  "p_signed": 1.0
+ }
+}

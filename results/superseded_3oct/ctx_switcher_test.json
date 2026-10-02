@@ -1,0 +1,60 @@
+{
+ "switchers_on_panel": [
+  "RUNX1"
+ ],
+ "taps": {
+  "L04": {
+   "n_switchers": 1,
+   "median_L_switchers": 41.48479175567627,
+   "vs_all_genes": {
+    "delta": 0.024390371065450722,
+    "p": 0.4471105778844231,
+    "n_ctrl": 1046
+   },
+   "vs_abundance_matched": {
+    "delta": -6.999715875567816,
+    "p": 0.3311337732453509,
+    "n_ctrl": 5
+   },
+   "vs_abundance_plus_neighdiv_matched": {
+    "delta": 2.9525232546257243,
+    "p": 0.33613277344531095,
+    "n_ctrl": 5
+   },
+   "vs_other_TFs_abundance_matched": {
+    "delta": 0.8099943832435983,
+    "p": 0.6854629074185163,
+    "n_ctrl": 5
+   },
+   "neighdiv_switchers": 0.2960798144340515,
+   "neighdiv_all": 0.3628113865852356
+  },
+  "L08": {
+   "n_switchers": 1,
+   "median_L_switchers": 83.79067459106446,
+   "vs_all_genes": {
+    "delta": 8.761802618882584,
+    "p": 0.26514697060587883,
+    "n_ctrl": 1046
+   },
+   "vs_abundance_matched": {
+    "delta": -0.7361260893850528,
+    "p": 0.4977004599080184,
+    "n_ctrl": 5
+   },
+   "vs_abundance_plus_neighdiv_matched": {
+    "delta": 5.551202357899058,
+    "p": 0.33613277344531095,
+    "n_ctrl": 5
+   },
+   "vs_other_TFs_abundance_matched": {
+    "delta": 8.012939460060807,
+    "p": 0.34653069386122776,
+    "n_ctrl": 5
+   },
+   "neighdiv_switchers": 0.2960798144340515,
+   "neighdiv_all": 0.3628113865852356
+  }
+ },
+ "verdict": "UNDERPOWERED / MEASUREMENT WALL, not a result. Only 1 of 14 documented context-switching TFs are count-balanced in >=9 contexts on this panel (they are low-abundance regulators; only 3 reach the 6000-gene panel at all). A group comparison with family-blocking on n<5 is meaningless. This is NOT evidence switchers do or do not move more -- the class is simply not adequately sampled in a 12-cell-type, abundance-selected panel. A real test needs a targeted re-extraction that forces the switcher genes + a matched control pool into the panel with more cells per context so low-expressed TFs reach the count floor in enough contexts."
+}

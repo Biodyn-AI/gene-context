@@ -1,0 +1,82 @@
+{
+ "model": "217m",
+ "extraction": "ctx217m600",
+ "alpha_unit": "centred",
+ "resid_norm_raw": 15.177458763122559,
+ "resid_norm_centred": 13.661394309997558,
+ "alphas_xResidNorm": [
+  0.25,
+  0.5,
+  1.0
+ ],
+ "site": 3,
+ "n_cells": 30,
+ "resid_norm": 13.661394309997558,
+ "push_size_raw": [
+  3.4153485774993895,
+  6.830697154998779,
+  13.661394309997558
+ ],
+ "natural_movement_along_axis": {
+  "n_genes": 3446,
+  "median_sd_across_contexts": 0.4607572704553604,
+  "median_range_across_contexts": 1.3070533275604248,
+  "p95_range_across_contexts": 5.783912420272827,
+  "pole_centroid_distance": 2.857494592666626,
+  "massive_dims": [
+   289,
+   552
+  ],
+  "axis_share_in_massive_dims": 0.11591342091560364
+ },
+ "n_nuclear_tokens": 1308,
+ "n_surface_tokens": 405,
+ "signed": {
+  "alpha_0.25": {
+   "spec_plus": 0.08583315447088499,
+   "spec_minus": 0.024147107993310355,
+   "func_swing": 0.061686046477574655,
+   "func_swing_sem": 0.014241383484689011,
+   "rand_swing": 0.0013476474939243014,
+   "func_gt_rand": 21,
+   "n": 30,
+   "sign_p": 0.02138697262853384,
+   "randsplit_swing": -0.0029951644644237254,
+   "randsplit_swing_sd": 0.05853118895454636,
+   "func_gt_randsplit": 21,
+   "sign_p_vs_randsplit": 0.02138697262853384,
+   "z_vs_randsplit": 3.632780394383234
+  },
+  "alpha_0.5": {
+   "spec_plus": 0.2737347411668823,
+   "spec_minus": 0.10590993338107775,
+   "func_swing": 0.16782480778580447,
+   "func_swing_sem": 0.027118277105396722,
+   "rand_swing": 0.00013643844673792612,
+   "func_gt_rand": 26,
+   "n": 30,
+   "sign_p": 2.9738061130046844e-05,
+   "randsplit_swing": -0.020314421016522026,
+   "randsplit_swing_sd": 0.13509691448877348,
+   "func_gt_randsplit": 25,
+   "sign_p_vs_randsplit": 0.00016245711594820023,
+   "z_vs_randsplit": 5.132350691255674
+  },
+  "alpha_1.0": {
+   "spec_plus": 0.8234838710292736,
+   "spec_minus": 0.3125422547832952,
+   "func_swing": 0.5109416162459783,
+   "func_swing_sem": 0.04969125452419345,
+   "rand_swing": -0.012361026127804441,
+   "func_gt_rand": 29,
+   "n": 30,
+   "sign_p": 2.8870999813079834e-08,
+   "randsplit_swing": -0.03952951504515825,
+   "randsplit_swing_sd": 0.27429589779113,
+   "func_gt_randsplit": 27,
+   "sign_p_vs_randsplit": 4.215165972709656e-06,
+   "z_vs_randsplit": 7.802677471557937
+  }
+ },
+ "verdict": "at 0.5xResid: spec(+u)=+0.274, spec(-u)=+0.106, signed swing +0.1678 (random +0.0001), func>rand 26/30 p=3.0e-05. NOT cleanly causal \u2014 the readout does not flip with the sign of the functional direction beyond the random control, so the earlier apparent effect was the baseline nuclear/surface asymmetry under generic perturbation. Level 1 stands as a representation result only."
+}

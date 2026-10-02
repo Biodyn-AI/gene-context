@@ -1,0 +1,111 @@
+{
+ "model": "217m",
+ "extraction": "ctx_maxtoki",
+ "alpha_unit": "raw",
+ "resid_norm_raw": 15.177458763122559,
+ "resid_norm_centred": 13.661394309997558,
+ "alphas_xResidNorm": [
+  0.25,
+  0.5,
+  1.0
+ ],
+ "site": 3,
+ "n_cells": 30,
+ "resid_norm": 15.177458763122559,
+ "push_size_raw": [
+  3.7943646907806396,
+  7.588729381561279,
+  15.177458763122559
+ ],
+ "natural_movement_along_axis": {
+  "n_genes": 5433,
+  "median_sd_across_contexts": 0.4496400058269501,
+  "median_range_across_contexts": 1.3161364793777466,
+  "p95_range_across_contexts": 4.520071792602539,
+  "pole_centroid_distance": 2.2893965244293213,
+  "massive_dims": [
+   289,
+   552
+  ],
+  "axis_share_in_massive_dims": 0.2023133933544159
+ },
+ "n_nuclear_tokens": 1308,
+ "n_surface_tokens": 405,
+ "signed": {
+  "alpha_0.25": {
+   "spec_plus": 0.11792817745464275,
+   "spec_minus": 0.09361906272529631,
+   "func_swing": 0.024309114729346448,
+   "func_swing_sem": 0.013026781700866453,
+   "rand_swing": 0.0014431025210487872,
+   "func_gt_rand": 17,
+   "n": 30,
+   "sign_p": 0.292332355864346
+  },
+  "alpha_0.5": {
+   "spec_plus": 0.35276397690838923,
+   "spec_minus": 0.2853030894710446,
+   "func_swing": 0.06746088743734463,
+   "func_swing_sem": 0.0282914549564675,
+   "rand_swing": -0.0009382705581497268,
+   "func_gt_rand": 15,
+   "n": 30,
+   "sign_p": 0.572232224047184
+  },
+  "alpha_1.0": {
+   "spec_plus": 0.9128281548202524,
+   "spec_minus": 0.6439633733430858,
+   "func_swing": 0.2688647814771665,
+   "func_swing_sem": 0.06812766173716805,
+   "rand_swing": -0.012436816973178878,
+   "func_gt_rand": 20,
+   "n": 30,
+   "sign_p": 0.04936857335269451
+  }
+ },
+ "verdict": "at 0.5xResid: spec(+u)=+0.353, spec(-u)=+0.285, signed swing +0.0675 (random -0.0009), func>rand 15/30 p=5.7e-01. NOT cleanly causal \u2014 the readout does not flip with the sign of the functional direction beyond the random control, so the earlier apparent effect was the baseline nuclear/surface asymmetry under generic perturbation. Level 1 stands as a representation result only.",
+ "split_null": {
+  "n_splits": 30,
+  "alpha": 0.5,
+  "func_mean_swing": 0.06746088743734463,
+  "split_mean_swings": [
+   -0.12379214805214574,
+   -0.07567736153951943,
+   -0.05239626376688012,
+   -0.14565166237744276,
+   -0.0925890756264705,
+   0.12976153194426493,
+   0.041478265737264444,
+   -0.021962601758548757,
+   0.1067055031589652,
+   -0.1444793186634557,
+   0.0648641964940208,
+   0.13715350055984743,
+   -0.1036298067169587,
+   -0.07830362777505678,
+   -0.007453394135971703,
+   -0.14716844104588775,
+   -0.10346064626356419,
+   0.05777310250651128,
+   -0.08012483188244464,
+   0.12165380560401513,
+   0.01819060469747006,
+   -0.03321995120519429,
+   -0.11722670224522624,
+   -0.09585842249549777,
+   -0.04219600747867478,
+   0.01310977900023356,
+   -0.06068242021423941,
+   0.13809647691365726,
+   0.11481259340625047,
+   0.05124892709315286
+  ],
+  "split_abs_mean": 0.0840240323452944,
+  "split_abs_sd": 0.04275039630812732,
+  "n_splits_abs_ge_func": 18,
+  "p_abs": 0.6129032258064516,
+  "z_abs": -0.3874383944462639,
+  "n_splits_ge_func_signed": 6,
+  "p_signed": 0.22580645161290322
+ }
+}

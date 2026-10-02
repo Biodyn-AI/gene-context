@@ -28,6 +28,7 @@ Reads the headline ctx_maxtoki_L*.npz. Out: results/ctx_directional_probe.json
 """
 import os, sys, json, pickle, warnings; warnings.filterwarnings("ignore")
 import numpy as np
+import ctx_prefix as PX
 
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 import ctx_position_confound as CP
@@ -35,8 +36,8 @@ from ctx_coexpr_null import coexpr_matrix, coherence
 RES = os.path.join(HERE, "results")
 NAME_ID = "/Volumes/Crucial X6/MacBook/Code/neuro-mechinterp/models/Geneformer/geneformer/gene_name_id_dict_gc104M.pkl"
 G2G = "/Volumes/Crucial X6/MacBook/biomechinterp/biodyn-work/single_cell_mechinterp/data/perturb/gene2go_all.pkl"
-TAPS = [4, 8]   # headline ctx_maxtoki set has L0/L4/L8/L11; L4 is where the null comparisons were run
-MIN_CTX = 9
+TAPS = PX.taps([4, 8])   # headline ctx_maxtoki set has L0/L4/L8/L11; L4 is where the null comparisons were run
+MIN_CTX = PX.min_ctx(9)
 N_NULL = 300
 TOL = 0.10
 MAX_TRIES = 40
@@ -55,25 +56,22 @@ def main():
     g2g = {k.upper(): set(v) for k, v in pickle.load(open(G2G, "rb")).items() if isinstance(v, (set, list, tuple))}
     rng = np.random.default_rng(SEED)
 
-    z0 = np.load(os.path.join(RES, "ctx_maxtoki_L04.npz"), allow_pickle=True)
+    z0 = np.load(PX.npz_path(TAPS[0]), allow_pickle=True)
     genes = z0["genes"].astype(str); ctxs = z0["contexts"].astype(str)
     syms = [ens2sym.get(g) for g in genes]
     tokmap = json.load(open(f"{CP.MSETUP}/token_dictionary.json")); ens2tid = {k: int(v) for k, v in tokmap.items()}
     tids = np.array([ens2tid.get(g, -1) for g in genes])
 
     print("[1/3] per-context mean rank (abundance control)", flush=True)
-    MR = CP.mean_ranks(set(ctxs))
-    rank = np.full((len(ctxs), len(genes)), np.nan)
-    for ci, c in enumerate(ctxs):
-        for gi, t in enumerate(tids):
-            if t in MR.get(c, {}):
-                rank[ci, gi] = MR[c][t]
+    rank = PX.covariate_matrix(ctxs, genes)   # MaxToki mean rank (COV=rank) on the extraction's cells
     print("[2/3] co-expression matrix", flush=True)
     C = coexpr_matrix(list(genes))
 
     out = {"taps": {}}
-    for tap in TAPS:
-        z = np.load(os.path.join(RES, f"ctx_maxtoki_L{tap:02d}.npz"), allow_pickle=True)
+    rng0 = rng
+    for _ti, tap in enumerate(TAPS):
+        rng = PX.rng_for(SEED, _ti, rng0)
+        z = np.load(PX.npz_path(tap), allow_pickle=True)
         M, counts, cap = z["M"].astype(np.float32), z["counts"], int(z["cap"])
         full = (counts == cap).all(0)
         flat = M[:, full]; mu = flat.reshape(-1, M.shape[-1]).mean(0); sd = flat.reshape(-1, M.shape[-1]).std(0) + 1e-6
@@ -91,7 +89,7 @@ def main():
             """per-partition projection onto vec, rank-residualised; returns (2, nctx, |use|) with nan mask."""
             q = np.tensordot(Mz[:, :, use], vec, axes=([3], [0]))
             qm = np.where(muse[None], q, np.nan)
-            fin = np.isfinite(qm[0]) & np.isfinite(Ruse)
+            fin = np.isfinite(qm[0]) & np.isfinite(Ruse); qm[:, ~fin] = np.nan
             r = Ruse[fin]; A = np.column_stack([np.ones_like(r), r, r ** 2])
             for p in range(2):
                 yv = qm[p][fin]; qm[p][fin] = yv - A @ np.linalg.lstsq(A, yv, rcond=None)[0]
@@ -190,7 +188,7 @@ def main():
         f"(sd {d['null_sd']:.3f}), p={d['p']:.4f}; Holm-corrected over {n_tests} tests: " +
         (f"SIGNAL in {len(sig)} test(s)." if sig else "NO SIGNAL beyond size- and co-expression-matched null axes."))
     print(f"\nVERDICT: {out['verdict']}")
-    json.dump(out, open(os.path.join(RES, "ctx_directional_probe.json"), "w"), indent=1)
+    out.update({} if PX.IS_DEFAULT else {"provenance": PX.provenance()}); json.dump(out, open(PX.out("ctx_directional_probe"), "w"), indent=1)
     print("[done] -> results/ctx_directional_probe.json")
 
 

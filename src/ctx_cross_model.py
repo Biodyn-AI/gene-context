@@ -33,7 +33,9 @@ HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 RES = os.path.join(HERE, "results")
 NAME_ID = "/Volumes/Crucial X6/MacBook/Code/neuro-mechinterp/models/Geneformer/geneformer/gene_name_id_dict_gc104M.pkl"
 G2G = "/Volumes/Crucial X6/MacBook/biomechinterp/biodyn-work/single_cell_mechinterp/data/perturb/gene2go_all.pkl"
-SEED, N_RANDOM, MIN_GENES = 0, 200, 150
+SEED, MIN_GENES = 0, 150
+N_RANDOM = int(os.environ.get("N_RANDOM", 200))          # random-partition axes for functional-z
+DISJOINT = os.environ.get("DISJOINT") == "1"             # draw the two random poles without overlap
 
 MODELS = [   # (label, prefix, tap, note)
     ("scGPT",            "ctx_scgpt",   4, "value-binned, 512-d"),
@@ -48,6 +50,16 @@ MODELS = [   # (label, prefix, tap, note)
     ("MaxToki-217M-L2", "ctx217m600", 2, "600-cell matched; depth-matched to 1B layer 4"),
     ("MaxToki-1B-L7", "ctx1b", 7, "600-cell matched; depth-matched to 217M layer 4"),
 ]
+# MODELS="label:prefix:tap[:note],..." replaces the list (non-default run, own output file, fresh generator per model);
+# COMMON=1 keeps only the (cell type, gene) entries that are count-balanced in EVERY listed model (Ensembl IDs, cell-type
+# names), so all models are scored on identical entries; OUTTAG names the output.
+if os.environ.get("MODELS"):
+    MODELS = []
+    for item in os.environ["MODELS"].split(","):
+        f = item.split(":"); MODELS.append((f[0], f[1], int(f[2]), f[3] if len(f) > 3 else ""))
+CUSTOM = bool(os.environ.get("MODELS") or os.environ.get("COMMON") or os.environ.get("OUTTAG"))
+OUTFILE = (os.path.join(RES, "ctx_cross_model.json") if not CUSTOM else
+           os.path.join(RES, f"ctx_cross_model__{os.environ.get('OUTTAG', 'custom')}.json"))
 AXES = {"nuclear_vs_surface": (["GO:0005634", "GO:0000785", "GO:0003677"],
                                ["GO:0005886", "GO:0005576", "GO:0005615"])}
 
@@ -58,12 +70,16 @@ def cos_rows(A, B):
     return (A * B).sum(1)
 
 
-def analyse(prefix, tap, ens2sym, g2g, rng):
-    z = np.load(os.path.join(RES, f"{prefix}_L{tap:02d}.npz"), allow_pickle=True)
-    M, counts, cap = z["M"].astype(np.float32), z["counts"], int(z["cap"])
-    genes = z["genes"].astype(str); ctxs = z["contexts"].astype(str)
+def analyse(prefix, tap, ens2sym, g2g, rng, keep_genes=None, common=None):
+    import ctx_prefix as PX
+    M, counts, cap, genes, ctxs, _ = PX.load(tap, prefix)       # genes as Ensembl IDs (symbols mapped)
+    if keep_genes is not None:                                   # COMMON=1: the genes every listed model shares
+        sel = np.array([g in keep_genes for g in genes])
+        M, counts, genes = M[:, :, sel], counts[:, :, sel], genes[sel]
     nP, nC, nG, d = M.shape
     full = (counts == cap).all(0)
+    if common is not None:                                       # COMMON=1: entries count-balanced in every model
+        full = full & np.array([[(c, g) in common for g in genes] for c in ctxs])
     flat = M[:, full]
     mu = flat.reshape(-1, d).mean(0); sd = flat.reshape(-1, d).std(0) + 1e-6
     Mz = (M - mu) / sd
@@ -114,11 +130,16 @@ def analyse(prefix, tap, ens2sym, g2g, rng):
         if len(ia) < 15 or len(ib) < 15:
             fz[name] = None; continue
         pf = power(axis(ia, ib))
-        null = np.array([power(axis(rng.choice(pool, len(ia), replace=False),
-                                    rng.choice(pool, len(ib), replace=False))) for _ in range(N_RANDOM)])
-        fz[name] = dict(z=float((pf - null.mean()) / (null.std() + 1e-12)), poleA=len(ia), poleB=len(ib))
+        def rand_axis():
+            if DISJOINT:
+                pr = rng.permutation(pool); return axis(pr[:len(ia)], pr[len(ia):len(ia) + len(ib)])
+            return axis(rng.choice(pool, len(ia), replace=False), rng.choice(pool, len(ib), replace=False))
+        null = np.array([power(rand_axis()) for _ in range(N_RANDOM)])
+        fz[name] = dict(z=float((pf - null.mean()) / (null.std() + 1e-12)), poleA=len(ia), poleB=len(ib),
+                        n_random=N_RANDOM, disjoint=DISJOINT)
 
-    return dict(n_ctx=int(nC), n_genes=int(nG), dim=int(d), cap=cap,
+    return dict(n_ctx=int(nC), n_genes=int(nG), n_genes_balanced=int(full.any(0).sum()),
+                n_entries_balanced=int(full.sum()), dim=int(d), cap=cap,
                 pairs_scored=len(same_all), excess=excess, excess_ci=ci,
                 main_effect_replication=float(np.mean(main_rep)),
                 anisotropy=float(np.abs(np.corrcoef(Mz[:, full].reshape(-1, d)[rng.integers(0, full.sum() * 2, 3000)].T)).mean()) if False else None,
@@ -130,12 +151,26 @@ def main():
     g2g = {k.upper(): set(v) for k, v in pickle.load(open(G2G, "rb")).items() if isinstance(v, (set, list, tuple))}
     rng = np.random.default_rng(SEED)
     out = {}
+    keep_genes, common = None, None
+    if os.environ.get("COMMON") == "1":
+        import ctx_prefix as PX
+        ents = []
+        for _, prefix, tap, _ in MODELS:
+            counts, cap, genes, ctxs = PX.meta(tap, prefix)
+            f_ = (counts == cap).all(0)
+            ents.append({(ctxs[c], genes[g]) for c, g in zip(*np.nonzero(f_))})
+        common = set.intersection(*ents)
+        keep_genes = {g for _, g in common}
+        out["common_entries"] = len(common); out["common_genes"] = len(keep_genes)
+        print(f"[common] {len(common)} (cell type, gene) entries count-balanced in all {len(MODELS)} models "
+              f"({len(keep_genes)} genes)")
     print(f"{'model':<18} {'ctx':>4} {'genes':>6} {'dim':>5} {'cap':>4} {'EXCESS':>9} {'95% CI':>18} "
           f"{'main-rep':>9} {'FUNC-z':>8}")
     print("-" * 92)
     for label, prefix, tap, note in MODELS:
         try:
-            r = analyse(prefix, tap, ens2sym, g2g, rng); r["note"] = note
+            r = analyse(prefix, tap, ens2sym, g2g, np.random.default_rng(SEED) if CUSTOM else rng, keep_genes, common)
+            r["note"] = note; r["prefix"], r["tap"] = prefix, tap
         except Exception as e:
             print(f"{label:<18} ERR {repr(e)[:60]}"); out[label] = {"error": repr(e)[:150]}; continue
         out[label] = r
@@ -162,8 +197,8 @@ def main():
             print(f"DEPTH-MATCHED: rel.depth~0.36 217M L4 {a['excess']:+.4f} vs 1B L7 {b7['excess']:+.4f}; "
                   f"rel.depth~0.2 217M L2 {c2['excess']:+.4f} vs 1B L4 {b['excess']:+.4f}")
         print(f"\nSAME LAYER INDEX 4 (different relative depth): EXCESS 217M {a['excess']:+.4f} -> 1B {b['excess']:+.4f}")
-    json.dump(out, open(os.path.join(RES, "ctx_cross_model.json"), "w"), indent=1)
-    print("\n[done] -> results/ctx_cross_model.json")
+    json.dump(out, open(OUTFILE, "w"), indent=1)
+    print(f"\n[done] -> {os.path.relpath(OUTFILE, HERE)}")
 
 
 if __name__ == "__main__":

@@ -4,19 +4,37 @@
    "rho_mag_vs_rank": 0.25884948525267176,
    "excess_rank_stable": 0.7491623759269714,
    "excess_rank_moving": 0.766784131526947,
-   "excess_residualised": 0.7493056019510792
+   "excess_residualised": 0.7493056019510792,
+   "excess_residualised_curved": 0.7470706742311386,
+   "diff_rank_matched": 0.05756981298327446,
+   "excess_vs_rank_matched": 0.7010691650211811,
+   "same_all": 0.7586389780044556,
+   "median_abs_rank_change_stable": 26.5168781021855,
+   "median_abs_rank_change_moving": 106.54653831636301
   },
   "L08": {
    "rho_mag_vs_rank": 0.2605444025000637,
    "excess_rank_stable": 0.7072056531906128,
    "excess_rank_moving": 0.7152448296546936,
-   "excess_residualised": 0.6955559245277358
+   "excess_residualised": 0.6955559245277358,
+   "excess_residualised_curved": 0.6922179833867713,
+   "diff_rank_matched": 0.06803512573242188,
+   "excess_vs_rank_matched": 0.6434599161148071,
+   "same_all": 0.711495041847229,
+   "median_abs_rank_change_stable": 26.5168781021855,
+   "median_abs_rank_change_moving": 106.54653831636301
   },
   "L11": {
    "rho_mag_vs_rank": 0.31231421664363895,
    "excess_rank_stable": 0.6415953636169434,
    "excess_rank_moving": 0.6582666039466858,
-   "excess_residualised": 0.627713139510659
+   "excess_residualised": 0.627713139510659,
+   "excess_residualised_curved": 0.6236718445222277,
+   "diff_rank_matched": 0.07706951349973679,
+   "excess_vs_rank_matched": 0.5730804279446602,
+   "same_all": 0.650149941444397,
+   "median_abs_rank_change_stable": 26.5168781021855,
+   "median_abs_rank_change_moving": 106.54653831636301
   }
  },
  "verdict": "residualised EXCESS +0.7493. SURVIVES rank control \u2014 the gene-specific context response is not merely token-position encoding."

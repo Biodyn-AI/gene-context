@@ -1,0 +1,28 @@
+{
+ "taps": {
+  "L06": {
+   "n_tfs": 24,
+   "static_excess_mean": 0.13188895699723546,
+   "static_frac_pos": 0.875,
+   "specific_excess_mean": 0.039518690698996196,
+   "specific_n": 24,
+   "specific_n_pos": 17,
+   "specific_sign_p": 0.03195732831954956,
+   "static_sign_p": 0.0001385807991027832,
+   "modulation_mean_rho": -0.031149406149406155,
+   "modulation_frac_pos": 0.5,
+   "modulation_sign_p": 0.5805901288986206,
+   "n_modul": 24
+  }
+ },
+ "verdict": "L6: (A) static excess +0.1319 (sign p 1.4e-04); (B) activity modulation rho -0.031 (sign p 0.58). PARTIAL \u2014 TFs sit closer to curated targets than co-expression-matched controls (A positive) but the effect is NOT modulated by where the programme is active (B null): near-targets, but not context-appropriately so.",
+ "provenance": {
+  "prefix": "ctx_state600rand",
+  "cells": 600,
+  "covariate": "rank",
+  "min_ctx": 9,
+  "outtag": "ctx_state600rand",
+  "min_tf_ctx": 6,
+  "verdict_tap": 6
+ }
+}

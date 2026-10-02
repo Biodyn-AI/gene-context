@@ -1,0 +1,42 @@
+{
+ "taps": {
+  "L04": {
+   "n_tfs": 11,
+   "static_excess_mean": 0.01139013944663393,
+   "static_frac_pos": 0.7272727272727273,
+   "specific_excess_mean": 0.003942685781483832,
+   "specific_n": 11,
+   "specific_n_pos": 4,
+   "specific_sign_p": 0.88671875,
+   "static_sign_p": 0.11328125,
+   "modulation_mean_rho": 0.0281582054309327,
+   "modulation_frac_pos": 0.36363636363636365,
+   "modulation_sign_p": 0.88671875,
+   "n_modul": 11
+  },
+  "L02": {
+   "n_tfs": 11,
+   "static_excess_mean": 0.02600457519045406,
+   "static_frac_pos": 0.6363636363636364,
+   "specific_excess_mean": 0.01645765169355102,
+   "specific_n": 11,
+   "specific_n_pos": 7,
+   "specific_sign_p": 0.2744140625,
+   "static_sign_p": 0.2744140625,
+   "modulation_mean_rho": 0.0768398268398268,
+   "modulation_frac_pos": 0.45454545454545453,
+   "modulation_sign_p": 0.7255859375,
+   "n_modul": 11
+  }
+ },
+ "verdict": "L4: (A) static excess +0.0114 (sign p 1.1e-01); (B) activity modulation rho +0.028 (sign p 0.89). NO LEVEL-2 SIGNAL \u2014 even with ChIP/literature targets as ground truth, TFs are not placed near their targets beyond co-expression, nor context-appropriately. The curated route does not rescue Level 2; the ceiling argument holds. Level 1 (functional organisation beyond co-expression) remains the result.",
+ "provenance": {
+  "prefix": "ctx217m600",
+  "cells": 600,
+  "covariate": "rank",
+  "min_ctx": 9,
+  "outtag": "ctx217m600",
+  "min_tf_ctx": 6,
+  "verdict_tap": 4
+ }
+}

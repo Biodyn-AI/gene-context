@@ -1,0 +1,111 @@
+{
+ "model": "1b",
+ "extraction": "ctx1b",
+ "alpha_unit": "centred",
+ "resid_norm_raw": 856.4404907226562,
+ "resid_norm_centred": 285.82789916992186,
+ "alphas_xResidNorm": [
+  0.25,
+  0.5,
+  1.0
+ ],
+ "site": 6,
+ "n_cells": 30,
+ "resid_norm": 285.82789916992186,
+ "push_size_raw": [
+  71.45697479248047,
+  142.91394958496093,
+  285.82789916992186
+ ],
+ "natural_movement_along_axis": {
+  "n_genes": 3446,
+  "median_sd_across_contexts": 22.611230850219727,
+  "median_range_across_contexts": 61.443328857421875,
+  "p95_range_across_contexts": 173.71173095703125,
+  "pole_centroid_distance": 82.19475555419922,
+  "massive_dims": [
+   1470,
+   969
+  ],
+  "axis_share_in_massive_dims": 0.1790420562028885
+ },
+ "n_nuclear_tokens": 1308,
+ "n_surface_tokens": 405,
+ "signed": {
+  "alpha_0.25": {
+   "spec_plus": 0.1219759155006484,
+   "spec_minus": -0.07735643671753337,
+   "func_swing": 0.19933235221818177,
+   "func_swing_sem": 0.010378772204651584,
+   "rand_swing": 0.008945404308028185,
+   "func_gt_rand": 30,
+   "n": 30,
+   "sign_p": 9.313225746154785e-10
+  },
+  "alpha_0.5": {
+   "spec_plus": 0.27295806112342547,
+   "spec_minus": -0.12737613295645167,
+   "func_swing": 0.4003341940798772,
+   "func_swing_sem": 0.019738266211113808,
+   "rand_swing": 0.016030883440373896,
+   "func_gt_rand": 30,
+   "n": 30,
+   "sign_p": 9.313225746154785e-10
+  },
+  "alpha_1.0": {
+   "spec_plus": 0.5933846543423171,
+   "spec_minus": -0.2419496083384441,
+   "func_swing": 0.8353342626807609,
+   "func_swing_sem": 0.035314513123627836,
+   "rand_swing": 0.023188751494519124,
+   "func_gt_rand": 30,
+   "n": 30,
+   "sign_p": 9.313225746154785e-10
+  }
+ },
+ "verdict": "at 0.5xResid: spec(+u)=+0.273, spec(-u)=-0.127, signed swing +0.4003 (random +0.0160), func>rand 30/30 p=9.3e-10. CAUSALLY USED \u2014 the readout FLIPS with the sign of the functional push (nuclear-gene logits rise toward +u, fall toward -u) at disjoint positions, dose-dependently, far beyond the sign-independent random control. Level 1 upgrades from 'represented' to 'represented AND causally used'.",
+ "split_null": {
+  "n_splits": 30,
+  "alpha": 0.5,
+  "func_mean_swing": 0.4003341940798772,
+  "split_mean_swings": [
+   0.14244224149023785,
+   -0.10968521151355981,
+   -0.1911332467281975,
+   -0.10934273936835098,
+   -0.08778148724010784,
+   0.1657163033316137,
+   0.014640288231210793,
+   0.034373256309470406,
+   -0.09710344101862246,
+   0.14879637873793067,
+   -0.16587606616443615,
+   -0.1800264210837719,
+   -0.16589199962921802,
+   -0.012587673021174169,
+   0.10508016547935352,
+   0.2742325553027198,
+   -0.06723160001599061,
+   -0.059034010202525154,
+   -0.1022868432012982,
+   -0.16498523466476628,
+   0.09939211638947967,
+   -0.06753528378113736,
+   0.05398322547306962,
+   0.06413959641787573,
+   0.04588050003075992,
+   0.10070092253464719,
+   0.025115270705419784,
+   0.18223862158818616,
+   0.003619894114000729,
+   0.031008724222614085
+  ],
+  "split_abs_mean": 0.10239537726639153,
+  "split_abs_sd": 0.06389127250155033,
+  "n_splits_abs_ge_func": 0,
+  "p_abs": 0.03225806451612903,
+  "z_abs": 4.663216197511059,
+  "n_splits_ge_func_signed": 0,
+  "p_signed": 0.03225806451612903
+ }
+}

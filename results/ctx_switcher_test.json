@@ -56,5 +56,6 @@
    "neighdiv_all": 0.3628113865852356
   }
  },
- "verdict": "UNDERPOWERED / MEASUREMENT WALL, not a result. Only 1 of 14 documented context-switching TFs are count-balanced in >=9 contexts on this panel (they are low-abundance regulators; only 3 reach the 6000-gene panel at all). A group comparison with family-blocking on n<5 is meaningless. This is NOT evidence switchers do or do not move more -- the class is simply not adequately sampled in a 12-cell-type, abundance-selected panel. A real test needs a targeted re-extraction that forces the switcher genes + a matched control pool into the panel with more cells per context so low-expressed TFs reach the count floor in enough contexts."
+ "n_switchers_in_panel": 10,
+ "verdict": "UNDERPOWERED / MEASUREMENT WALL, not a result. Only 1 of 14 documented context-switching TFs are count-balanced in >=9 contexts on this panel (they are low-abundance regulators; 10 of 14 are in the gene panel at all). A group comparison with family-blocking on n<5 is meaningless. This is NOT evidence switchers do or do not move more -- the class is simply not adequately sampled in a 12-cell-type, abundance-selected panel. A real test needs a targeted re-extraction that forces the switcher genes + a matched control pool into the panel with more cells per context so low-expressed TFs reach the count floor in enough contexts."
 }

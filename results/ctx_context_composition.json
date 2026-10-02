@@ -1,0 +1,1144 @@
+{
+ "note": "What else differs between the 12 cell types besides cell type: source dataset, tissue, donor and assay of the",
+ "cells_1000": {
+  "per_cell_type": {
+   "macrophage": {
+    "n": 1000,
+    "datasets": {
+     "lung": 863,
+     "immune_subset_20000": 113,
+     "kidney": 24
+    },
+    "tissues": {
+     "lung": 888,
+     "lymph node": 4,
+     "kidney": 23,
+     "blood": 4,
+     "subcutaneous adipose tissue": 12,
+     "mammary gland": 3,
+     "aorta": 2,
+     "brown adipose tissue": 18,
+     "cornea": 1,
+     "liver": 8,
+     "bladder organ": 10,
+     "spleen": 4,
+     "adipose tissue": 5,
+     "endometrium": 3,
+     "coronary artery": 3,
+     "submandibular gland": 1,
+     "exocrine pancreas": 1,
+     "mucosa of stomach": 1,
+     "cortex of kidney": 1,
+     "muscle of pelvic diaphragm": 2,
+     "muscle of abdomen": 3,
+     "trachea": 2,
+     "heart": 1
+    },
+    "assays": {
+     "10x 3' v3": 990,
+     "Smart-seq2": 10
+    },
+    "n_donors": 13,
+    "donors": {
+     "TSP1": 549,
+     "TSP2": 256,
+     "TSP25": 114,
+     "TSP14": 49,
+     "TSP21": 7,
+     "TSP19": 6,
+     "TSP10": 5,
+     "TSP4": 5,
+     "TSP27": 4,
+     "TSP6": 2,
+     "TSP15": 1,
+     "TSP9": 1,
+     "TSP7": 1
+    },
+    "top_dataset_share": 0.863,
+    "top_donor": "TSP1",
+    "top_donor_n": 549,
+    "top_donor_share": 0.549,
+    "share_10x_3v3": 0.99
+   },
+   "pulmonary alveolar type 2 cell": {
+    "n": 1000,
+    "datasets": {
+     "lung": 1000
+    },
+    "tissues": {
+     "lung": 1000
+    },
+    "assays": {
+     "10x 3' v3": 927,
+     "Smart-seq2": 73
+    },
+    "n_donors": 4,
+    "donors": {
+     "TSP14": 386,
+     "TSP2": 367,
+     "TSP25": 134,
+     "TSP1": 113
+    },
+    "top_dataset_share": 1.0,
+    "top_donor": "TSP14",
+    "top_donor_n": 386,
+    "top_donor_share": 0.386,
+    "share_10x_3v3": 0.927
+   },
+   "kidney epithelial cell": {
+    "n": 1000,
+    "datasets": {
+     "kidney": 1000
+    },
+    "tissues": {
+     "kidney": 995,
+     "cortex of kidney": 5
+    },
+    "assays": {
+     "10x 3' v3": 992,
+     "Smart-seq2": 8
+    },
+    "n_donors": 1,
+    "donors": {
+     "TSP2": 1000
+    },
+    "top_dataset_share": 1.0,
+    "top_donor": "TSP2",
+    "top_donor_n": 1000,
+    "top_donor_share": 1.0,
+    "share_10x_3v3": 0.992
+   },
+   "capillary endothelial cell": {
+    "n": 1000,
+    "datasets": {
+     "lung": 1000
+    },
+    "tissues": {
+     "lung": 1000
+    },
+    "assays": {
+     "10x 3' v3": 961,
+     "Smart-seq2": 39
+    },
+    "n_donors": 4,
+    "donors": {
+     "TSP2": 517,
+     "TSP25": 233,
+     "TSP14": 165,
+     "TSP1": 85
+    },
+    "top_dataset_share": 1.0,
+    "top_donor": "TSP2",
+    "top_donor_n": 517,
+    "top_donor_share": 0.517,
+    "share_10x_3v3": 0.961
+   },
+   "CD4-positive, alpha-beta T cell": {
+    "n": 1000,
+    "datasets": {
+     "lung": 354,
+     "immune_subset_20000": 592,
+     "kidney": 54
+    },
+    "tissues": {
+     "lung": 369,
+     "brown adipose tissue": 39,
+     "stomach smooth muscle": 25,
+     "inguinal lymph node": 23,
+     "kidney": 51,
+     "mesenteric lymph node": 18,
+     "lymph node": 218,
+     "thymus": 48,
+     "ascending colon": 4,
+     "blood": 24,
+     "adipose tissue": 26,
+     "bone marrow": 13,
+     "spleen": 16,
+     "muscle of pelvic diaphragm": 3,
+     "sublingual gland": 4,
+     "submandibular gland": 1,
+     "large intestine": 18,
+     "bladder organ": 16,
+     "skin of body": 2,
+     "uterus": 1,
+     "lacrimal gland": 2,
+     "cortex of kidney": 3,
+     "mammary gland": 6,
+     "small intestine": 25,
+     "posterior part of tongue": 11,
+     "sigmoid colon": 7,
+     "inferior vena cava": 1,
+     "parotid gland": 4,
+     "endometrium": 3,
+     "muscle of abdomen": 4,
+     "eye": 1,
+     "stomach": 1,
+     "eyelid": 5,
+     "subcutaneous adipose tissue": 5,
+     "left ovary": 1,
+     "ileum": 1,
+     "anterior part of tongue": 1
+    },
+    "assays": {
+     "10x 3' v3": 883,
+     "10x 5' v2": 82,
+     "Smart-seq2": 35
+    },
+    "n_donors": 14,
+    "donors": {
+     "TSP2": 275,
+     "TSP14": 216,
+     "TSP25": 194,
+     "TSP21": 96,
+     "TSP27": 71,
+     "TSP1": 66,
+     "TSP7": 34,
+     "TSP20": 25,
+     "TSP4": 10,
+     "TSP10": 7,
+     "TSP13": 2,
+     "TSP26": 2,
+     "TSP5": 1,
+     "TSP11": 1
+    },
+    "top_dataset_share": 0.592,
+    "top_donor": "TSP2",
+    "top_donor_n": 275,
+    "top_donor_share": 0.275,
+    "share_10x_3v3": 0.883
+   },
+   "CD8-positive, alpha-beta T cell": {
+    "n": 1000,
+    "datasets": {
+     "immune_subset_20000": 497,
+     "lung": 392,
+     "kidney": 111
+    },
+    "tissues": {
+     "lymph node": 86,
+     "lung": 397,
+     "blood": 38,
+     "kidney": 108,
+     "bone marrow": 16,
+     "spleen": 80,
+     "thymus": 16,
+     "adipose tissue": 14,
+     "bladder organ": 34,
+     "liver": 13,
+     "aorta": 8,
+     "coronary artery": 6,
+     "cortex of kidney": 6,
+     "inguinal lymph node": 7,
+     "mammary gland": 15,
+     "muscle of abdomen": 5,
+     "muscle of pelvic diaphragm": 7,
+     "endometrium": 10,
+     "parotid gland": 17,
+     "small intestine": 12,
+     "stomach": 2,
+     "brown adipose tissue": 9,
+     "subcutaneous adipose tissue": 9,
+     "skin of body": 9,
+     "posterior part of tongue": 10,
+     "anterior segment of eyeball": 1,
+     "trachea": 10,
+     "ileum": 5,
+     "duodenum": 1,
+     "prostate gland": 14,
+     "chorioretinal region": 1,
+     "large intestine": 7,
+     "right cardiac atrium": 1,
+     "sublingual gland": 3,
+     "mucosa of stomach": 2,
+     "stomach smooth muscle": 3,
+     "exocrine pancreas": 4,
+     "eye": 1,
+     "mesenteric lymph node": 2,
+     "lacrimal gland": 1,
+     "anterior part of tongue": 2,
+     "sigmoid colon": 2,
+     "sclera": 1,
+     "skin of chest": 1,
+     "skin of abdomen": 2,
+     "cornea": 1,
+     "ascending colon": 1
+    },
+    "assays": {
+     "10x 3' v3": 901,
+     "10x 5' v2": 62,
+     "Smart-seq2": 37
+    },
+    "n_donors": 19,
+    "donors": {
+     "TSP2": 388,
+     "TSP14": 148,
+     "TSP25": 131,
+     "TSP1": 105,
+     "TSP21": 67,
+     "TSP27": 43,
+     "TSP7": 42,
+     "TSP4": 18,
+     "TSP10": 15,
+     "TSP8": 10,
+     "TSP11": 7,
+     "TSP19": 6,
+     "TSP6": 6,
+     "TSP9": 4,
+     "TSP15": 3,
+     "TSP26": 2,
+     "TSP17": 2,
+     "TSP20": 2,
+     "TSP5": 1
+    },
+    "top_dataset_share": 0.497,
+    "top_donor": "TSP2",
+    "top_donor_n": 388,
+    "top_donor_share": 0.388,
+    "share_10x_3v3": 0.901
+   },
+   "B cell": {
+    "n": 1000,
+    "datasets": {
+     "immune_subset_20000": 770,
+     "kidney": 89,
+     "lung": 141
+    },
+    "tissues": {
+     "lymph node": 278,
+     "spleen": 108,
+     "parotid gland": 35,
+     "inguinal lymph node": 74,
+     "brown adipose tissue": 58,
+     "mesenteric lymph node": 29,
+     "kidney": 82,
+     "lacrimal gland": 19,
+     "sublingual gland": 9,
+     "mucosa of stomach": 4,
+     "lung": 146,
+     "posterior part of tongue": 12,
+     "bone marrow": 15,
+     "large intestine": 4,
+     "blood": 22,
+     "thymus": 19,
+     "adipose tissue": 26,
+     "small intestine": 6,
+     "ascending colon": 9,
+     "stomach smooth muscle": 8,
+     "trachea": 3,
+     "cortex of kidney": 8,
+     "right cardiac atrium": 1,
+     "prostate gland": 3,
+     "duodenum": 1,
+     "coronary artery": 1,
+     "bladder organ": 3,
+     "eyelid": 11,
+     "liver": 2,
+     "muscularis mucosae of stomach": 2,
+     "sigmoid colon": 2
+    },
+    "assays": {
+     "10x 3' v3": 880,
+     "10x 5' v2": 87,
+     "Smart-seq2": 33
+    },
+    "n_donors": 13,
+    "donors": {
+     "TSP25": 266,
+     "TSP2": 198,
+     "TSP21": 162,
+     "TSP7": 124,
+     "TSP27": 98,
+     "TSP14": 77,
+     "TSP1": 49,
+     "TSP20": 14,
+     "TSP10": 5,
+     "TSP6": 3,
+     "TSP8": 2,
+     "TSP19": 1,
+     "TSP17": 1
+    },
+    "top_dataset_share": 0.77,
+    "top_donor": "TSP25",
+    "top_donor_n": 266,
+    "top_donor_share": 0.266,
+    "share_10x_3v3": 0.88
+   },
+   "basal cell": {
+    "n": 1000,
+    "datasets": {
+     "lung": 1000
+    },
+    "tissues": {
+     "lung": 1000
+    },
+    "assays": {
+     "10x 3' v3": 946,
+     "Smart-seq2": 54
+    },
+    "n_donors": 4,
+    "donors": {
+     "TSP2": 604,
+     "TSP25": 352,
+     "TSP14": 28,
+     "TSP1": 16
+    },
+    "top_dataset_share": 1.0,
+    "top_donor": "TSP2",
+    "top_donor_n": 604,
+    "top_donor_share": 0.604,
+    "share_10x_3v3": 0.946
+   },
+   "pulmonary alveolar type 1 cell": {
+    "n": 1000,
+    "datasets": {
+     "lung": 1000
+    },
+    "tissues": {
+     "lung": 1000
+    },
+    "assays": {
+     "10x 3' v3": 978,
+     "Smart-seq2": 22
+    },
+    "n_donors": 4,
+    "donors": {
+     "TSP14": 915,
+     "TSP1": 40,
+     "TSP25": 32,
+     "TSP2": 13
+    },
+    "top_dataset_share": 1.0,
+    "top_donor": "TSP14",
+    "top_donor_n": 915,
+    "top_donor_share": 0.915,
+    "share_10x_3v3": 0.978
+   },
+   "intermediate monocyte": {
+    "n": 1000,
+    "datasets": {
+     "lung": 944,
+     "immune_subset_20000": 56
+    },
+    "tissues": {
+     "lung": 974,
+     "liver": 5,
+     "spleen": 6,
+     "lymph node": 1,
+     "blood": 7,
+     "bone marrow": 5,
+     "inguinal lymph node": 1,
+     "lacrimal gland": 1
+    },
+    "assays": {
+     "10x 3' v3": 995,
+     "10x 5' v2": 3,
+     "Smart-seq2": 2
+    },
+    "n_donors": 8,
+    "donors": {
+     "TSP2": 567,
+     "TSP14": 237,
+     "TSP25": 107,
+     "TSP1": 75,
+     "TSP21": 10,
+     "TSP6": 2,
+     "TSP19": 1,
+     "TSP11": 1
+    },
+    "top_dataset_share": 0.944,
+    "top_donor": "TSP2",
+    "top_donor_n": 567,
+    "top_donor_share": 0.567,
+    "share_10x_3v3": 0.995
+   },
+   "neutrophil": {
+    "n": 1000,
+    "datasets": {
+     "immune_subset_20000": 854,
+     "lung": 140,
+     "kidney": 6
+    },
+    "tissues": {
+     "spleen": 189,
+     "trachea": 49,
+     "subcutaneous adipose tissue": 10,
+     "blood": 414,
+     "thoracic aorta": 9,
+     "lung": 146,
+     "skin of body": 3,
+     "coronary artery": 11,
+     "bone marrow": 99,
+     "liver": 13,
+     "aorta": 6,
+     "myometrium": 2,
+     "parotid gland": 1,
+     "muscle of abdomen": 2,
+     "stomach smooth muscle": 7,
+     "adipose tissue": 11,
+     "stomach": 5,
+     "kidney": 6,
+     "brown adipose tissue": 6,
+     "lymph node": 1,
+     "heart": 2,
+     "prostate gland": 2,
+     "inguinal lymph node": 1,
+     "thymus": 2,
+     "bladder organ": 2,
+     "posterior part of tongue": 1
+    },
+    "assays": {
+     "10x 3' v3": 899,
+     "Smart-seq2": 44,
+     "10x 5' v2": 57
+    },
+    "n_donors": 14,
+    "donors": {
+     "TSP14": 486,
+     "TSP21": 164,
+     "TSP25": 102,
+     "TSP7": 63,
+     "TSP8": 61,
+     "TSP27": 56,
+     "TSP2": 26,
+     "TSP6": 19,
+     "TSP1": 9,
+     "TSP17": 5,
+     "TSP10": 3,
+     "TSP4": 2,
+     "TSP19": 2,
+     "TSP11": 2
+    },
+    "top_dataset_share": 0.854,
+    "top_donor": "TSP14",
+    "top_donor_n": 486,
+    "top_donor_share": 0.486,
+    "share_10x_3v3": 0.899
+   },
+   "classical monocyte": {
+    "n": 1000,
+    "datasets": {
+     "lung": 709,
+     "immune_subset_20000": 291
+    },
+    "tissues": {
+     "lung": 732,
+     "blood": 166,
+     "spleen": 73,
+     "exocrine pancreas": 12,
+     "lymph node": 7,
+     "bone marrow": 6,
+     "liver": 4
+    },
+    "assays": {
+     "10x 3' v3": 863,
+     "Smart-seq2": 103,
+     "10x 5' v2": 34
+    },
+    "n_donors": 13,
+    "donors": {
+     "TSP2": 345,
+     "TSP1": 248,
+     "TSP14": 162,
+     "TSP21": 73,
+     "TSP25": 72,
+     "TSP7": 45,
+     "TSP10": 27,
+     "TSP9": 12,
+     "TSP27": 10,
+     "TSP8": 2,
+     "TSP17": 2,
+     "TSP6": 1,
+     "TSP19": 1
+    },
+    "top_dataset_share": 0.709,
+    "top_donor": "TSP2",
+    "top_donor_n": 345,
+    "top_donor_share": 0.345,
+    "share_10x_3v3": 0.863
+   }
+  },
+  "cell_types_from_one_dataset": [
+   "pulmonary alveolar type 2 cell",
+   "kidney epithelial cell",
+   "capillary endothelial cell",
+   "basal cell",
+   "pulmonary alveolar type 1 cell"
+  ],
+  "cell_types_one_dataset_by_dataset": {
+   "pulmonary alveolar type 2 cell": "lung",
+   "kidney epithelial cell": "kidney",
+   "capillary endothelial cell": "lung",
+   "basal cell": "lung",
+   "pulmonary alveolar type 1 cell": "lung"
+  },
+  "min_share_10x_3v3": 0.863,
+  "max_top_donor_share": 1.0,
+  "cell_types_top_donor_ge_half": {
+   "macrophage": "549 of 1000",
+   "kidney epithelial cell": "1000 of 1000",
+   "capillary endothelial cell": "517 of 1000",
+   "basal cell": "604 of 1000",
+   "pulmonary alveolar type 1 cell": "915 of 1000",
+   "intermediate monocyte": "567 of 1000"
+  }
+ },
+ "cells_600": {
+  "per_cell_type": {
+   "macrophage": {
+    "n": 600,
+    "datasets": {
+     "lung": 516,
+     "immune_subset_20000": 70,
+     "kidney": 14
+    },
+    "tissues": {
+     "lung": 529,
+     "lymph node": 3,
+     "kidney": 13,
+     "blood": 2,
+     "subcutaneous adipose tissue": 5,
+     "mammary gland": 2,
+     "aorta": 2,
+     "brown adipose tissue": 12,
+     "cornea": 1,
+     "liver": 5,
+     "bladder organ": 7,
+     "spleen": 3,
+     "adipose tissue": 5,
+     "endometrium": 3,
+     "coronary artery": 2,
+     "submandibular gland": 1,
+     "exocrine pancreas": 1,
+     "mucosa of stomach": 1,
+     "cortex of kidney": 1,
+     "muscle of pelvic diaphragm": 1,
+     "muscle of abdomen": 1
+    },
+    "assays": {
+     "10x 3' v3": 596,
+     "Smart-seq2": 4
+    },
+    "n_donors": 12,
+    "donors": {
+     "TSP1": 329,
+     "TSP2": 150,
+     "TSP25": 70,
+     "TSP14": 27,
+     "TSP21": 6,
+     "TSP19": 4,
+     "TSP10": 4,
+     "TSP4": 4,
+     "TSP27": 3,
+     "TSP15": 1,
+     "TSP9": 1,
+     "TSP6": 1
+    },
+    "top_dataset_share": 0.86,
+    "top_donor": "TSP1",
+    "top_donor_n": 329,
+    "top_donor_share": 0.5483333333333333,
+    "share_10x_3v3": 0.9933333333333333
+   },
+   "pulmonary alveolar type 2 cell": {
+    "n": 600,
+    "datasets": {
+     "lung": 600
+    },
+    "tissues": {
+     "lung": 600
+    },
+    "assays": {
+     "10x 3' v3": 548,
+     "Smart-seq2": 52
+    },
+    "n_donors": 4,
+    "donors": {
+     "TSP14": 232,
+     "TSP2": 219,
+     "TSP25": 76,
+     "TSP1": 73
+    },
+    "top_dataset_share": 1.0,
+    "top_donor": "TSP14",
+    "top_donor_n": 232,
+    "top_donor_share": 0.38666666666666666,
+    "share_10x_3v3": 0.9133333333333333
+   },
+   "kidney epithelial cell": {
+    "n": 600,
+    "datasets": {
+     "kidney": 600
+    },
+    "tissues": {
+     "kidney": 596,
+     "cortex of kidney": 4
+    },
+    "assays": {
+     "10x 3' v3": 594,
+     "Smart-seq2": 6
+    },
+    "n_donors": 1,
+    "donors": {
+     "TSP2": 600
+    },
+    "top_dataset_share": 1.0,
+    "top_donor": "TSP2",
+    "top_donor_n": 600,
+    "top_donor_share": 1.0,
+    "share_10x_3v3": 0.99
+   },
+   "capillary endothelial cell": {
+    "n": 600,
+    "datasets": {
+     "lung": 600
+    },
+    "tissues": {
+     "lung": 600
+    },
+    "assays": {
+     "10x 3' v3": 580,
+     "Smart-seq2": 20
+    },
+    "n_donors": 4,
+    "donors": {
+     "TSP2": 309,
+     "TSP25": 139,
+     "TSP14": 99,
+     "TSP1": 53
+    },
+    "top_dataset_share": 1.0,
+    "top_donor": "TSP2",
+    "top_donor_n": 309,
+    "top_donor_share": 0.515,
+    "share_10x_3v3": 0.9666666666666667
+   },
+   "CD4-positive, alpha-beta T cell": {
+    "n": 600,
+    "datasets": {
+     "lung": 212,
+     "immune_subset_20000": 352,
+     "kidney": 36
+    },
+    "tissues": {
+     "lung": 223,
+     "brown adipose tissue": 23,
+     "stomach smooth muscle": 19,
+     "inguinal lymph node": 12,
+     "kidney": 35,
+     "mesenteric lymph node": 10,
+     "lymph node": 127,
+     "thymus": 22,
+     "ascending colon": 2,
+     "blood": 16,
+     "adipose tissue": 15,
+     "bone marrow": 8,
+     "spleen": 12,
+     "muscle of pelvic diaphragm": 3,
+     "sublingual gland": 3,
+     "submandibular gland": 1,
+     "large intestine": 13,
+     "bladder organ": 11,
+     "skin of body": 2,
+     "uterus": 1,
+     "lacrimal gland": 2,
+     "cortex of kidney": 1,
+     "mammary gland": 5,
+     "small intestine": 13,
+     "posterior part of tongue": 7,
+     "sigmoid colon": 3,
+     "inferior vena cava": 1,
+     "parotid gland": 3,
+     "endometrium": 2,
+     "muscle of abdomen": 1,
+     "eye": 1,
+     "stomach": 1,
+     "eyelid": 1,
+     "subcutaneous adipose tissue": 1
+    },
+    "assays": {
+     "10x 3' v3": 526,
+     "10x 5' v2": 53,
+     "Smart-seq2": 21
+    },
+    "n_donors": 12,
+    "donors": {
+     "TSP2": 168,
+     "TSP14": 134,
+     "TSP25": 118,
+     "TSP21": 52,
+     "TSP1": 39,
+     "TSP27": 38,
+     "TSP20": 19,
+     "TSP7": 18,
+     "TSP4": 8,
+     "TSP10": 4,
+     "TSP13": 1,
+     "TSP5": 1
+    },
+    "top_dataset_share": 0.5866666666666667,
+    "top_donor": "TSP2",
+    "top_donor_n": 168,
+    "top_donor_share": 0.28,
+    "share_10x_3v3": 0.8766666666666667
+   },
+   "CD8-positive, alpha-beta T cell": {
+    "n": 600,
+    "datasets": {
+     "immune_subset_20000": 297,
+     "lung": 239,
+     "kidney": 64
+    },
+    "tissues": {
+     "lymph node": 50,
+     "lung": 243,
+     "blood": 22,
+     "kidney": 62,
+     "bone marrow": 10,
+     "spleen": 41,
+     "thymus": 14,
+     "adipose tissue": 6,
+     "bladder organ": 21,
+     "liver": 11,
+     "aorta": 3,
+     "coronary artery": 4,
+     "cortex of kidney": 4,
+     "inguinal lymph node": 5,
+     "mammary gland": 8,
+     "muscle of abdomen": 5,
+     "muscle of pelvic diaphragm": 2,
+     "endometrium": 4,
+     "parotid gland": 12,
+     "small intestine": 6,
+     "stomach": 1,
+     "brown adipose tissue": 8,
+     "subcutaneous adipose tissue": 8,
+     "skin of body": 6,
+     "posterior part of tongue": 7,
+     "anterior segment of eyeball": 1,
+     "trachea": 4,
+     "ileum": 3,
+     "duodenum": 1,
+     "prostate gland": 7,
+     "chorioretinal region": 1,
+     "large intestine": 3,
+     "right cardiac atrium": 1,
+     "sublingual gland": 3,
+     "mucosa of stomach": 2,
+     "stomach smooth muscle": 2,
+     "exocrine pancreas": 1,
+     "eye": 1,
+     "mesenteric lymph node": 2,
+     "lacrimal gland": 1,
+     "anterior part of tongue": 2,
+     "sigmoid colon": 2
+    },
+    "assays": {
+     "10x 3' v3": 545,
+     "10x 5' v2": 37,
+     "Smart-seq2": 18
+    },
+    "n_donors": 19,
+    "donors": {
+     "TSP2": 232,
+     "TSP14": 87,
+     "TSP25": 76,
+     "TSP1": 68,
+     "TSP21": 44,
+     "TSP7": 23,
+     "TSP27": 23,
+     "TSP4": 9,
+     "TSP10": 8,
+     "TSP11": 6,
+     "TSP19": 6,
+     "TSP8": 6,
+     "TSP6": 3,
+     "TSP26": 2,
+     "TSP17": 2,
+     "TSP20": 2,
+     "TSP15": 1,
+     "TSP9": 1,
+     "TSP5": 1
+    },
+    "top_dataset_share": 0.495,
+    "top_donor": "TSP2",
+    "top_donor_n": 232,
+    "top_donor_share": 0.38666666666666666,
+    "share_10x_3v3": 0.9083333333333333
+   },
+   "B cell": {
+    "n": 600,
+    "datasets": {
+     "immune_subset_20000": 461,
+     "kidney": 52,
+     "lung": 87
+    },
+    "tissues": {
+     "lymph node": 165,
+     "spleen": 60,
+     "parotid gland": 28,
+     "inguinal lymph node": 42,
+     "brown adipose tissue": 37,
+     "mesenteric lymph node": 17,
+     "kidney": 48,
+     "lacrimal gland": 12,
+     "sublingual gland": 8,
+     "mucosa of stomach": 4,
+     "lung": 89,
+     "posterior part of tongue": 8,
+     "bone marrow": 10,
+     "large intestine": 2,
+     "blood": 13,
+     "thymus": 11,
+     "adipose tissue": 15,
+     "small intestine": 4,
+     "ascending colon": 5,
+     "stomach smooth muscle": 5,
+     "trachea": 2,
+     "cortex of kidney": 4,
+     "right cardiac atrium": 1,
+     "prostate gland": 1,
+     "duodenum": 1,
+     "coronary artery": 1,
+     "bladder organ": 1,
+     "eyelid": 3,
+     "liver": 2,
+     "muscularis mucosae of stomach": 1
+    },
+    "assays": {
+     "10x 3' v3": 538,
+     "10x 5' v2": 51,
+     "Smart-seq2": 11
+    },
+    "n_donors": 13,
+    "donors": {
+     "TSP25": 167,
+     "TSP2": 117,
+     "TSP21": 95,
+     "TSP7": 78,
+     "TSP27": 54,
+     "TSP14": 44,
+     "TSP1": 28,
+     "TSP20": 10,
+     "TSP6": 2,
+     "TSP10": 2,
+     "TSP8": 1,
+     "TSP19": 1,
+     "TSP17": 1
+    },
+    "top_dataset_share": 0.7683333333333333,
+    "top_donor": "TSP25",
+    "top_donor_n": 167,
+    "top_donor_share": 0.2783333333333333,
+    "share_10x_3v3": 0.8966666666666666
+   },
+   "basal cell": {
+    "n": 600,
+    "datasets": {
+     "lung": 600
+    },
+    "tissues": {
+     "lung": 600
+    },
+    "assays": {
+     "10x 3' v3": 563,
+     "Smart-seq2": 37
+    },
+    "n_donors": 4,
+    "donors": {
+     "TSP2": 369,
+     "TSP25": 201,
+     "TSP14": 18,
+     "TSP1": 12
+    },
+    "top_dataset_share": 1.0,
+    "top_donor": "TSP2",
+    "top_donor_n": 369,
+    "top_donor_share": 0.615,
+    "share_10x_3v3": 0.9383333333333334
+   },
+   "pulmonary alveolar type 1 cell": {
+    "n": 600,
+    "datasets": {
+     "lung": 600
+    },
+    "tissues": {
+     "lung": 600
+    },
+    "assays": {
+     "10x 3' v3": 584,
+     "Smart-seq2": 16
+    },
+    "n_donors": 4,
+    "donors": {
+     "TSP14": 554,
+     "TSP1": 20,
+     "TSP25": 18,
+     "TSP2": 8
+    },
+    "top_dataset_share": 1.0,
+    "top_donor": "TSP14",
+    "top_donor_n": 554,
+    "top_donor_share": 0.9233333333333333,
+    "share_10x_3v3": 0.9733333333333334
+   },
+   "intermediate monocyte": {
+    "n": 600,
+    "datasets": {
+     "lung": 570,
+     "immune_subset_20000": 30
+    },
+    "tissues": {
+     "lung": 589,
+     "liver": 3,
+     "spleen": 3,
+     "lymph node": 1,
+     "blood": 3,
+     "bone marrow": 1
+    },
+    "assays": {
+     "10x 3' v3": 599,
+     "10x 5' v2": 1
+    },
+    "n_donors": 7,
+    "donors": {
+     "TSP2": 350,
+     "TSP14": 136,
+     "TSP25": 67,
+     "TSP1": 41,
+     "TSP21": 3,
+     "TSP6": 2,
+     "TSP19": 1
+    },
+    "top_dataset_share": 0.95,
+    "top_donor": "TSP2",
+    "top_donor_n": 350,
+    "top_donor_share": 0.5833333333333334,
+    "share_10x_3v3": 0.9983333333333333
+   },
+   "neutrophil": {
+    "n": 600,
+    "datasets": {
+     "immune_subset_20000": 520,
+     "lung": 76,
+     "kidney": 4
+    },
+    "tissues": {
+     "spleen": 121,
+     "trachea": 30,
+     "subcutaneous adipose tissue": 4,
+     "blood": 244,
+     "thoracic aorta": 8,
+     "lung": 80,
+     "skin of body": 3,
+     "coronary artery": 7,
+     "bone marrow": 59,
+     "liver": 10,
+     "aorta": 2,
+     "myometrium": 1,
+     "parotid gland": 1,
+     "muscle of abdomen": 1,
+     "stomach smooth muscle": 4,
+     "adipose tissue": 8,
+     "stomach": 3,
+     "kidney": 4,
+     "brown adipose tissue": 3,
+     "lymph node": 1,
+     "heart": 2,
+     "prostate gland": 2,
+     "inguinal lymph node": 1,
+     "thymus": 1
+    },
+    "assays": {
+     "10x 3' v3": 538,
+     "Smart-seq2": 25,
+     "10x 5' v2": 37
+    },
+    "n_donors": 13,
+    "donors": {
+     "TSP14": 292,
+     "TSP21": 98,
+     "TSP25": 59,
+     "TSP7": 41,
+     "TSP27": 38,
+     "TSP8": 35,
+     "TSP2": 13,
+     "TSP6": 11,
+     "TSP1": 5,
+     "TSP17": 4,
+     "TSP19": 2,
+     "TSP4": 1,
+     "TSP10": 1
+    },
+    "top_dataset_share": 0.8666666666666667,
+    "top_donor": "TSP14",
+    "top_donor_n": 292,
+    "top_donor_share": 0.4866666666666667,
+    "share_10x_3v3": 0.8966666666666666
+   },
+   "classical monocyte": {
+    "n": 600,
+    "datasets": {
+     "lung": 421,
+     "immune_subset_20000": 179
+    },
+    "tissues": {
+     "lung": 438,
+     "blood": 105,
+     "spleen": 44,
+     "exocrine pancreas": 5,
+     "lymph node": 3,
+     "bone marrow": 4,
+     "liver": 1
+    },
+    "assays": {
+     "10x 3' v3": 525,
+     "Smart-seq2": 58,
+     "10x 5' v2": 17
+    },
+    "n_donors": 11,
+    "donors": {
+     "TSP2": 208,
+     "TSP1": 150,
+     "TSP14": 103,
+     "TSP21": 44,
+     "TSP25": 37,
+     "TSP7": 31,
+     "TSP10": 13,
+     "TSP27": 6,
+     "TSP9": 5,
+     "TSP8": 2,
+     "TSP6": 1
+    },
+    "top_dataset_share": 0.7016666666666667,
+    "top_donor": "TSP2",
+    "top_donor_n": 208,
+    "top_donor_share": 0.3466666666666667,
+    "share_10x_3v3": 0.875
+   }
+  },
+  "cell_types_from_one_dataset": [
+   "pulmonary alveolar type 2 cell",
+   "kidney epithelial cell",
+   "capillary endothelial cell",
+   "basal cell",
+   "pulmonary alveolar type 1 cell"
+  ],
+  "cell_types_one_dataset_by_dataset": {
+   "pulmonary alveolar type 2 cell": "lung",
+   "kidney epithelial cell": "kidney",
+   "capillary endothelial cell": "lung",
+   "basal cell": "lung",
+   "pulmonary alveolar type 1 cell": "lung"
+  },
+  "min_share_10x_3v3": 0.875,
+  "max_top_donor_share": 1.0,
+  "cell_types_top_donor_ge_half": {
+   "macrophage": "329 of 600",
+   "kidney epithelial cell": "600 of 600",
+   "capillary endothelial cell": "309 of 600",
+   "basal cell": "369 of 600",
+   "pulmonary alveolar type 1 cell": "554 of 600",
+   "intermediate monocyte": "350 of 600"
+  }
+ }
+}

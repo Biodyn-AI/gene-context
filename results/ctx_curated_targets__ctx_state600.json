@@ -1,0 +1,56 @@
+{
+ "taps": {
+  "L06": {
+   "n_tfs": 24,
+   "static_excess_mean": 0.09904013702470375,
+   "static_frac_pos": 0.8333333333333334,
+   "specific_excess_mean": 0.0468045765008511,
+   "specific_n": 24,
+   "specific_n_pos": 17,
+   "specific_sign_p": 0.03195732831954956,
+   "static_sign_p": 0.000771939754486084,
+   "modulation_mean_rho": -0.04679695304695305,
+   "modulation_frac_pos": 0.4583333333333333,
+   "modulation_sign_p": 0.7293719053268433,
+   "n_modul": 24
+  },
+  "L03": {
+   "n_tfs": 24,
+   "static_excess_mean": 0.09642805781955062,
+   "static_frac_pos": 0.875,
+   "specific_excess_mean": 0.052576623022501656,
+   "specific_n": 24,
+   "specific_n_pos": 17,
+   "specific_sign_p": 0.03195732831954956,
+   "static_sign_p": 0.0001385807991027832,
+   "modulation_mean_rho": -0.038828532578532575,
+   "modulation_frac_pos": 0.4583333333333333,
+   "modulation_sign_p": 0.7293719053268433,
+   "n_modul": 24
+  },
+  "L12": {
+   "n_tfs": 24,
+   "static_excess_mean": 0.09553682440600418,
+   "static_frac_pos": 0.7916666666666666,
+   "specific_excess_mean": 0.04229193904903816,
+   "specific_n": 24,
+   "specific_n_pos": 16,
+   "specific_sign_p": 0.07579481601715088,
+   "static_sign_p": 0.003305375576019287,
+   "modulation_mean_rho": -0.046249583749583746,
+   "modulation_frac_pos": 0.4583333333333333,
+   "modulation_sign_p": 0.7293719053268433,
+   "n_modul": 24
+  }
+ },
+ "verdict": "L6: (A) static excess +0.0990 (sign p 7.7e-04); (B) activity modulation rho -0.047 (sign p 0.73). PARTIAL \u2014 TFs sit closer to curated targets than co-expression-matched controls (A positive) but the effect is NOT modulated by where the programme is active (B null): near-targets, but not context-appropriately so.",
+ "provenance": {
+  "prefix": "ctx_state600",
+  "cells": 600,
+  "covariate": "rank",
+  "min_ctx": 9,
+  "outtag": "ctx_state600",
+  "min_tf_ctx": 6,
+  "verdict_tap": 6
+ }
+}

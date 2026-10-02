@@ -6,6 +6,7 @@ export PATH="/opt/homebrew/bin:/Library/TeX/texbin:$PATH"
 PANDOC_REFS="--citeproc --bibliography=references_bmc.bib --csl=build/biomed-central.csl"
 # 1) every number from the result files -> build/numbers.json; 2) render the templates (fails on any unresolved key)
 python3 build/make_numbers.py && python3 build/compose_extra.py numbers
+python3 build/make_additional_file.py      # Additional file 1 (Excel) from the same result files
 python3 build/fill_template.py manuscript_bmc.template.md manuscript_bmc.md
 python3 build/fill_template.py cover_letter_bmc.template.md cover_letter_bmc.md
 python3 build/compose_extra.py form

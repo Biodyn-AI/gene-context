@@ -1,0 +1,554 @@
+{
+ "taps": {
+  "L06": {
+   "excess": 0.7607111930847168,
+   "ci": [
+    0.7590228623628544,
+    0.7623486544895715
+   ],
+   "same": 0.7605276703834534,
+   "diff": -0.00018350440950598568,
+   "main_effect_replication": 0.9486478670979991,
+   "top_dim_share": 0.002108789049088955,
+   "n_pairs": 66,
+   "pairs": [
+    {
+     "c1": "macrophage",
+     "c2": "pulmonary alveolar type 2 cell",
+     "n": 2253,
+     "same": 0.8713153600692749,
+     "diff": 9.137463348452002e-05,
+     "excess": 0.8712239861488342
+    },
+    {
+     "c1": "macrophage",
+     "c2": "kidney epithelial cell",
+     "n": 1739,
+     "same": 0.9064692854881287,
+     "diff": 0.0028117692563682795,
+     "excess": 0.9036574959754944
+    },
+    {
+     "c1": "macrophage",
+     "c2": "capillary endothelial cell",
+     "n": 2171,
+     "same": 0.8383924961090088,
+     "diff": 0.0022208348382264376,
+     "excess": 0.8361716866493225
+    },
+    {
+     "c1": "macrophage",
+     "c2": "CD4-positive, alpha-beta T cell",
+     "n": 2196,
+     "same": 0.8132711052894592,
+     "diff": -0.00167428283020854,
+     "excess": 0.8149453997612
+    },
+    {
+     "c1": "macrophage",
+     "c2": "CD8-positive, alpha-beta T cell",
+     "n": 2261,
+     "same": 0.8092478513717651,
+     "diff": -0.004156061913818121,
+     "excess": 0.8134039044380188
+    },
+    {
+     "c1": "macrophage",
+     "c2": "B cell",
+     "n": 2237,
+     "same": 0.830996572971344,
+     "diff": 0.0024603931233286858,
+     "excess": 0.8285361528396606
+    },
+    {
+     "c1": "macrophage",
+     "c2": "basal cell",
+     "n": 2319,
+     "same": 0.8360615968704224,
+     "diff": 0.0002451276232022792,
+     "excess": 0.8358164429664612
+    },
+    {
+     "c1": "macrophage",
+     "c2": "pulmonary alveolar type 1 cell",
+     "n": 2216,
+     "same": 0.8817985653877258,
+     "diff": -0.00027443558792583644,
+     "excess": 0.8820729851722717
+    },
+    {
+     "c1": "macrophage",
+     "c2": "intermediate monocyte",
+     "n": 2796,
+     "same": 0.5659617781639099,
+     "diff": 0.0010290812933817506,
+     "excess": 0.5649327039718628
+    },
+    {
+     "c1": "macrophage",
+     "c2": "neutrophil",
+     "n": 1749,
+     "same": 0.8380666375160217,
+     "diff": -0.0001739418221404776,
+     "excess": 0.8382405638694763
+    },
+    {
+     "c1": "macrophage",
+     "c2": "classical monocyte",
+     "n": 2707,
+     "same": 0.6211881041526794,
+     "diff": 0.0005478944513015449,
+     "excess": 0.620640218257904
+    },
+    {
+     "c1": "pulmonary alveolar type 2 cell",
+     "c2": "kidney epithelial cell",
+     "n": 1797,
+     "same": 0.8813558220863342,
+     "diff": 0.0024464649613946676,
+     "excess": 0.8789093494415283
+    },
+    {
+     "c1": "pulmonary alveolar type 2 cell",
+     "c2": "capillary endothelial cell",
+     "n": 2057,
+     "same": 0.8062031865119934,
+     "diff": 0.00024216767633333802,
+     "excess": 0.805961012840271
+    },
+    {
+     "c1": "pulmonary alveolar type 2 cell",
+     "c2": "CD4-positive, alpha-beta T cell",
+     "n": 1981,
+     "same": 0.8170846700668335,
+     "diff": 0.0003038029244635254,
+     "excess": 0.8167808651924133
+    },
+    {
+     "c1": "pulmonary alveolar type 2 cell",
+     "c2": "CD8-positive, alpha-beta T cell",
+     "n": 2013,
+     "same": 0.8149183988571167,
+     "diff": 0.00038666490581817925,
+     "excess": 0.8145317435264587
+    },
+    {
+     "c1": "pulmonary alveolar type 2 cell",
+     "c2": "B cell",
+     "n": 1967,
+     "same": 0.8305622935295105,
+     "diff": -0.00027400287217460573,
+     "excess": 0.830836296081543
+    },
+    {
+     "c1": "pulmonary alveolar type 2 cell",
+     "c2": "basal cell",
+     "n": 2461,
+     "same": 0.6923219561576843,
+     "diff": -0.0015791989862918854,
+     "excess": 0.6939011812210083
+    },
+    {
+     "c1": "pulmonary alveolar type 2 cell",
+     "c2": "pulmonary alveolar type 1 cell",
+     "n": 2481,
+     "same": 0.7568605542182922,
+     "diff": 0.002462172880768776,
+     "excess": 0.7543984055519104
+    },
+    {
+     "c1": "pulmonary alveolar type 2 cell",
+     "c2": "intermediate monocyte",
+     "n": 2229,
+     "same": 0.8597224354743958,
+     "diff": 0.0015073609538376331,
+     "excess": 0.8582150936126709
+    },
+    {
+     "c1": "pulmonary alveolar type 2 cell",
+     "c2": "neutrophil",
+     "n": 1390,
+     "same": 0.891955554485321,
+     "diff": 0.00285903038457036,
+     "excess": 0.8890964984893799
+    },
+    {
+     "c1": "pulmonary alveolar type 2 cell",
+     "c2": "classical monocyte",
+     "n": 2161,
+     "same": 0.8538985848426819,
+     "diff": -0.004446330014616251,
+     "excess": 0.8583449125289917
+    },
+    {
+     "c1": "kidney epithelial cell",
+     "c2": "capillary endothelial cell",
+     "n": 1534,
+     "same": 0.8549728393554688,
+     "diff": -0.004676391836255789,
+     "excess": 0.8596492409706116
+    },
+    {
+     "c1": "kidney epithelial cell",
+     "c2": "CD4-positive, alpha-beta T cell",
+     "n": 1526,
+     "same": 0.8542812466621399,
+     "diff": 0.0016798063879832625,
+     "excess": 0.8526014685630798
+    },
+    {
+     "c1": "kidney epithelial cell",
+     "c2": "CD8-positive, alpha-beta T cell",
+     "n": 1580,
+     "same": 0.8611533641815186,
+     "diff": 0.00722496397793293,
+     "excess": 0.8539283871650696
+    },
+    {
+     "c1": "kidney epithelial cell",
+     "c2": "B cell",
+     "n": 1516,
+     "same": 0.8718574047088623,
+     "diff": -0.005924852564930916,
+     "excess": 0.8777822852134705
+    },
+    {
+     "c1": "kidney epithelial cell",
+     "c2": "basal cell",
+     "n": 1796,
+     "same": 0.8475098609924316,
+     "diff": 3.1358814567283844e-07,
+     "excess": 0.8475095629692078
+    },
+    {
+     "c1": "kidney epithelial cell",
+     "c2": "pulmonary alveolar type 1 cell",
+     "n": 1737,
+     "same": 0.885360598564148,
+     "diff": 0.006662213243544102,
+     "excess": 0.8786984086036682
+    },
+    {
+     "c1": "kidney epithelial cell",
+     "c2": "intermediate monocyte",
+     "n": 1705,
+     "same": 0.9092569947242737,
+     "diff": -0.003856486175209284,
+     "excess": 0.9131134748458862
+    },
+    {
+     "c1": "kidney epithelial cell",
+     "c2": "neutrophil",
+     "n": 993,
+     "same": 0.9100302457809448,
+     "diff": 0.0060154772363603115,
+     "excess": 0.9040147662162781
+    },
+    {
+     "c1": "kidney epithelial cell",
+     "c2": "classical monocyte",
+     "n": 1657,
+     "same": 0.9003686904907227,
+     "diff": 0.0009341496624983847,
+     "excess": 0.8994345664978027
+    },
+    {
+     "c1": "capillary endothelial cell",
+     "c2": "CD4-positive, alpha-beta T cell",
+     "n": 2009,
+     "same": 0.6538269519805908,
+     "diff": 0.0016039293259382248,
+     "excess": 0.6522230505943298
+    },
+    {
+     "c1": "capillary endothelial cell",
+     "c2": "CD8-positive, alpha-beta T cell",
+     "n": 2061,
+     "same": 0.668232798576355,
+     "diff": -0.004011200740933418,
+     "excess": 0.6722440123558044
+    },
+    {
+     "c1": "capillary endothelial cell",
+     "c2": "B cell",
+     "n": 2019,
+     "same": 0.7241593599319458,
+     "diff": -0.00647603627294302,
+     "excess": 0.730635404586792
+    },
+    {
+     "c1": "capillary endothelial cell",
+     "c2": "basal cell",
+     "n": 2220,
+     "same": 0.7018550038337708,
+     "diff": 0.0027715733740478754,
+     "excess": 0.6990834474563599
+    },
+    {
+     "c1": "capillary endothelial cell",
+     "c2": "pulmonary alveolar type 1 cell",
+     "n": 2103,
+     "same": 0.7693367004394531,
+     "diff": -0.0016405950300395489,
+     "excess": 0.7709773182868958
+    },
+    {
+     "c1": "capillary endothelial cell",
+     "c2": "intermediate monocyte",
+     "n": 2252,
+     "same": 0.8231993317604065,
+     "diff": -0.0002481906849425286,
+     "excess": 0.8234475255012512
+    },
+    {
+     "c1": "capillary endothelial cell",
+     "c2": "neutrophil",
+     "n": 1473,
+     "same": 0.7875719666481018,
+     "diff": 0.0024753338657319546,
+     "excess": 0.7850966453552246
+    },
+    {
+     "c1": "capillary endothelial cell",
+     "c2": "classical monocyte",
+     "n": 2181,
+     "same": 0.8082820773124695,
+     "diff": -8.816611807560548e-05,
+     "excess": 0.8083702325820923
+    },
+    {
+     "c1": "CD4-positive, alpha-beta T cell",
+     "c2": "CD8-positive, alpha-beta T cell",
+     "n": 2558,
+     "same": 0.14339162409305573,
+     "diff": 8.804216486169025e-05,
+     "excess": 0.14330358803272247
+    },
+    {
+     "c1": "CD4-positive, alpha-beta T cell",
+     "c2": "B cell",
+     "n": 2413,
+     "same": 0.44855210185050964,
+     "diff": 0.0013055014424026012,
+     "excess": 0.44724661111831665
+    },
+    {
+     "c1": "CD4-positive, alpha-beta T cell",
+     "c2": "basal cell",
+     "n": 2156,
+     "same": 0.7193626165390015,
+     "diff": -0.0004021893546450883,
+     "excess": 0.7197648286819458
+    },
+    {
+     "c1": "CD4-positive, alpha-beta T cell",
+     "c2": "pulmonary alveolar type 1 cell",
+     "n": 1982,
+     "same": 0.7791680097579956,
+     "diff": -0.002443938748911023,
+     "excess": 0.7816119194030762
+    },
+    {
+     "c1": "CD4-positive, alpha-beta T cell",
+     "c2": "intermediate monocyte",
+     "n": 2287,
+     "same": 0.7890427708625793,
+     "diff": 0.0023053092882037163,
+     "excess": 0.7867374420166016
+    },
+    {
+     "c1": "CD4-positive, alpha-beta T cell",
+     "c2": "neutrophil",
+     "n": 1540,
+     "same": 0.7738987803459167,
+     "diff": -0.0031238612718880177,
+     "excess": 0.777022659778595
+    },
+    {
+     "c1": "CD4-positive, alpha-beta T cell",
+     "c2": "classical monocyte",
+     "n": 2244,
+     "same": 0.7640483975410461,
+     "diff": 0.0016547675477340817,
+     "excess": 0.7623936533927917
+    },
+    {
+     "c1": "CD8-positive, alpha-beta T cell",
+     "c2": "B cell",
+     "n": 2419,
+     "same": 0.4934782385826111,
+     "diff": -0.004184766672551632,
+     "excess": 0.4976629912853241
+    },
+    {
+     "c1": "CD8-positive, alpha-beta T cell",
+     "c2": "basal cell",
+     "n": 2187,
+     "same": 0.7259658575057983,
+     "diff": -0.0007775239064358175,
+     "excess": 0.7267434000968933
+    },
+    {
+     "c1": "CD8-positive, alpha-beta T cell",
+     "c2": "pulmonary alveolar type 1 cell",
+     "n": 2019,
+     "same": 0.7850164771080017,
+     "diff": 0.0021646395325660706,
+     "excess": 0.7828518152236938
+    },
+    {
+     "c1": "CD8-positive, alpha-beta T cell",
+     "c2": "intermediate monocyte",
+     "n": 2362,
+     "same": 0.7870088219642639,
+     "diff": 0.0006878142012283206,
+     "excess": 0.7863209843635559
+    },
+    {
+     "c1": "CD8-positive, alpha-beta T cell",
+     "c2": "neutrophil",
+     "n": 1587,
+     "same": 0.7901611924171448,
+     "diff": -6.0207526985323057e-05,
+     "excess": 0.7902213931083679
+    },
+    {
+     "c1": "CD8-positive, alpha-beta T cell",
+     "c2": "classical monocyte",
+     "n": 2316,
+     "same": 0.7575318813323975,
+     "diff": -0.00074980832869187,
+     "excess": 0.7582817077636719
+    },
+    {
+     "c1": "B cell",
+     "c2": "basal cell",
+     "n": 2160,
+     "same": 0.7500715255737305,
+     "diff": 0.0017133732326328754,
+     "excess": 0.7483581304550171
+    },
+    {
+     "c1": "B cell",
+     "c2": "pulmonary alveolar type 1 cell",
+     "n": 1986,
+     "same": 0.800589382648468,
+     "diff": 0.0011414740001782775,
+     "excess": 0.7994478940963745
+    },
+    {
+     "c1": "B cell",
+     "c2": "intermediate monocyte",
+     "n": 2356,
+     "same": 0.8027269840240479,
+     "diff": -0.0011461414396762848,
+     "excess": 0.8038731217384338
+    },
+    {
+     "c1": "B cell",
+     "c2": "neutrophil",
+     "n": 1578,
+     "same": 0.8146082758903503,
+     "diff": -0.0016998964129015803,
+     "excess": 0.8163082003593445
+    },
+    {
+     "c1": "B cell",
+     "c2": "classical monocyte",
+     "n": 2307,
+     "same": 0.7817599773406982,
+     "diff": 0.0012519240844994783,
+     "excess": 0.7805080413818359
+    },
+    {
+     "c1": "basal cell",
+     "c2": "pulmonary alveolar type 1 cell",
+     "n": 2406,
+     "same": 0.7235194444656372,
+     "diff": -0.00029418448684737086,
+     "excess": 0.7238136529922485
+    },
+    {
+     "c1": "basal cell",
+     "c2": "intermediate monocyte",
+     "n": 2343,
+     "same": 0.8234410285949707,
+     "diff": -0.005954672582447529,
+     "excess": 0.8293957114219666
+    },
+    {
+     "c1": "basal cell",
+     "c2": "neutrophil",
+     "n": 1454,
+     "same": 0.8573155999183655,
+     "diff": 0.004136884119361639,
+     "excess": 0.8531787395477295
+    },
+    {
+     "c1": "basal cell",
+     "c2": "classical monocyte",
+     "n": 2264,
+     "same": 0.8181242942810059,
+     "diff": -0.0009581808117218316,
+     "excess": 0.819082498550415
+    },
+    {
+     "c1": "pulmonary alveolar type 1 cell",
+     "c2": "intermediate monocyte",
+     "n": 2210,
+     "same": 0.8691840171813965,
+     "diff": -0.000733071006834507,
+     "excess": 0.869917094707489
+    },
+    {
+     "c1": "pulmonary alveolar type 1 cell",
+     "c2": "neutrophil",
+     "n": 1389,
+     "same": 0.8782764673233032,
+     "diff": -0.0013657076051458716,
+     "excess": 0.8796421885490417
+    },
+    {
+     "c1": "pulmonary alveolar type 1 cell",
+     "c2": "classical monocyte",
+     "n": 2141,
+     "same": 0.8609725832939148,
+     "diff": -0.00020859966753050685,
+     "excess": 0.8611811995506287
+    },
+    {
+     "c1": "intermediate monocyte",
+     "c2": "neutrophil",
+     "n": 1871,
+     "same": 0.7967097759246826,
+     "diff": -0.006387656554579735,
+     "excess": 0.8030974268913269
+    },
+    {
+     "c1": "intermediate monocyte",
+     "c2": "classical monocyte",
+     "n": 2947,
+     "same": 0.2259712815284729,
+     "diff": 0.00028718210523948073,
+     "excess": 0.22568410634994507
+    },
+    {
+     "c1": "neutrophil",
+     "c2": "classical monocyte",
+     "n": 1918,
+     "same": 0.7586776614189148,
+     "diff": -0.00333626801148057,
+     "excess": 0.7620139122009277
+    }
+   ]
+  }
+ },
+ "verdict": "L06: gene-specific context response EXCESS = +0.7607, CI [+0.7590, +0.7623]. POSITIVE \u2014 a gene's departure from the crowd reproduces across independent cells, so context response is gene-specific and not merely the averaging null. Next: does it track FUNCTION?",
+ "provenance": {
+  "prefix": "ctx_state600rand",
+  "cells": 600,
+  "covariate": "rank",
+  "min_ctx": 9,
+  "outtag": "ctx_state600rand"
+ }
+}

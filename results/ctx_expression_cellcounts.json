@@ -1,0 +1,11 @@
+{
+ "n_entries": 16349,
+ "model_occurrences_per_entry": 50,
+ "expressing_cells_per_entry": {
+  "median": 202.0,
+  "p10": 108.0,
+  "p90": 277.0,
+  "min": 52,
+  "max": 300
+ }
+}

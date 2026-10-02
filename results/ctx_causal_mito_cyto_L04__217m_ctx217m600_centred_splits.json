@@ -1,0 +1,111 @@
+{
+ "model": "217m",
+ "extraction": "ctx217m600",
+ "alpha_unit": "centred",
+ "resid_norm_raw": 15.177458763122559,
+ "resid_norm_centred": 13.661394309997558,
+ "alphas_xResidNorm": [
+  0.25,
+  0.5,
+  1.0
+ ],
+ "site": 3,
+ "n_cells": 30,
+ "resid_norm": 13.661394309997558,
+ "push_size_raw": [
+  3.4153485774993895,
+  6.830697154998779,
+  13.661394309997558
+ ],
+ "natural_movement_along_axis": {
+  "n_genes": 3446,
+  "median_sd_across_contexts": 0.4607572704553604,
+  "median_range_across_contexts": 1.3070533275604248,
+  "p95_range_across_contexts": 5.783912420272827,
+  "pole_centroid_distance": 2.857494592666626,
+  "massive_dims": [
+   289,
+   552
+  ],
+  "axis_share_in_massive_dims": 0.11591342091560364
+ },
+ "n_nuclear_tokens": 1308,
+ "n_surface_tokens": 405,
+ "signed": {
+  "alpha_0.25": {
+   "spec_plus": 0.08583315447088499,
+   "spec_minus": 0.024147107993310355,
+   "func_swing": 0.061686046477574655,
+   "func_swing_sem": 0.014241383484689011,
+   "rand_swing": 0.0013476474939243014,
+   "func_gt_rand": 21,
+   "n": 30,
+   "sign_p": 0.02138697262853384
+  },
+  "alpha_0.5": {
+   "spec_plus": 0.2737347411668823,
+   "spec_minus": 0.10590993338107775,
+   "func_swing": 0.16782480778580447,
+   "func_swing_sem": 0.027118277105396722,
+   "rand_swing": 0.00013643844673792612,
+   "func_gt_rand": 26,
+   "n": 30,
+   "sign_p": 2.9738061130046844e-05
+  },
+  "alpha_1.0": {
+   "spec_plus": 0.8234838710292736,
+   "spec_minus": 0.3125422547832952,
+   "func_swing": 0.5109416162459783,
+   "func_swing_sem": 0.04969125452419345,
+   "rand_swing": -0.012361026127804441,
+   "func_gt_rand": 29,
+   "n": 30,
+   "sign_p": 2.8870999813079834e-08
+  }
+ },
+ "verdict": "at 0.5xResid: spec(+u)=+0.274, spec(-u)=+0.106, signed swing +0.1678 (random +0.0001), func>rand 26/30 p=3.0e-05. NOT cleanly causal \u2014 the readout does not flip with the sign of the functional direction beyond the random control, so the earlier apparent effect was the baseline nuclear/surface asymmetry under generic perturbation. Level 1 stands as a representation result only.",
+ "split_null": {
+  "n_splits": 30,
+  "alpha": 0.5,
+  "func_mean_swing": 0.16782480778580447,
+  "split_mean_swings": [
+   0.17378382506538742,
+   -0.01162262677501893,
+   -0.19289335902705732,
+   -0.1684393951577268,
+   0.03458094432648706,
+   0.1946541452732278,
+   -0.07774690089000877,
+   0.04597778103244337,
+   -0.13509759909346672,
+   0.14303909039732035,
+   -0.12170672908525768,
+   -0.2014942822930193,
+   -0.009455462041435724,
+   0.037937488106910285,
+   0.03797934629557214,
+   0.3193442487109793,
+   0.06471777965991872,
+   0.018087511625210464,
+   -0.16387648058421003,
+   -0.11537022761620115,
+   0.07280263264963684,
+   -0.26173670079179223,
+   -0.004176655313733601,
+   0.08947482829357097,
+   0.08355753823740822,
+   0.01786510042185089,
+   0.0032822657796422166,
+   0.11500839253435573,
+   -0.06486520700532943,
+   0.030426501750442377
+  ],
+  "split_abs_mean": 0.10036670152782072,
+  "split_abs_sd": 0.08004470733013036,
+  "n_splits_abs_ge_func": 7,
+  "p_abs": 0.25806451612903225,
+  "z_abs": 0.8427553614372261,
+  "n_splits_ge_func_signed": 3,
+  "p_signed": 0.12903225806451613
+ }
+}

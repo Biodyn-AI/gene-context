@@ -22,6 +22,7 @@ Out: results/ctx_coexpr_null_v3.json
 """
 import os, sys, json, pickle, warnings; warnings.filterwarnings("ignore")
 import numpy as np
+import ctx_prefix as PX
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE); RES = os.path.join(HERE, "results")
 import ctx_position_confound as CP
 from ctx_coexpr_null import coexpr_matrix, coherence
@@ -34,7 +35,7 @@ def main():
     ens2sym = {e: s.upper() for s, e in pickle.load(open(NAME_ID, "rb")).items()}
     g2g = {k.upper(): set(v) for k, v in pickle.load(open(G2G, "rb")).items() if isinstance(v, (set, list, tuple))}
     rng = np.random.default_rng(SEED); rng_strong = np.random.default_rng(SEED + 1)
-    z = np.load(os.path.join(RES, f"ctx_maxtoki_L{TAP:02d}.npz"), allow_pickle=True)
+    z = np.load(PX.npz_path(TAP), allow_pickle=True)
     M, counts, cap = z["M"].astype(np.float32), z["counts"], int(z["cap"])
     genes = z["genes"].astype(str); ctxs = z["contexts"].astype(str); syms = [ens2sym.get(g) for g in genes]
     full = (counts == cap).all(0); d = M.shape[-1]
@@ -43,20 +44,15 @@ def main():
     for gi in range(len(genes)):
         cs = np.where(full[:, gi])[0]
         if len(cs): a[gi] = Mz[:, cs, gi].mean((0, 1))
-    ok = np.isfinite(a[:, 0]); use = np.where(full.sum(0) >= 9)[0]
+    ok = np.isfinite(a[:, 0]); use = np.where(full.sum(0) >= PX.min_ctx(9))[0]
     tokmap = json.load(open(f"{CP.MSETUP}/token_dictionary.json")); ens2tid = {k: int(v) for k, v in tokmap.items()}
-    tids = np.array([ens2tid.get(g, -1) for g in genes]); MR = CP.mean_ranks(set(ctxs))
-    rank = np.full((len(ctxs), len(genes)), np.nan)
-    for ci, c in enumerate(ctxs):
-        dd = MR.get(c, {})
-        for gi, t in enumerate(tids):
-            if t in dd: rank[ci, gi] = dd[t]
+    rank = PX.covariate_matrix(ctxs, genes)   # MaxToki mean rank (COV=rank) on the extraction's cells
     Ruse, muse, Msub = rank[:, use], full[:, use], Mz[:, :, use]
     del M, flat
 
     def power(vec):                                   # identical to ctx_coexpr_null_v2.power
         q = np.tensordot(Msub, vec, axes=([3], [0])); qm = np.where(muse[None], q, np.nan)
-        fin = np.isfinite(qm[0]) & np.isfinite(Ruse); r = Ruse[fin]; A = np.column_stack([np.ones_like(r), r, r ** 2])
+        fin = np.isfinite(qm[0]) & np.isfinite(Ruse); qm[:, ~fin] = np.nan; r = Ruse[fin]; A = np.column_stack([np.ones_like(r), r, r ** 2])
         for p in range(2):
             yv = qm[p][fin]; qm[p][fin] = yv - A @ np.linalg.lstsq(A, yv, rcond=None)[0]
         I = qm - np.nanmean(qm, 1, keepdims=True) - np.nanmean(qm, 2, keepdims=True) + np.nanmean(qm, (1, 2), keepdims=True)
@@ -140,8 +136,8 @@ def main():
             rows = [c for c in curve if c["f"] == f]
             print(f"  curve f={f:<4} coherence {np.mean([r['cohA'] for r in rows]):.4f}/{np.mean([r['cohB'] for r in rows]):.4f}"
                   f"  power mean {np.mean([r['power'] for r in rows]):.3f}  max {np.max([r['power'] for r in rows]):.3f}")
-    v2p = os.path.join(RES, "ctx_coexpr_null_v2.json")
-    if os.path.getmtime(v2p) < os.path.getmtime(os.path.join(RES, f"ctx_maxtoki_L{TAP:02d}.npz")):
+    v2p = PX.out("ctx_coexpr_null_v2")
+    if os.path.getmtime(v2p) < os.path.getmtime(PX.npz_path(TAP)):
         raise SystemExit("ctx_coexpr_null_v2.json is older than the current extraction (stale); re-run ctx_coexpr_null_v2.py")
     v2 = json.load(open(v2p))["axes"]
     out["v2_source_mtime"] = os.path.getmtime(v2p)
@@ -161,7 +157,7 @@ def main():
         + f"): {n_edge}/{n_ax} axes exceed it at p<0.05 ("
         + ", ".join(f"{k} p={v['p_strong_modules_v2']:.3f}" for k, v in out["summary"].items()) + ").")
     print(f"\nVERDICT: {out['verdict']}")
-    json.dump(out, open(os.path.join(RES, "ctx_coexpr_null_v3.json"), "w"), indent=1)
+    out.update({} if PX.IS_DEFAULT else {"provenance": PX.provenance()}); json.dump(out, open(PX.out("ctx_coexpr_null_v3"), "w"), indent=1)
     print("[done] -> results/ctx_coexpr_null_v3.json")
 
 

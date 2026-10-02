@@ -1,0 +1,80 @@
+{
+ "axes_defined": {
+  "mito_vs_cytoskeleton": {
+   "poleA": 565,
+   "poleB": 137
+  },
+  "nuclear_vs_surface": {
+   "poleA": 1535,
+   "poleB": 1003
+  },
+  "cellcycle_vs_diff": {
+   "poleA": 129,
+   "poleB": 138
+  },
+  "transcription_vs_transport": {
+   "poleA": 273,
+   "poleB": 74
+  }
+ },
+ "taps": {
+  "L07": {
+   "mito_vs_cytoskeleton": {
+    "validity_auc": 0.7964623282841105,
+    "power": 1.881848931312561,
+    "z_raw": 8.0941815396133,
+    "power_resid": 2.0210320949554443,
+    "z_rank_controlled": 8.777208991568454,
+    "null_mean": 0.38505067482590677,
+    "null_resid_mean": 0.40129616086681685,
+    "rank_confound_rho": -0.12203414134122674,
+    "poleA": 502,
+    "poleB": 134
+   },
+   "nuclear_vs_surface": {
+    "validity_auc": 0.7750273946167271,
+    "power": 1.965250015258789,
+    "z_raw": 8.30093854280538,
+    "power_resid": 1.8968676328659058,
+    "z_rank_controlled": 7.783573737867303,
+    "null_mean": 0.3984859174489975,
+    "null_resid_mean": 0.414375675568978,
+    "rank_confound_rho": -0.2656863687441905,
+    "poleA": 1300,
+    "poleB": 956
+   },
+   "cellcycle_vs_diff": {
+    "validity_auc": 0.5988405797101449,
+    "power": 0.5143563747406006,
+    "z_raw": 0.5759620830713286,
+    "power_resid": 0.5922329425811768,
+    "z_rank_controlled": 0.8885628143411709,
+    "null_mean": 0.40016331275304157,
+    "null_resid_mean": 0.41660105595986047,
+    "rank_confound_rho": -0.33212170347353065,
+    "poleA": 115,
+    "poleB": 122
+   },
+   "transcription_vs_transport": {
+    "validity_auc": 0.7348999215070644,
+    "power": 1.060869812965393,
+    "z_raw": 2.9203316578374965,
+    "power_resid": 0.9753900170326233,
+    "z_rank_controlled": 2.5118598930062617,
+    "null_mean": 0.40766830136378607,
+    "null_resid_mean": 0.42039777353405955,
+    "rank_confound_rho": -0.3158393212390789,
+    "poleA": 241,
+    "poleB": 69
+   }
+  }
+ },
+ "verdict": "L07/mito_vs_cytoskeleton: validity AUC 0.80. Raw modulation z +8.1 but RANK-CONTROLLED z +8.8. Across valid axes, 2 beat the null raw, 2 survive rank control. POSITIVE \u2014 functional modulation survives abundance/rank control on at least one valid axis: genes move preferentially along a functional direction beyond what abundance explains.",
+ "provenance": {
+  "prefix": "ctx1b",
+  "cells": 600,
+  "covariate": "expr",
+  "min_ctx": 6,
+  "outtag": "ctx1b__minctx6__cov-expr"
+ }
+}

@@ -1,0 +1,113 @@
+{
+ "model": "1b",
+ "extraction": "ctx1b",
+ "alpha_unit": "centred",
+ "resid_norm_raw": 856.4404907226562,
+ "resid_norm_centred": 285.82789916992186,
+ "alphas_xResidNorm": [
+  0.25,
+  0.5,
+  1.0
+ ],
+ "site": 6,
+ "n_cells": 30,
+ "resid_norm": 285.82789916992186,
+ "push_size_raw": [
+  71.45697479248047,
+  142.91394958496093,
+  285.82789916992186
+ ],
+ "natural_movement_along_axis": {
+  "n_genes": 3446,
+  "median_sd_across_contexts": 24.645099639892578,
+  "median_range_across_contexts": 63.42071533203125,
+  "p95_range_across_contexts": 152.8190155029297,
+  "pole_centroid_distance": 52.69636154174805,
+  "massive_dims": [
+   1470,
+   969
+  ],
+  "axis_share_in_massive_dims": 0.5170848965644836,
+  "axis_massive_dims_zeroed": true,
+  "note": "natural-movement numbers describe the axis before the two dimensions were zeroed"
+ },
+ "n_nuclear_tokens": 4844,
+ "n_surface_tokens": 5520,
+ "signed": {
+  "alpha_0.25": {
+   "spec_plus": 0.07071739139169259,
+   "spec_minus": -0.08684157005127743,
+   "func_swing": 0.15755896144297,
+   "func_swing_sem": 0.010960762089754507,
+   "rand_swing": 0.009470784034507,
+   "func_gt_rand": 30,
+   "n": 30,
+   "sign_p": 9.313225746154785e-10
+  },
+  "alpha_0.5": {
+   "spec_plus": 0.12180401284856342,
+   "spec_minus": -0.20224357437467194,
+   "func_swing": 0.32404758722323534,
+   "func_swing_sem": 0.02056097856090643,
+   "rand_swing": 0.017033811937895868,
+   "func_gt_rand": 30,
+   "n": 30,
+   "sign_p": 9.313225746154785e-10
+  },
+  "alpha_1.0": {
+   "spec_plus": 0.20955028479249255,
+   "spec_minus": -0.4525050229469642,
+   "func_swing": 0.6620553077394569,
+   "func_swing_sem": 0.0331074391912559,
+   "rand_swing": 0.02722775691231478,
+   "func_gt_rand": 30,
+   "n": 30,
+   "sign_p": 9.313225746154785e-10
+  }
+ },
+ "verdict": "at 0.5xResid: spec(+u)=+0.122, spec(-u)=-0.202, signed swing +0.3240 (random +0.0170), func>rand 30/30 p=9.3e-10. CAUSALLY USED \u2014 the readout FLIPS with the sign of the functional push (nuclear-gene logits rise toward +u, fall toward -u) at disjoint positions, dose-dependently, far beyond the sign-independent random control. Level 1 upgrades from 'represented' to 'represented AND causally used'.",
+ "split_null": {
+  "n_splits": 30,
+  "alpha": 0.5,
+  "func_mean_swing": 0.32404758722323534,
+  "split_mean_swings": [
+   -0.03991082936257514,
+   -0.047532091757976576,
+   -0.07976343980895999,
+   0.10642956170801293,
+   -0.1469896488405423,
+   0.016527698231507962,
+   -0.05231109410591329,
+   -0.05961023721959617,
+   -0.050098081081618756,
+   -0.11447401056005285,
+   0.1294763289848792,
+   -0.07687776246710737,
+   -0.025171190972312133,
+   -0.16891899668824722,
+   0.046576590187896276,
+   0.026374328617810052,
+   0.014269617705368564,
+   -0.016500319691703538,
+   0.03368953816933571,
+   -0.09562412286490758,
+   0.021337374620553507,
+   -0.0066909369946231605,
+   0.010745315108055663,
+   0.06872268778667628,
+   0.007329106929839835,
+   -0.012234181166912605,
+   0.03837043492866111,
+   -0.05300062111244098,
+   0.015777340949287757,
+   0.04909519469146339
+  ],
+  "split_abs_mean": 0.05434762277716126,
+  "split_abs_sd": 0.042684290910220225,
+  "n_splits_abs_ge_func": 0,
+  "p_abs": 0.03225806451612903,
+  "z_abs": 6.318482952124649,
+  "n_splits_ge_func_signed": 0,
+  "p_signed": 0.03225806451612903
+ }
+}

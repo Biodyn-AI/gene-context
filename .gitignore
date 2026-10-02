@@ -21,3 +21,6 @@ venv/
 
 # keep the re-run logs (provenance of every result file)
 !results/logs_tokfix/*.log
+
+# the selected cells (needed to rebuild the extractions)
+!results/ctx_cell_selection.npz

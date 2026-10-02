@@ -1,0 +1,113 @@
+{
+ "model": "217m",
+ "extraction": "ctx217m600",
+ "alpha_unit": "centred",
+ "resid_norm_raw": 15.177458763122559,
+ "resid_norm_centred": 13.661394309997558,
+ "alphas_xResidNorm": [
+  0.25,
+  0.5,
+  1.0
+ ],
+ "site": 3,
+ "n_cells": 30,
+ "resid_norm": 13.661394309997558,
+ "push_size_raw": [
+  3.4153485774993895,
+  6.830697154998779,
+  13.661394309997558
+ ],
+ "natural_movement_along_axis": {
+  "n_genes": 3446,
+  "median_sd_across_contexts": 0.8466442227363586,
+  "median_range_across_contexts": 2.0611377954483032,
+  "p95_range_across_contexts": 3.859955072402954,
+  "pole_centroid_distance": 1.478696584701538,
+  "massive_dims": [
+   289,
+   552
+  ],
+  "axis_share_in_massive_dims": 0.12821082770824432,
+  "axis_massive_dims_zeroed": true,
+  "note": "natural-movement numbers describe the axis before the two dimensions were zeroed"
+ },
+ "n_nuclear_tokens": 4844,
+ "n_surface_tokens": 5520,
+ "signed": {
+  "alpha_0.25": {
+   "spec_plus": 0.004160106622559168,
+   "spec_minus": -0.033636159106991616,
+   "func_swing": 0.03779626572955078,
+   "func_swing_sem": 0.014770035906547062,
+   "rand_swing": 0.0028543661150082964,
+   "func_gt_rand": 18,
+   "n": 30,
+   "sign_p": 0.1807973040267825
+  },
+  "alpha_0.5": {
+   "spec_plus": -0.001809302146479578,
+   "spec_minus": -0.1326243073030624,
+   "func_swing": 0.13081500515658281,
+   "func_swing_sem": 0.031122484885502844,
+   "rand_swing": 0.002274151470122628,
+   "func_gt_rand": 20,
+   "n": 30,
+   "sign_p": 0.04936857335269451
+  },
+  "alpha_1.0": {
+   "spec_plus": -0.016765804840069138,
+   "spec_minus": -0.23122348840427553,
+   "func_swing": 0.2144576835642064,
+   "func_swing_sem": 0.04408837868731232,
+   "rand_swing": -0.02052483563086181,
+   "func_gt_rand": 21,
+   "n": 30,
+   "sign_p": 0.02138697262853384
+  }
+ },
+ "verdict": "at 0.5xResid: spec(+u)=-0.002, spec(-u)=-0.133, signed swing +0.1308 (random +0.0023), func>rand 20/30 p=4.9e-02. NOT cleanly causal \u2014 the readout does not flip with the sign of the functional direction beyond the random control, so the earlier apparent effect was the baseline nuclear/surface asymmetry under generic perturbation. Level 1 stands as a representation result only.",
+ "split_null": {
+  "n_splits": 30,
+  "alpha": 0.5,
+  "func_mean_swing": 0.13081500515658281,
+  "split_mean_swings": [
+   0.0847861994817561,
+   0.012024544603586951,
+   -0.09510070091533449,
+   -0.0382355193199675,
+   -0.09060324692867357,
+   0.08056230171808813,
+   0.08233473546608211,
+   -0.04579239241267534,
+   -0.08262208854990366,
+   0.03177999629712136,
+   0.02332333043229833,
+   -0.09249664910843754,
+   0.03757294870474758,
+   -0.10299824707380502,
+   0.032102687106851234,
+   0.04256917555213847,
+   0.14008122691799418,
+   0.02834944947899679,
+   0.07035707718625762,
+   -0.11737914132331712,
+   0.0010034336645180645,
+   0.11561725055388011,
+   0.04735146345461123,
+   0.02264118425767212,
+   0.03735211433635815,
+   -0.00678585453482432,
+   0.03218398593073968,
+   -0.10526418336353635,
+   -0.016782840235536223,
+   0.06354542219098293
+  ],
+  "split_abs_mean": 0.05931997970335642,
+  "split_abs_sd": 0.036879385787396114,
+  "n_splits_abs_ge_func": 1,
+  "p_abs": 0.06451612903225806,
+  "z_abs": 1.938617575234181,
+  "n_splits_ge_func_signed": 1,
+  "p_signed": 0.06451612903225806
+ }
+}

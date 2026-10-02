@@ -1,0 +1,42 @@
+{
+ "layers": {
+  "L04": {
+   "anisotropy_raw": 0.5668752193450928,
+   "selfsim_raw": 0.9500895142555237,
+   "corrected_selfsim_raw": 0.3832142949104309,
+   "top_pc_raw": 0.0867888480424881,
+   "anisotropy_zscored": 0.0009846099419519305,
+   "selfsim_zscored": 0.8895558714866638,
+   "corrected_selfsim_zscored": 0.8885712615447119,
+   "top_pc_zscored": 0.08481908589601517
+  },
+  "L02": {
+   "anisotropy_raw": 0.5356503129005432,
+   "selfsim_raw": 0.9857598543167114,
+   "corrected_selfsim_raw": 0.4501095414161682,
+   "top_pc_raw": 0.06615617126226425,
+   "anisotropy_zscored": -9.420275455340743e-05,
+   "selfsim_zscored": 0.9714183807373047,
+   "corrected_selfsim_zscored": 0.9715125834918581,
+   "top_pc_zscored": 0.061813369393348694
+  },
+  "L09": {
+   "anisotropy_raw": 0.619407057762146,
+   "selfsim_raw": 0.8459517359733582,
+   "corrected_selfsim_raw": 0.22654467821121216,
+   "top_pc_raw": 0.2012636363506317,
+   "anisotropy_zscored": 0.0031917248852550983,
+   "selfsim_zscored": 0.6426894068717957,
+   "corrected_selfsim_zscored": 0.6394976819865406,
+   "top_pc_zscored": 0.1732574999332428
+  }
+ },
+ "note": "High raw anisotropy with much lower self-sim-minus-anisotropy is exactly Ethayarajh's finding; our per-dimension z-scoring lowers anisotropy and keeps genes distinguishable, validating the cosine-based EXCESS/functional metrics computed on z-scored representations.",
+ "provenance": {
+  "prefix": "ctx_scgpt600",
+  "cells": 600,
+  "covariate": "rank",
+  "min_ctx": 9,
+  "outtag": "ctx_scgpt600"
+ }
+}

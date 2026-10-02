@@ -2,24 +2,32 @@
  "taps": {
   "L04": {
    "n_tfs": 26,
-   "static_excess_mean": 0.021234695547225308,
+   "static_excess_mean": 0.021498554561340182,
    "static_frac_pos": 0.7692307692307693,
+   "specific_excess_mean": 0.007850180824313935,
+   "specific_n": 26,
+   "specific_n_pos": 17,
+   "specific_sign_p": 0.08431877195835114,
    "static_sign_p": 0.0046776533126831055,
-   "modulation_mean_rho": 0.07341376572145805,
-   "modulation_frac_pos": 0.6538461538461539,
-   "modulation_sign_p": 0.08431877195835114,
+   "modulation_mean_rho": 0.08378672609441842,
+   "modulation_frac_pos": 0.5769230769230769,
+   "modulation_sign_p": 0.2785985469818115,
    "n_modul": 26
   },
   "L08": {
    "n_tfs": 26,
-   "static_excess_mean": 0.005016007621284039,
-   "static_frac_pos": 0.5769230769230769,
-   "static_sign_p": 0.2785985469818115,
-   "modulation_mean_rho": 0.13512961397576784,
-   "modulation_frac_pos": 0.6538461538461539,
-   "modulation_sign_p": 0.08431877195835114,
+   "static_excess_mean": 0.0037804932432606536,
+   "static_frac_pos": 0.5384615384615384,
+   "specific_excess_mean": -0.006824477803246451,
+   "specific_n": 26,
+   "specific_n_pos": 12,
+   "specific_sign_p": 0.7214014530181885,
+   "static_sign_p": 0.42250949144363403,
+   "modulation_mean_rho": 0.09650285611824073,
+   "modulation_frac_pos": 0.5769230769230769,
+   "modulation_sign_p": 0.2785985469818115,
    "n_modul": 26
   }
  },
- "verdict": "L4: (A) static excess +0.0212 (sign p 4.7e-03); (B) activity modulation rho +0.073 (sign p 0.08). PARTIAL \u2014 TFs sit closer to curated targets than co-expression-matched controls (A positive) but the effect is NOT modulated by where the programme is active (B null): near-targets, but not context-appropriately so."
+ "verdict": "L4: (A) static excess +0.0215 (sign p 4.7e-03); (B) activity modulation rho +0.084 (sign p 0.28). PARTIAL \u2014 TFs sit closer to curated targets than co-expression-matched controls (A positive) but the effect is NOT modulated by where the programme is active (B null): near-targets, but not context-appropriately so."
 }

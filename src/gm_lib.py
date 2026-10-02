@@ -177,7 +177,8 @@ def build_coexpr(force=False):
     mats, syms0 = [], None
     for fn in TS_FILES:
         with h5py.File(os.path.join(TS_RAW, fn), "r") as f:
-            X = f["X"]; n, g = (int(v) for v in X.attrs["shape"])
+            import ctx_tokenise as TK
+            X = TK.count_matrix(f); TK.check_counts(X); n, g = (int(v) for v in X.attrs["shape"])   # raw counts (fix 2 Oct 2026)
             # var/_index is the ENSEMBL id; the symbols live in the categorical var/feature_name.
             fnm = f["var"]["feature_name"]
             syms = _dec(fnm["categories"][:]).astype(str)[fnm["codes"][:]]
@@ -229,7 +230,10 @@ def build_coexpr_k562(n_cells=8000, force=False):
         X = f["X"]; n = X.shape[0]
         v = f["var"]["gene_name_index"]
         syms = _dec(v[:]).astype(str) if v.dtype.kind in "OS" else np.asarray(v).astype(str)
-        sel = np.sort(rng.choice(n, min(n_cells, n), replace=False))
+        # K562 non-targeting controls only (fixed 2 Oct 2026: the file holds K562, Jurkat, RPE1 and HepG2 cells,
+        # mostly with knockdowns; the earlier panel was that four-line mix)
+        import ctx_tokenise as TK
+        sel = TK.select_rows(f, n_cells, 0, cell_line="k562", gene_label="non-targeting")
         D = np.stack([np.asarray(X[int(i), :], dtype=np.float32) for i in sel])
     tot = D.sum(1, keepdims=True); tot[tot == 0] = 1.0
     C = D if (D.max() < 20.0 and not np.allclose(D, np.round(D))) else np.log1p(D / tot * 1e4)

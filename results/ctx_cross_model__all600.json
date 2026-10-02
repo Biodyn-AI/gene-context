@@ -1,0 +1,450 @@
+{
+ "MaxToki-217M-L2": {
+  "n_ctx": 12,
+  "n_genes": 5000,
+  "n_genes_balanced": 4425,
+  "n_entries_balanced": 16349,
+  "dim": 1232,
+  "cap": 50,
+  "pairs_scored": 66,
+  "excess": 0.8316134214401245,
+  "excess_ci": [
+   0.8282898508987001,
+   0.8351577761956417
+  ],
+  "main_effect_replication": 0.9924403844457684,
+  "anisotropy": null,
+  "func_z": {
+   "nuclear_vs_surface": {
+    "z": 18.421265628127305,
+    "poleA": 1300,
+    "poleB": 956,
+    "n_random": 1000,
+    "disjoint": true
+   }
+  },
+  "note": "",
+  "prefix": "ctx217m600",
+  "tap": 2
+ },
+ "MaxToki-217M": {
+  "n_ctx": 12,
+  "n_genes": 5000,
+  "n_genes_balanced": 4425,
+  "n_entries_balanced": 16349,
+  "dim": 1232,
+  "cap": 50,
+  "pairs_scored": 66,
+  "excess": 0.73978590965271,
+  "excess_ci": [
+   0.7362369846375171,
+   0.7432497750366652
+  ],
+  "main_effect_replication": 0.9927813049518701,
+  "anisotropy": null,
+  "func_z": {
+   "nuclear_vs_surface": {
+    "z": 15.516507541822591,
+    "poleA": 1300,
+    "poleB": 956,
+    "n_random": 1000,
+    "disjoint": true
+   }
+  },
+  "note": "",
+  "prefix": "ctx217m600",
+  "tap": 4
+ },
+ "MaxToki-1B-L4": {
+  "n_ctx": 12,
+  "n_genes": 5000,
+  "n_genes_balanced": 4425,
+  "n_entries_balanced": 16349,
+  "dim": 2304,
+  "cap": 50,
+  "pairs_scored": 66,
+  "excess": 0.7663193941116333,
+  "excess_ci": [
+   0.762548544784297,
+   0.7702530843087388
+  ],
+  "main_effect_replication": 0.9885795215765635,
+  "anisotropy": null,
+  "func_z": {
+   "nuclear_vs_surface": {
+    "z": 18.014140236619735,
+    "poleA": 1300,
+    "poleB": 956,
+    "n_random": 1000,
+    "disjoint": true
+   }
+  },
+  "note": "",
+  "prefix": "ctx1b",
+  "tap": 4
+ },
+ "MaxToki-1B-L7": {
+  "n_ctx": 12,
+  "n_genes": 5000,
+  "n_genes_balanced": 4425,
+  "n_entries_balanced": 16349,
+  "dim": 2304,
+  "cap": 50,
+  "pairs_scored": 66,
+  "excess": 0.7665789127349854,
+  "excess_ci": [
+   0.763511986776319,
+   0.7696783308482604
+  ],
+  "main_effect_replication": 0.9917863986708901,
+  "anisotropy": null,
+  "func_z": {
+   "nuclear_vs_surface": {
+    "z": 7.165934462805376,
+    "poleA": 1300,
+    "poleB": 956,
+    "n_random": 1000,
+    "disjoint": true
+   }
+  },
+  "note": "",
+  "prefix": "ctx1b",
+  "tap": 7
+ },
+ "scGPT-L2": {
+  "n_ctx": 12,
+  "n_genes": 5000,
+  "n_genes_balanced": 4093,
+  "n_entries_balanced": 21315,
+  "dim": 512,
+  "cap": 50,
+  "pairs_scored": 66,
+  "excess": 0.6879697442054749,
+  "excess_ci": [
+   0.6802096285238332,
+   0.6958496337395125
+  ],
+  "main_effect_replication": 0.991606020566189,
+  "anisotropy": null,
+  "func_z": {
+   "nuclear_vs_surface": {
+    "z": 3.959323073338138,
+    "poleA": 1221,
+    "poleB": 903,
+    "n_random": 1000,
+    "disjoint": true
+   }
+  },
+  "note": "",
+  "prefix": "ctx_scgpt600",
+  "tap": 2
+ },
+ "scGPT-L4": {
+  "n_ctx": 12,
+  "n_genes": 5000,
+  "n_genes_balanced": 4093,
+  "n_entries_balanced": 21315,
+  "dim": 512,
+  "cap": 50,
+  "pairs_scored": 66,
+  "excess": 0.8129490613937378,
+  "excess_ci": [
+   0.8075682958676402,
+   0.8182614990890474
+  ],
+  "main_effect_replication": 0.9934872903607108,
+  "anisotropy": null,
+  "func_z": {
+   "nuclear_vs_surface": {
+    "z": 3.6584342323041232,
+    "poleA": 1221,
+    "poleB": 903,
+    "n_random": 1000,
+    "disjoint": true
+   }
+  },
+  "note": "",
+  "prefix": "ctx_scgpt600",
+  "tap": 4
+ },
+ "STATE-L3": {
+  "n_ctx": 12,
+  "n_genes": 4969,
+  "n_genes_balanced": 4761,
+  "n_entries_balanced": 33637,
+  "dim": 2048,
+  "cap": 50,
+  "pairs_scored": 66,
+  "excess": 0.8798263669013977,
+  "excess_ci": [
+   0.8777449023746549,
+   0.8818708236294236
+  ],
+  "main_effect_replication": 0.9855157751025576,
+  "anisotropy": null,
+  "func_z": {
+   "nuclear_vs_surface": {
+    "z": 3.953459575678488,
+    "poleA": 1451,
+    "poleB": 988,
+    "n_random": 1000,
+    "disjoint": true
+   }
+  },
+  "note": "",
+  "prefix": "ctx_state600",
+  "tap": 3
+ },
+ "STATE-L6": {
+  "n_ctx": 12,
+  "n_genes": 4969,
+  "n_genes_balanced": 4761,
+  "n_entries_balanced": 33637,
+  "dim": 2048,
+  "cap": 50,
+  "pairs_scored": 66,
+  "excess": 0.8672252297401428,
+  "excess_ci": [
+   0.8652294786828573,
+   0.8692042786104218
+  ],
+  "main_effect_replication": 0.9822718519153018,
+  "anisotropy": null,
+  "func_z": {
+   "nuclear_vs_surface": {
+    "z": 4.013735978672876,
+    "poleA": 1451,
+    "poleB": 988,
+    "n_random": 1000,
+    "disjoint": true
+   }
+  },
+  "note": "",
+  "prefix": "ctx_state600",
+  "tap": 6
+ },
+ "MaxToki-217M-random": {
+  "n_ctx": 12,
+  "n_genes": 5000,
+  "n_genes_balanced": 4425,
+  "n_entries_balanced": 16349,
+  "dim": 1232,
+  "cap": 50,
+  "pairs_scored": 66,
+  "excess": 0.4406428933143616,
+  "excess_ci": [
+   0.4368377561906904,
+   0.44475910638138116
+  ],
+  "main_effect_replication": 0.9367511778166799,
+  "anisotropy": null,
+  "func_z": {
+   "nuclear_vs_surface": {
+    "z": 4.603705665201228,
+    "poleA": 1300,
+    "poleB": 956,
+    "n_random": 1000,
+    "disjoint": true
+   }
+  },
+  "note": "",
+  "prefix": "ctxrand",
+  "tap": 4
+ },
+ "scGPT-random": {
+  "n_ctx": 12,
+  "n_genes": 5000,
+  "n_genes_balanced": 4093,
+  "n_entries_balanced": 21315,
+  "dim": 512,
+  "cap": 50,
+  "pairs_scored": 66,
+  "excess": 0.29632964730262756,
+  "excess_ci": [
+   0.28679272341750217,
+   0.30633254154496303
+  ],
+  "main_effect_replication": 0.9050749079747633,
+  "anisotropy": null,
+  "func_z": {
+   "nuclear_vs_surface": {
+    "z": 2.2050729412928622,
+    "poleA": 1221,
+    "poleB": 903,
+    "n_random": 1000,
+    "disjoint": true
+   }
+  },
+  "note": "",
+  "prefix": "ctx_scgpt600rand",
+  "tap": 4
+ },
+ "STATE-random": {
+  "n_ctx": 12,
+  "n_genes": 4969,
+  "n_genes_balanced": 4761,
+  "n_entries_balanced": 33637,
+  "dim": 2048,
+  "cap": 50,
+  "pairs_scored": 66,
+  "excess": 0.7607111930847168,
+  "excess_ci": [
+   0.7590228623628544,
+   0.7623486544895715
+  ],
+  "main_effect_replication": 0.9486478670979991,
+  "anisotropy": null,
+  "func_z": {
+   "nuclear_vs_surface": {
+    "z": 1.371403479212367,
+    "poleA": 1451,
+    "poleB": 988,
+    "n_random": 1000,
+    "disjoint": true
+   }
+  },
+  "note": "",
+  "prefix": "ctx_state600rand",
+  "tap": 6
+ },
+ "expression-landmarks": {
+  "n_ctx": 12,
+  "n_genes": 5000,
+  "n_genes_balanced": 4425,
+  "n_entries_balanced": 16349,
+  "dim": 512,
+  "cap": 50,
+  "pairs_scored": 66,
+  "excess": 0.42446914315223694,
+  "excess_ci": [
+   0.41524950489262336,
+   0.4346767174864586
+  ],
+  "main_effect_replication": 0.8076716977538485,
+  "anisotropy": null,
+  "func_z": {
+   "nuclear_vs_surface": {
+    "z": -1.3317826405239697,
+    "poleA": 1300,
+    "poleB": 956,
+    "n_random": 1000,
+    "disjoint": true
+   }
+  },
+  "note": "",
+  "prefix": "ctxexpr",
+  "tap": 0
+ },
+ "expression-PCs": {
+  "n_ctx": 12,
+  "n_genes": 5000,
+  "n_genes_balanced": 4425,
+  "n_entries_balanced": 16349,
+  "dim": 256,
+  "cap": 50,
+  "pairs_scored": 66,
+  "excess": 0.21779000759124756,
+  "excess_ci": [
+   0.2108660137215334,
+   0.22505560819365208
+  ],
+  "main_effect_replication": 0.5952829122543335,
+  "anisotropy": null,
+  "func_z": {
+   "nuclear_vs_surface": {
+    "z": 0.7013595886234583,
+    "poleA": 1300,
+    "poleB": 956,
+    "n_random": 1000,
+    "disjoint": true
+   }
+  },
+  "note": "",
+  "prefix": "ctxexprpc",
+  "tap": 0
+ },
+ "expression-centroids": {
+  "n_ctx": 12,
+  "n_genes": 5000,
+  "n_genes_balanced": 4425,
+  "n_entries_balanced": 16349,
+  "dim": 50,
+  "cap": 50,
+  "pairs_scored": 66,
+  "excess": 0.3196215331554413,
+  "excess_ci": [
+   0.3108436561863742,
+   0.32844984587009846
+  ],
+  "main_effect_replication": 0.7847760753198103,
+  "anisotropy": null,
+  "func_z": {
+   "nuclear_vs_surface": {
+    "z": -0.39329661027206264,
+    "poleA": 1300,
+    "poleB": 956,
+    "n_random": 1000,
+    "disjoint": true
+   }
+  },
+  "note": "",
+  "prefix": "ctxexprcen50c",
+  "tap": 0
+ },
+ "expression-centroids-allcells": {
+  "n_ctx": 12,
+  "n_genes": 5000,
+  "n_genes_balanced": 4425,
+  "n_entries_balanced": 16349,
+  "dim": 50,
+  "cap": 50,
+  "pairs_scored": 66,
+  "excess": 0.6065811514854431,
+  "excess_ci": [
+   0.5960899032976528,
+   0.6174217318297555
+  ],
+  "main_effect_replication": 0.8842272315964554,
+  "anisotropy": null,
+  "func_z": {
+   "nuclear_vs_surface": {
+    "z": -1.7325808589862408,
+    "poleA": 1300,
+    "poleB": 956,
+    "n_random": 1000,
+    "disjoint": true
+   }
+  },
+  "note": "",
+  "prefix": "ctxexprcen50",
+  "tap": 0
+ },
+ "expression-centroids-512": {
+  "n_ctx": 12,
+  "n_genes": 5000,
+  "n_genes_balanced": 4425,
+  "n_entries_balanced": 16349,
+  "dim": 512,
+  "cap": 50,
+  "pairs_scored": 66,
+  "excess": 0.12934136390686035,
+  "excess_ci": [
+   0.12488997348713013,
+   0.1342208512402222
+  ],
+  "main_effect_replication": -0.22893855455472614,
+  "anisotropy": null,
+  "func_z": {
+   "nuclear_vs_surface": {
+    "z": 2.261988746160754,
+    "poleA": 1300,
+    "poleB": 956,
+    "n_random": 1000,
+    "disjoint": true
+   }
+  },
+  "note": "",
+  "prefix": "ctxexprcen",
+  "tap": 0
+ }
+}

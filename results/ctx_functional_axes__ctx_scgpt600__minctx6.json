@@ -1,0 +1,180 @@
+{
+ "axes_defined": {
+  "mito_vs_cytoskeleton": {
+   "poleA": 565,
+   "poleB": 137
+  },
+  "nuclear_vs_surface": {
+   "poleA": 1535,
+   "poleB": 1003
+  },
+  "cellcycle_vs_diff": {
+   "poleA": 129,
+   "poleB": 138
+  },
+  "transcription_vs_transport": {
+   "poleA": 273,
+   "poleB": 74
+  }
+ },
+ "taps": {
+  "L04": {
+   "mito_vs_cytoskeleton": {
+    "validity_auc": 0.8350315468127529,
+    "power": 0.6245958209037781,
+    "z_raw": 1.7203894253714709,
+    "power_resid": 1.3806674480438232,
+    "z_rank_controlled": 2.3381987055124513,
+    "null_mean": 0.3703342877328396,
+    "null_resid_mean": 0.57190945054094,
+    "rank_confound_rho": 0.6446481325171265,
+    "poleA": 463,
+    "poleB": 131
+   },
+   "nuclear_vs_surface": {
+    "validity_auc": 0.7842938110908404,
+    "power": 0.8562852144241333,
+    "z_raw": 3.8547969041547323,
+    "power_resid": 0.9340346455574036,
+    "z_rank_controlled": 1.357915551598019,
+    "null_mean": 0.3412920844554901,
+    "null_resid_mean": 0.5141272832701603,
+    "rank_confound_rho": 0.29701606847232026,
+    "poleA": 1221,
+    "poleB": 903
+   },
+   "cellcycle_vs_diff": {
+    "validity_auc": 0.6478260869565217,
+    "power": 1.1424992084503174,
+    "z_raw": 5.777215684349908,
+    "power_resid": 1.0706933736801147,
+    "z_rank_controlled": 1.5775796894834861,
+    "null_mean": 0.36069886962572734,
+    "null_resid_mean": 0.5550251502792041,
+    "rank_confound_rho": 0.30169345994282554,
+    "poleA": 110,
+    "poleB": 114
+   },
+   "transcription_vs_transport": {
+    "validity_auc": 0.7725108225108225,
+    "power": 0.6928041577339172,
+    "z_raw": 2.318265752084408,
+    "power_resid": 1.6625853776931763,
+    "z_rank_controlled": 3.4805337851782205,
+    "null_mean": 0.36581009698410827,
+    "null_resid_mean": 0.5562086291362842,
+    "rank_confound_rho": -0.2652841594868537,
+    "poleA": 223,
+    "poleB": 71
+   }
+  },
+  "L02": {
+   "mito_vs_cytoskeleton": {
+    "validity_auc": 0.8473230161869711,
+    "power": 0.389636367559433,
+    "z_raw": 2.2765383561811627,
+    "power_resid": 0.8752022385597229,
+    "z_rank_controlled": 3.198406230945944,
+    "null_mean": 0.13370041890690723,
+    "null_resid_mean": 0.24917188934360943,
+    "rank_confound_rho": 0.619665640252698,
+    "poleA": 463,
+    "poleB": 131
+   },
+   "nuclear_vs_surface": {
+    "validity_auc": 0.7925250400434909,
+    "power": 0.48828983306884766,
+    "z_raw": 4.1535805664962915,
+    "power_resid": 0.6038123369216919,
+    "z_rank_controlled": 2.3010618881541025,
+    "null_mean": 0.11698284140477577,
+    "null_resid_mean": 0.20585226169476906,
+    "rank_confound_rho": 0.37897028448598397,
+    "poleA": 1221,
+    "poleB": 903
+   },
+   "cellcycle_vs_diff": {
+    "validity_auc": 0.6546712181099533,
+    "power": 0.6371176242828369,
+    "z_raw": 6.026354752350492,
+    "power_resid": 0.6018689870834351,
+    "z_rank_controlled": 1.8679983150386947,
+    "null_mean": 0.12265913054347038,
+    "null_resid_mean": 0.22638760012884934,
+    "rank_confound_rho": 0.39524789958021045,
+    "poleA": 110,
+    "poleB": 114
+   },
+   "transcription_vs_transport": {
+    "validity_auc": 0.8215367965367966,
+    "power": 0.2511415481567383,
+    "z_raw": 1.8924893888606882,
+    "power_resid": 0.6991183161735535,
+    "z_rank_controlled": 2.4826399060392808,
+    "null_mean": 0.11188309123118718,
+    "null_resid_mean": 0.223618492949754,
+    "rank_confound_rho": -0.20274141112027563,
+    "poleA": 223,
+    "poleB": 71
+   }
+  },
+  "L09": {
+   "mito_vs_cytoskeleton": {
+    "validity_auc": 0.77762314045624,
+    "power": 2.3820111751556396,
+    "z_raw": 0.7475130441449453,
+    "power_resid": 5.734094142913818,
+    "z_rank_controlled": 1.6458832052608687,
+    "null_mean": 1.9640702809890112,
+    "null_resid_mean": 3.1124182750781375,
+    "rank_confound_rho": 0.684473659983825,
+    "poleA": 463,
+    "poleB": 131
+   },
+   "nuclear_vs_surface": {
+    "validity_auc": 0.7553183876998555,
+    "power": 2.2723419666290283,
+    "z_raw": 0.4643088205085627,
+    "power_resid": 2.519397497177124,
+    "z_rank_controlled": -0.428296070142546,
+    "null_mean": 2.009036939740181,
+    "null_resid_mean": 3.276096132993698,
+    "rank_confound_rho": 0.31022551312223784,
+    "poleA": 1221,
+    "poleB": 903
+   },
+   "cellcycle_vs_diff": {
+    "validity_auc": 0.6558749550844413,
+    "power": 2.817648410797119,
+    "z_raw": 1.41775231118842,
+    "power_resid": 3.0017452239990234,
+    "z_rank_controlled": -0.07579885121483891,
+    "null_mean": 1.9847058635950088,
+    "null_resid_mean": 3.133100033402443,
+    "rank_confound_rho": 0.44183828814917386,
+    "poleA": 110,
+    "poleB": 114
+   },
+   "transcription_vs_transport": {
+    "validity_auc": 0.7093001443001443,
+    "power": 2.9939119815826416,
+    "z_raw": 1.6501306076327331,
+    "power_resid": 7.870231628417969,
+    "z_rank_controlled": 2.494009479876798,
+    "null_mean": 2.018452676733335,
+    "null_resid_mean": 3.384240182240804,
+    "rank_confound_rho": -0.42011032121422653,
+    "poleA": 223,
+    "poleB": 71
+   }
+  }
+ },
+ "verdict": "L04/transcription_vs_transport: validity AUC 0.77. Raw modulation z +2.3 but RANK-CONTROLLED z +3.5. Across valid axes, 3 beat the null raw, 2 survive rank control. POSITIVE \u2014 functional modulation survives abundance/rank control on at least one valid axis: genes move preferentially along a functional direction beyond what abundance explains.",
+ "provenance": {
+  "prefix": "ctx_scgpt600",
+  "cells": 600,
+  "covariate": "rank",
+  "min_ctx": 6,
+  "outtag": "ctx_scgpt600__minctx6"
+ }
+}

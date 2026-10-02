@@ -1,8 +1,11 @@
-"""Save the per-cell-type projection of the context main effect onto the nuclear/surface functional axis, so the
-per-context loadings quoted in §4.4 (CD8 T +4.1 ... alveolar type-2 -5.3) are traceable to a result file.
+"""Save the per-cell-type loading on the nuclear/surface functional axis (the mean projection of the z-scored
+representations of the genes count-balanced in that cell type), so the per-context loadings quoted in the paper are
+traceable to a result file. NOTE: each cell type averages over its OWN gene set, so the loading includes the genes'
+main effects (which genes the cell type expresses), not only how context moves the same genes.
 Out: results/ctx_celltype_loadings.json"""
 import os, sys, json, pickle, warnings; warnings.filterwarnings("ignore")
 import numpy as np
+import ctx_prefix as PX
 HERE = os.path.dirname(os.path.abspath(__file__)); RES = os.path.join(HERE, "results")
 NAME_ID = "/Volumes/Crucial X6/MacBook/Code/neuro-mechinterp/models/Geneformer/geneformer/gene_name_id_dict_gc104M.pkl"
 G2G = "/Volumes/Crucial X6/MacBook/biomechinterp/biodyn-work/single_cell_mechinterp/data/perturb/gene2go_all.pkl"
@@ -10,7 +13,8 @@ NUC = ["GO:0005634", "GO:0000785", "GO:0003677"]; SURF = ["GO:0005886", "GO:0005
 
 ens2sym = {e: s.upper() for s, e in pickle.load(open(NAME_ID, "rb")).items()}
 g2g = {k.upper(): set(v) for k, v in pickle.load(open(G2G, "rb")).items() if isinstance(v, (set, list, tuple))}
-z = np.load(os.path.join(RES, "ctx_maxtoki_L04.npz"), allow_pickle=True)
+TAP = PX.tap(4)
+z = np.load(PX.npz_path(TAP), allow_pickle=True)
 M, counts, cap = z["M"].astype(np.float32), z["counts"], int(z["cap"])
 genes = z["genes"].astype(str); ctxs = z["contexts"].astype(str); syms = [ens2sym.get(g) for g in genes]
 full = (counts == cap).all(0); d = M.shape[-1]
@@ -30,7 +34,7 @@ load = {ctxs[ci]: float(np.nanmean(np.where(full[ci], q[ci], np.nan))) for ci in
 load = dict(sorted(load.items(), key=lambda kv: -kv[1]))
 json.dump({"axis": "nuclear(+)/surface(-)", "per_context_loading": load,
            "note": "context main effect projected on the frozen nuclear/surface axis (§4.4)"},
-          open(os.path.join(RES, "ctx_celltype_loadings.json"), "w"), indent=1)
+          open(PX.out("ctx_celltype_loadings"), "w"), indent=1)
 for c, v in load.items():
     print(f"  {v:+.2f}  {c}")
 print("[done] -> results/ctx_celltype_loadings.json")

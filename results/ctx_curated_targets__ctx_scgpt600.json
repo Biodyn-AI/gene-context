@@ -1,0 +1,56 @@
+{
+ "taps": {
+  "L04": {
+   "n_tfs": 16,
+   "static_excess_mean": 0.025632926488438186,
+   "static_frac_pos": 0.5625,
+   "specific_excess_mean": 0.06999495736360001,
+   "specific_n": 16,
+   "specific_n_pos": 13,
+   "specific_sign_p": 0.0106353759765625,
+   "static_sign_p": 0.4018096923828125,
+   "modulation_mean_rho": -0.0018887362637362293,
+   "modulation_frac_pos": 0.5625,
+   "modulation_sign_p": 0.4018096923828125,
+   "n_modul": 16
+  },
+  "L02": {
+   "n_tfs": 16,
+   "static_excess_mean": 0.029277822950337408,
+   "static_frac_pos": 0.625,
+   "specific_excess_mean": 0.06348291292006628,
+   "specific_n": 16,
+   "specific_n_pos": 13,
+   "specific_sign_p": 0.0106353759765625,
+   "static_sign_p": 0.2272491455078125,
+   "modulation_mean_rho": -0.15247252747252749,
+   "modulation_frac_pos": 0.375,
+   "modulation_sign_p": 0.8949432373046875,
+   "n_modul": 16
+  },
+  "L09": {
+   "n_tfs": 16,
+   "static_excess_mean": 0.013811593799330793,
+   "static_frac_pos": 0.625,
+   "specific_excess_mean": 0.05578601226233845,
+   "specific_n": 16,
+   "specific_n_pos": 9,
+   "specific_sign_p": 0.4018096923828125,
+   "static_sign_p": 0.2272491455078125,
+   "modulation_mean_rho": -0.21840139027639024,
+   "modulation_frac_pos": 0.375,
+   "modulation_sign_p": 0.8949432373046875,
+   "n_modul": 16
+  }
+ },
+ "verdict": "L4: (A) static excess +0.0256 (sign p 4.0e-01); (B) activity modulation rho -0.002 (sign p 0.40). NO LEVEL-2 SIGNAL \u2014 even with ChIP/literature targets as ground truth, TFs are not placed near their targets beyond co-expression, nor context-appropriately. The curated route does not rescue Level 2; the ceiling argument holds. Level 1 (functional organisation beyond co-expression) remains the result.",
+ "provenance": {
+  "prefix": "ctx_scgpt600",
+  "cells": 600,
+  "covariate": "rank",
+  "min_ctx": 9,
+  "outtag": "ctx_scgpt600",
+  "min_tf_ctx": 6,
+  "verdict_tap": 4
+ }
+}

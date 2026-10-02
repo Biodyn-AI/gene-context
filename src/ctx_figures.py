@@ -24,6 +24,7 @@ plt.rcParams.update({"font.size": 8, "axes.labelsize": 8, "xtick.labelsize": 7.5
                      "legend.fontsize": 7.5, "axes.spines.top": False, "axes.spines.right": False,
                      "figure.dpi": 150, "pdf.fonttype": 42, "ps.fonttype": 42})   # TrueType fonts embedded
 BLUE, RED, GREY, GREEN, LBLUE = "#2c6fbb", "#c0392b", "#95a5a6", "#e69f00", "#a9cbe8"   # orange, not green, next to red
+ORANGE = GREEN
 ANN = 7.5                                                # minimum annotation size (pt)
 
 
@@ -144,23 +145,37 @@ def fig4():
 
 
 def fig5():
-    d = L("ctx_cross_model.json")
-    # MaxToki-1B is shown at layer 7, the relative depth (0.35) matched to MaxToki-217M layer 4 (0.36)
-    order = ["scGPT", "STATE-SE", "MaxToki-217M", "MaxToki-1B-L7", "MaxToki-217M-random"]
-    label = {"STATE-SE": "STATE (SE-600M)", "MaxToki-217M": "MaxToki-217M\n(layer 4)",
-             "MaxToki-1B-L7": "MaxToki-1B\n(layer 7)", "MaxToki-217M-random": "MaxToki-217M\n(random weights)"}
-    rows = [(m, d[m]) for m in order if m in d and "error" not in d[m]]
-    names = [label.get(r[0], r[0]) for r in rows]
+    """All representations on the same 600 cells per cell type, gene panel and cap (results/ctx_cross_model__all600.json);
+    each model at its depth-matched layer. Falls back to the older mixed comparison if that file is absent."""
+    p = os.path.join(RES, "ctx_cross_model__all600.json")
+    if not os.path.exists(p) and os.environ.get("FIG5_LEGACY") != "1":
+        raise SystemExit("fig5: results/ctx_cross_model__all600.json missing (set FIG5_LEGACY=1 for the old figure)")
+    if os.path.exists(p):
+        d = json.load(open(p))
+        order = [("MaxToki-217M", "MaxToki-217M (layer 4)", BLUE), ("MaxToki-1B-L7", "MaxToki-1B (layer 7)", BLUE),
+                 ("scGPT-L4", "scGPT (layer 4)", BLUE), ("STATE-L6", "STATE (layer 6)", BLUE),
+                 ("MaxToki-217M-random", "MaxToki-217M, untrained", GREY), ("scGPT-random", "scGPT, untrained", GREY),
+                 ("STATE-random", "STATE, untrained", GREY),
+                 ("expression-landmarks", "Expression only (landmarks)", ORANGE),
+                 ("expression-PCs", "Expression only (PCs)", ORANGE),
+                 ("expression-centroids", "Expression only (centroids)", ORANGE)]
+    else:
+        d = L("ctx_cross_model.json")
+        order = [("scGPT", "scGPT", BLUE), ("STATE-SE", "STATE (SE-600M)", BLUE), ("MaxToki-217M", "MaxToki-217M\n(layer 4)", BLUE),
+                 ("MaxToki-1B-L7", "MaxToki-1B\n(layer 7)", BLUE), ("MaxToki-217M-random", "MaxToki-217M\n(random weights)", GREY)]
+    rows = [(lab, d[k], c) for k, lab, c in order if k in d and isinstance(d[k], dict) and "excess" in d[k]]
+    names = [r[0] for r in rows]; cols = [r[2] for r in rows]
     ex = [r[1]["excess"] for r in rows]
     fz = [r[1]["func_z"]["nuclear_vs_surface"]["z"] if r[1]["func_z"].get("nuclear_vs_surface") else 0 for r in rows]
-    fig, (a1, a2) = plt.subplots(1, 2, figsize=(W2, 2.7), layout="constrained", sharey=True)
-    cols = [BLUE if "random" not in n else GREY for n in names]
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(W2, 0.32 * len(rows) + 1.0), layout="constrained", sharey=True)
     y = np.arange(len(names))[::-1]
     a1.barh(y, ex, color=cols); a1.set_yticks(y); a1.set_yticklabels(names)
-    a1.set_xlabel("EXCESS (contextualisation strength)")
+    a1.set_xlabel("EXCESS (gene-specific context shift)")
     title(a1, "Contextualisation strength", fontsize=8.5)
-    a2.barh(y, fz, color=cols); a2.set_xlabel("functional-z (nuclear/surface axis vs random axes)")
-    a2.axvline(3, color="k", ls="--", lw=0.7); a2.text(3.3, y.max() + 0.35, "z = 3", fontsize=ANN, va="center")
+    a2.barh(y, fz, color=cols); a2.set_xlabel("functional-z (nuclear/surface axis)")
+    a2.axvline(0, color="k", lw=0.5)
+    a2.axvline(3, color="k", ls="--", lw=0.7); a2.text(3.3, y.min() - 0.3, "z = 3", fontsize=ANN, va="center")
+    a2.set_ylim(y.min() - 0.7, y.max() + 0.5)
     title(a2, "Functional organisation", fontsize=8.5)
     save(fig, "ctx_fig5.pdf")
 

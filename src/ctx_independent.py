@@ -29,10 +29,11 @@ def main():
     g2g = {k.upper(): set(v) for k, v in pickle.load(open(G2G, "rb")).items() if isinstance(v, (set, list, tuple))}
     rng = np.random.default_rng(SEED)
     out = {"dataset": "Setty CD34+ bone marrow (developmental states)", "taps": {}}
-    for tap in [2, 4]:
+    TAPS = [int(x) for x in os.environ.get("TAPS", "2,4").split(",")]   # verdict uses the LAST listed tap
+    for tap in TAPS:
         z = np.load(os.path.join(RES, f"{PREFIX}_L{tap:02d}.npz"), allow_pickle=True)
         M, counts, cap = z["M"].astype(np.float32), z["counts"], int(z["cap"])
-        genes = z["genes"].astype(str); ctxs = z["clusters"].astype(str)
+        genes = z["genes"].astype(str); ctxs = (z["clusters"] if "clusters" in z else z["contexts"]).astype(str)
         nP, nC, nG, d = M.shape
         full = (counts == cap).all(0)
         flat = M[:, full]; mu = flat.reshape(-1, d).mean(0); sd = flat.reshape(-1, d).std(0) + 1e-6
@@ -79,7 +80,7 @@ def main():
         fzp = fz.get("nuclear_vs_surface")
         print(f"L{tap}: EXCESS {excess:+.4f} CI[{ci_g[0]:+.3f},{ci_g[1]:+.3f}] "
               f"diff {D.mean():+.4f} mainrep {np.mean(mr):+.3f} | FUNC-z(nuc/surf) {fzp['z']:+.1f}" if fzp else "")
-    d4 = out["taps"]["L04"]; fzp = d4["func_z"].get("nuclear_vs_surface")
+    d4 = out["taps"][f"L{TAPS[-1]:02d}"]; fzp = d4["func_z"].get("nuclear_vs_surface")
     rep = fzp and d4["excess"] > 0 and d4["excess_ci"][0] > 0 and fzp["z"] > 3
     out["prefix"] = PREFIX
     out["verdict"] = ((f"REPLICATES on the Setty data: EXCESS {d4['excess']:+.3f} (CI lower {d4['excess_ci'][0]:+.3f}), "

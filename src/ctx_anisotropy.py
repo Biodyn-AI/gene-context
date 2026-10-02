@@ -15,6 +15,7 @@ Out: results/ctx_anisotropy.json
 """
 import os, sys, json, warnings; warnings.filterwarnings("ignore")
 import numpy as np
+import ctx_prefix as PX
 HERE = os.path.dirname(os.path.abspath(__file__)); RES = os.path.join(HERE, "results")
 SEED = 0
 
@@ -27,11 +28,23 @@ def stats(V, rng, n=6000):
     return ani, float((s[0] ** 2) / (s ** 2).sum())
 
 
+def selfsim(U, gidx):
+    """mean over genes (with >= 2 count-balanced cell types) of the mean cosine between that gene's cell types"""
+    order = np.argsort(gidx, kind="stable"); g = gidx[order]; V = U[order]
+    starts = np.flatnonzero(np.r_[True, g[1:] != g[:-1]]); ends = np.r_[starts[1:], len(g)]
+    vals = []
+    for s, e in zip(starts, ends):
+        if e - s < 2: continue
+        v = V[s:e]; G = v @ v.T; m = e - s
+        vals.append((G.sum() - np.trace(G)) / (m * (m - 1)))
+    return float(np.mean(vals)), len(vals)
+
+
 def main():
     rng = np.random.default_rng(SEED)
     out = {"layers": {}}
-    for tap in [0, 4, 8, 11]:
-        p = os.path.join(RES, f"ctx_maxtoki_L{tap:02d}.npz")
+    for tap in PX.taps([0, 4, 8, 11]):
+        p = PX.npz_path(tap)
         if not os.path.exists(p):
             continue
         z = np.load(p, allow_pickle=True)
@@ -50,28 +63,18 @@ def main():
         U = raw / (np.linalg.norm(raw, axis=1, keepdims=True) + 1e-9)
         ani_raw, pc_raw = stats(U, rng)
         # self-similarity: same gene across contexts
-        selfsim = []
-        for gi in np.unique(gidx)[: min(1500, nG)]:
-            v = U[gidx == gi]
-            if len(v) < 2:
-                continue
-            iu = np.triu_indices(len(v), 1); selfsim.append((v[iu[0]] * v[iu[1]]).sum(1).mean())
-        ss_raw = float(np.mean(selfsim))
+        # (3 Oct 2026: all genes with >= 2 count-balanced cell types; the first version used only the first 1500 genes)
+        ss_raw, n_ss = selfsim(U, gidx)
         # after per-dim z-scoring (our correction)
         mu = raw.mean(0); sd = raw.std(0) + 1e-6
         Z = (raw - mu) / sd; Uz = Z / (np.linalg.norm(Z, axis=1, keepdims=True) + 1e-9)
         ani_z, pc_z = stats(Uz, rng)
-        ss_z = []
-        for gi in np.unique(gidx)[: min(1500, nG)]:
-            v = Uz[gidx == gi]
-            if len(v) < 2:
-                continue
-            iu = np.triu_indices(len(v), 1); ss_z.append((v[iu[0]] * v[iu[1]]).sum(1).mean())
-        ss_z = float(np.mean(ss_z))
+        ss_z, _ = selfsim(Uz, gidx)
         out["layers"][f"L{tap:02d}"] = dict(anisotropy_raw=ani_raw, selfsim_raw=ss_raw,
                                             corrected_selfsim_raw=ss_raw - ani_raw, top_pc_raw=pc_raw,
                                             anisotropy_zscored=ani_z, selfsim_zscored=ss_z,
-                                            corrected_selfsim_zscored=ss_z - ani_z, top_pc_zscored=pc_z)
+                                            corrected_selfsim_zscored=ss_z - ani_z, top_pc_zscored=pc_z,
+                                            selfsim_n_genes=n_ss, n_entries=int(len(gidx)))
         print(f"L{tap:02d}: RAW anisotropy {ani_raw:+.3f} self-sim {ss_raw:+.3f} (corrected {ss_raw-ani_raw:+.3f}) "
               f"topPC {pc_raw:.2f} || Z-SCORED anisotropy {ani_z:+.3f} self-sim {ss_z:+.3f} "
               f"(corrected {ss_z-ani_z:+.3f}) topPC {pc_z:.2f}", flush=True)
@@ -79,7 +82,7 @@ def main():
     out["note"] = ("High raw anisotropy with much lower self-sim-minus-anisotropy is exactly Ethayarajh's finding; "
                    "our per-dimension z-scoring lowers anisotropy and keeps genes distinguishable, validating the "
                    "cosine-based EXCESS/functional metrics computed on z-scored representations.")
-    json.dump(out, open(os.path.join(RES, "ctx_anisotropy.json"), "w"), indent=1)
+    out.update({} if PX.IS_DEFAULT else {"provenance": PX.provenance()}); json.dump(out, open(PX.out("ctx_anisotropy"), "w"), indent=1)
     print("[done] -> results/ctx_anisotropy.json")
 
 

@@ -48,16 +48,17 @@ Out: results/ctx_polysemy.json
 """
 import os, sys, json, itertools, warnings; warnings.filterwarnings("ignore")
 import numpy as np
+import ctx_prefix as PX
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "results")
-TAPS = [0, 4, 8, 11]
+TAPS = PX.taps([0, 4, 8, 11])
 SEED = 0
 MIN_GENES = 200          # a context pair needs this many count-balanced genes to be scored
 
 
 def load(tap):
-    p = os.path.join(RES, f"ctx_maxtoki_L{tap:02d}.npz")
+    p = PX.npz_path(tap)
     z = np.load(p, allow_pickle=True)
     return (z["M"].astype(np.float32), z["counts"], z["genes"].astype(str),
             z["contexts"].astype(str), int(z["cap"]))
@@ -80,7 +81,9 @@ def cos_rows(A, B):
 def main():
     rng = np.random.default_rng(SEED)
     out = {"taps": {}}
-    for tap in TAPS:
+    rng0 = rng
+    for _ti, tap in enumerate(TAPS):
+        rng = PX.rng_for(SEED, _ti, rng0)
         M, counts, genes, ctxs, cap = load(tap)
         nP, nC, nG, d = M.shape
         full = (counts == cap).all(0)                   # (n_ctx, n_gene) balanced in BOTH partitions
@@ -144,7 +147,7 @@ def main():
              "finding that SCFM attention re-expresses co-expression."))
         print(f"\nVERDICT: {out['verdict']}")
     os.makedirs(RES, exist_ok=True)
-    json.dump(out, open(os.path.join(RES, "ctx_polysemy.json"), "w"), indent=1)
+    out.update({} if PX.IS_DEFAULT else {"provenance": PX.provenance()}); json.dump(out, open(PX.out("ctx_polysemy"), "w"), indent=1)
     print("\n[done] -> results/ctx_polysemy.json")
 
 

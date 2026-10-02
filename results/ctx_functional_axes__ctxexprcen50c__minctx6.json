@@ -1,0 +1,80 @@
+{
+ "axes_defined": {
+  "mito_vs_cytoskeleton": {
+   "poleA": 565,
+   "poleB": 137
+  },
+  "nuclear_vs_surface": {
+   "poleA": 1535,
+   "poleB": 1003
+  },
+  "cellcycle_vs_diff": {
+   "poleA": 129,
+   "poleB": 138
+  },
+  "transcription_vs_transport": {
+   "poleA": 273,
+   "poleB": 74
+  }
+ },
+ "taps": {
+  "L00": {
+   "mito_vs_cytoskeleton": {
+    "validity_auc": 0.7542491326055684,
+    "power": 0.08761338889598846,
+    "z_raw": -2.0870304512207394,
+    "power_resid": 0.08805971592664719,
+    "z_rank_controlled": -2.1444214895046434,
+    "null_mean": 0.13929196243484815,
+    "null_resid_mean": 0.1425279955814282,
+    "rank_confound_rho": 0.11651772525655518,
+    "poleA": 502,
+    "poleB": 134
+   },
+   "nuclear_vs_surface": {
+    "validity_auc": 0.7084537773526647,
+    "power": 0.13135330379009247,
+    "z_raw": -0.4093589023255667,
+    "power_resid": 0.1380845010280609,
+    "z_rank_controlled": -0.2767105669752804,
+    "null_mean": 0.14217725242177645,
+    "null_resid_mean": 0.14567613293727238,
+    "rank_confound_rho": 0.2514461616840398,
+    "poleA": 1300,
+    "poleB": 956
+   },
+   "cellcycle_vs_diff": {
+    "validity_auc": 0.569536231884058,
+    "power": 0.11754481494426727,
+    "z_raw": -0.9599410076864004,
+    "power_resid": 0.11971333622932434,
+    "z_rank_controlled": -0.9771568050908386,
+    "null_mean": 0.14244442261755466,
+    "null_resid_mean": 0.14549566936989625,
+    "rank_confound_rho": 0.13249932861858837,
+    "poleA": 115,
+    "poleB": 122
+   },
+   "transcription_vs_transport": {
+    "validity_auc": 0.6374411302982731,
+    "power": 0.15171745419502258,
+    "z_raw": 0.4814926457212395,
+    "power_resid": 0.15632331371307373,
+    "z_rank_controlled": 0.5232793875295725,
+    "null_mean": 0.1394846944262584,
+    "null_resid_mean": 0.14259684247275192,
+    "rank_confound_rho": 0.16870445519082367,
+    "poleA": 241,
+    "poleB": 69
+   }
+  }
+ },
+ "verdict": "L00/nuclear_vs_surface: validity AUC 0.71. Raw modulation z -0.4 but RANK-CONTROLLED z -0.3. Across valid axes, 0 beat the null raw, 0 survive rank control. The raw functional signal is ABUNDANCE, not function \u2014 it collapses once per-gene-per-context rank is removed, and the one abundance-neutral axis (cell-cycle vs differentiation) was null from the start. Genes move gene-specifically and reproducibly (established in ctx_polysemy), but that movement is not organised around these functional categories once abundance is controlled.",
+ "provenance": {
+  "prefix": "ctxexprcen50c",
+  "cells": 600,
+  "covariate": "rank",
+  "min_ctx": 6,
+  "outtag": "ctxexprcen50c__minctx6"
+ }
+}

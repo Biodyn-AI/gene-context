@@ -31,13 +31,14 @@ Out: results/ctx_functional_axes.json
 """
 import os, sys, json, pickle, itertools, warnings; warnings.filterwarnings("ignore")
 import numpy as np
+import ctx_prefix as PX
 
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 RES = os.path.join(HERE, "results")
 NAME_ID = "/Volumes/Crucial X6/MacBook/Code/neuro-mechinterp/models/Geneformer/geneformer/gene_name_id_dict_gc104M.pkl"
 G2G = "/Volumes/Crucial X6/MacBook/biomechinterp/biodyn-work/single_cell_mechinterp/data/perturb/gene2go_all.pkl"
-TAPS = [4, 8, 11]
-MIN_CTX = 9          # a gene must be count-balanced in >= this many contexts to enter the two-way analysis
+TAPS = PX.taps([4, 8, 11])
+MIN_CTX = PX.min_ctx(9) # a gene must be count-balanced in >= this many contexts to enter the two-way analysis
 N_RANDOM = 300
 SEED = 0
 from sklearn.model_selection import StratifiedKFold
@@ -74,19 +75,13 @@ def main():
 
     # per-context mean rank, for the abundance check (reuse the tokenisation from the confound script)
     import ctx_position_confound as CP
-    z0 = np.load(os.path.join(RES, "ctx_maxtoki_L08.npz"), allow_pickle=True)
+    z0 = np.load(PX.npz_path(TAPS[0]), allow_pickle=True)
     ctxs = z0["contexts"].astype(str); genes = z0["genes"].astype(str)
     syms = [ens2sym.get(g) for g in genes]
     tokmap = json.load(open(f"{CP.MSETUP}/token_dictionary.json"))
     ens2tid = {k: int(v) for k, v in tokmap.items()}
     tids = np.array([ens2tid.get(g, -1) for g in genes])
-    MR = CP.mean_ranks(set(ctxs))
-    rank = np.full((len(ctxs), len(genes)), np.nan)
-    for ci, c in enumerate(ctxs):
-        d = MR.get(c, {})
-        for gi, t in enumerate(tids):
-            if t in d:
-                rank[ci, gi] = d[t]
+    rank = PX.covariate_matrix(ctxs, genes)   # MaxToki mean rank (COV=rank) on the extraction's cells
 
     out = {"axes_defined": {}, "taps": {}}
     for name, (A, B) in AXES.items():
@@ -95,7 +90,7 @@ def main():
         print(f"axis {name:<28} poleA={len(ia):<4} poleB={len(ib)}")
 
     for tap in TAPS:
-        z = np.load(os.path.join(RES, f"ctx_maxtoki_L{tap:02d}.npz"), allow_pickle=True)
+        z = np.load(PX.npz_path(tap), allow_pickle=True)
         M, counts, cap = z["M"].astype(np.float32), z["counts"], int(z["cap"])
         full = (counts == cap).all(0)                      # (n_ctx, n_gene) balanced in both partitions
         flat = M[:, full]
@@ -148,6 +143,7 @@ def main():
                 qm = np.where(m[None], q, np.nan)
                 if resid_rank:
                     fin = np.isfinite(qm[0]) & np.isfinite(Ruse)         # same mask both partitions
+                    qm[:, ~fin] = np.nan                                 # no covariate -> excluded
                     r = Ruse[fin]
                     A = np.column_stack([np.ones_like(r), r, r ** 2])    # linear + quadratic in rank
                     P = A @ np.linalg.lstsq(A, np.zeros_like(r), rcond=None)[0]  # placeholder shape
@@ -212,7 +208,7 @@ def main():
     else:
         out["verdict"] = "No axis reached validity AUC > 0.65 — cannot test functional modulation."
     print(f"\nVERDICT: {out['verdict']}")
-    json.dump(out, open(os.path.join(RES, "ctx_functional_axes.json"), "w"), indent=1)
+    out.update({} if PX.IS_DEFAULT else {"provenance": PX.provenance()}); json.dump(out, open(PX.out("ctx_functional_axes"), "w"), indent=1)
     print("[done] -> results/ctx_functional_axes.json")
 
 

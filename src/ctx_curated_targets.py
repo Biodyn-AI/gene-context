@@ -24,6 +24,7 @@ Reads headline ctx_maxtoki_L{04,08}.npz. Out: results/ctx_curated_targets.json
 """
 import os, sys, json, pickle, csv, collections, warnings; warnings.filterwarnings("ignore")
 import numpy as np
+import ctx_prefix as PX
 
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 import ctx_position_confound as CP
@@ -31,10 +32,10 @@ from ctx_coexpr_null import coexpr_matrix
 RES = os.path.join(HERE, "results")
 NAME_ID = "/Volumes/Crucial X6/MacBook/Code/neuro-mechinterp/models/Geneformer/geneformer/gene_name_id_dict_gc104M.pkl"
 NET = "/Volumes/Crucial X6/MacBook/biomechinterp/biodyn-work/single_cell_mechinterp/external/networks"
-TAPS = [4, 8]
-MIN_TF_CTX = 6         # TF must be count-balanced in >= this many contexts
+TAPS = PX.taps([4, 8])
+MIN_TF_CTX = PX.min_ctx(6) if os.environ.get('MIN_CTX') else 6         # TF must be count-balanced in >= this many contexts
 MIN_TARGETS = 15       # ... with at least this many measurable curated targets
-N_CTRL = 40            # co-expression-matched control redraws
+N_CTRL = int(os.environ.get("N_CTRL", 200))   # co-expression-matched control redraws (40 before 2 Oct 2026; more draws = less Monte Carlo noise)
 SEED = 0
 from scipy.stats import spearmanr
 
@@ -56,26 +57,23 @@ def main():
     tgtmap = load_targets()
     rng = np.random.default_rng(SEED)
 
-    z0 = np.load(os.path.join(RES, "ctx_maxtoki_L04.npz"), allow_pickle=True)
+    z0 = np.load(PX.npz_path(TAPS[0]), allow_pickle=True)
     genes = z0["genes"].astype(str); ctxs = z0["contexts"].astype(str)
     syms = np.array([ens2sym.get(g, "") for g in genes]); sidx = {s: i for i, s in enumerate(syms) if s}
     tokmap = json.load(open(f"{CP.MSETUP}/token_dictionary.json")); ens2tid = {k: int(v) for k, v in tokmap.items()}
     tids = np.array([ens2tid.get(g, -1) for g in genes])
 
     print("[1/3] per-context mean rank (target-activity + abundance)", flush=True)
-    MR = CP.mean_ranks(set(ctxs))
-    rank = np.full((len(ctxs), len(genes)), np.nan)
-    for ci, c in enumerate(ctxs):
-        for gi, t in enumerate(tids):
-            if t in MR.get(c, {}):
-                rank[ci, gi] = MR[c][t]
+    rank = PX.covariate_matrix(ctxs, genes)   # MaxToki mean rank (COV=rank) on the extraction's cells
     # activity = -rank (lower rank number = more highly expressed = more active); use max_rank - rank
     print("[2/3] co-expression matrix (for the matched control)", flush=True)
     C = coexpr_matrix(list(genes))
 
     out = {"taps": {}}
-    for tap in TAPS:
-        z = np.load(os.path.join(RES, f"ctx_maxtoki_L{tap:02d}.npz"), allow_pickle=True)
+    rng0 = rng
+    for _ti, tap in enumerate(TAPS):
+        rng = PX.rng_for(SEED, _ti, rng0)
+        z = np.load(PX.npz_path(tap), allow_pickle=True)
         M, counts, cap = z["M"].astype(np.float32), z["counts"], int(z["cap"])
         full = (counts == cap).all(0)
         flat = M[:, full]; mu = flat.reshape(-1, M.shape[-1]).mean(0); sd = flat.reshape(-1, M.shape[-1]).std(0) + 1e-6
@@ -91,7 +89,7 @@ def main():
         for s, gi in sidx.items():
             if s not in tgtmap or full[:, gi].sum() < MIN_TF_CTX:
                 continue
-            tg = [sidx[t] for t in tgtmap[s] if t in sidx and t != s]
+            tg = [sidx[t] for t in sorted(tgtmap[s]) if t in sidx and t != s]   # sorted: a set's order changes between runs
             if len(tg) >= MIN_TARGETS:
                 elig.append((s, gi, np.array(tg)))
         print(f"\n=== layer {tap}: {len(elig)} measurable TFs with >= {MIN_TARGETS} measurable targets ===", flush=True)
@@ -99,12 +97,13 @@ def main():
             continue
 
         exc_static, exc_null, modul, modul_null = [], [], [], []
+        exc_spec = []          # (C, added 2 Oct 2026) own targets vs OTHER TFs' targets: is the closeness TF-specific?
         for s, gi, tg in elig:
             cs = np.where(full[:, gi])[0]                 # contexts where the TF is measured
             # co-expression profile of the TF to all genes (for matched control)
             cprof = C[gi]
             pool = np.array([j for j in range(len(genes)) if full[:, j].any() and j != gi and j not in set(tg)])
-            e_by_c, a_by_c = [], []
+            e_by_c, a_by_c, s_by_c = [], [], []
             en_draws = [[] for _ in range(N_CTRL)]
             for c in cs:
                 mt = tg[full[c, tg]]                       # targets measured in this context
@@ -129,13 +128,24 @@ def main():
                     en_draws[k].append(ct - cc)
                     cc_draw.append(cc)
                 e_by_c.append(ct - float(np.mean(cc_draw)))
+                oth = []
+                for s2, gi2, tg2 in elig:
+                    if s2 == s:
+                        continue
+                    m2 = tg2[full[c, tg2]]; m2 = m2[m2 != gi]
+                    if len(m2) >= 8:
+                        vo = Mz[c, m2].mean(0); oth.append(float(v @ vo / (np.linalg.norm(v) * np.linalg.norm(vo) + 1e-9)))
+                if oth:
+                    s_by_c.append(ct - float(np.mean(oth)))
                 a_by_c.append(float(np.nanmean(rank[c, mt])))    # lower = more active
             if len(e_by_c) < 3:
                 continue
             exc_static.append(float(np.mean(e_by_c)))
+            if s_by_c:
+                exc_spec.append(float(np.mean(s_by_c)))
             exc_null.append(float(np.mean([np.mean(d) for d in en_draws if d])))
             # (B) does excess closeness track target activity across this TF's contexts? (activity = -rank)
-            act = -np.array(a_by_c)
+            act = (-1 if PX.cov() == "rank" else 1) * np.array(a_by_c)   # activity: low rank / high expression
             if np.std(act) > 0 and np.std(e_by_c) > 0:
                 modul.append(float(spearmanr(e_by_c, act).statistic))
                 modul_null.append(float(spearmanr(e_by_c, rng.permutation(act)).statistic))
@@ -162,16 +172,22 @@ def main():
         print(f"        mean {mean_exc:+.4f} over {n} TFs; {100*frac_pos:.0f}% of TFs positive (sign p={p_sign:.1e})")
         print(f"  (B) CONTEXT modulation: excess closeness vs target activity, mean rho {mean_mod:+.3f} "
               f"over {len(modul)} TFs; {100*np.mean(modul>0):.0f}% positive (sign p={p_mod_sign:.2f})")
+        exc_spec = np.array(exc_spec); ns, ks = len(exc_spec), int((exc_spec > 0).sum())
+        p_spec = float(sum(comb(ns, i) for i in range(ks, ns + 1)) / 2 ** ns) if 0 < ns <= 900 else float("nan")
+        print(f"  (C) TF-SPECIFIC: closeness to own targets minus to other TFs' targets, mean "
+              f"{float(np.mean(exc_spec)) if ns else float('nan'):+.4f} over {ns} TFs; {ks} positive (sign p={p_spec:.2g})")
         out["taps"][f"L{tap:02d}"] = dict(n_tfs=n, static_excess_mean=mean_exc, static_frac_pos=frac_pos,
+                                          specific_excess_mean=float(np.mean(exc_spec)) if ns else float("nan"),
+                                          specific_n=ns, specific_n_pos=ks, specific_sign_p=p_spec,
                                           static_sign_p=p_sign, modulation_mean_rho=mean_mod,
                                           modulation_frac_pos=float(np.mean(modul > 0)) if len(modul) else float("nan"),
                                           modulation_sign_p=p_mod_sign, n_modul=len(modul))
 
-    l4 = out["taps"].get("L04", {})
+    l4 = out["taps"].get(f"L{TAPS[0]:02d}", {})
     A_pos = l4.get("static_excess_mean", 0) > 0 and l4.get("static_sign_p", 1) < 0.05
     B_pos = l4.get("modulation_mean_rho", 0) > 0 and l4.get("modulation_sign_p", 1) < 0.05
     out["verdict"] = (
-        f"L4: (A) static excess {l4.get('static_excess_mean', float('nan')):+.4f} "
+        f"L{TAPS[0]}: (A) static excess {l4.get('static_excess_mean', float('nan')):+.4f} "
         f"(sign p {l4.get('static_sign_p', float('nan')):.1e}); (B) activity modulation rho "
         f"{l4.get('modulation_mean_rho', float('nan')):+.3f} (sign p {l4.get('modulation_sign_p', float('nan')):.2f}). " +
         ("LEVEL-2 SPARK — TFs sit closer to their curated (ChIP/literature) targets than to co-expression-matched "
@@ -186,7 +202,7 @@ def main():
          "the ceiling argument holds. Level 1 (functional organisation beyond co-expression) remains the result.")
     )
     print(f"\nVERDICT: {out['verdict']}")
-    json.dump(out, open(os.path.join(RES, "ctx_curated_targets.json"), "w"), indent=1)
+    out.update({} if PX.IS_DEFAULT else {"provenance": PX.provenance(min_tf_ctx=MIN_TF_CTX, verdict_tap=TAPS[0])}); json.dump(out, open(PX.out("ctx_curated_targets"), "w"), indent=1)
     print("[done] -> results/ctx_curated_targets.json")
 
 

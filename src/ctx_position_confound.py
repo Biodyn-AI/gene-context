@@ -25,6 +25,7 @@ Out: results/ctx_position_confound.json
 """
 import os, sys, json, collections, itertools, warnings; warnings.filterwarnings("ignore")
 import numpy as np, h5py
+import ctx_prefix as PX
 
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 MSETUP = "/Volumes/Crucial X6/MacBook/Code/biomi_automation/projects/maxtoki/setup"
@@ -33,7 +34,7 @@ RES = os.path.join(HERE, "results")
 TS = "/Volumes/Crucial X6/MacBook/biomechinterp/biodyn-work/single_cell_mechinterp/data/raw"
 PANELS = ["tabula_sapiens_immune_subset_20000.h5ad", "tabula_sapiens_kidney.h5ad", "tabula_sapiens_lung.h5ad"]
 MAX_LEN, CELLS_CTX, SEED = 1024, 1000, 0
-TAPS = [4, 8, 11]
+TAPS = PX.taps([4, 8, 11])
 from scipy.stats import spearmanr
 
 
@@ -93,26 +94,20 @@ def cos_rows(A, B):
 
 
 def main():
-    z0 = np.load(os.path.join(RES, "ctx_maxtoki_L04.npz"), allow_pickle=True)
+    z0 = np.load(PX.npz_path(TAPS[0]), allow_pickle=True)
     ctxs = z0["contexts"].astype(str); genes = z0["genes"].astype(str)
     tokmap = json.load(open(f"{MSETUP}/token_dictionary.json"))
     ens2tid = {k: int(v) for k, v in tokmap.items()}
     tids = np.array([ens2tid.get(g, -1) for g in genes])
 
     print("[1/2] recomputing per-gene mean rank per context (tokenisation only)", flush=True)
-    MR = mean_ranks(set(ctxs))
-    rank = np.full((len(ctxs), len(genes)), np.nan)
-    for ci, c in enumerate(ctxs):
-        d = MR.get(c, {})
-        for gi, t in enumerate(tids):
-            if t in d:
-                rank[ci, gi] = d[t]
+    rank = PX.covariate_matrix(ctxs, genes)   # MaxToki mean rank (COV=rank) on the extraction's cells
     print(f"      rank table filled for {np.isfinite(rank).mean():.1%} of (context, gene) cells")
 
     out = {"taps": {}}
     rng = np.random.default_rng(SEED)
     for tap in TAPS:
-        z = np.load(os.path.join(RES, f"ctx_maxtoki_L{tap:02d}.npz"), allow_pickle=True)
+        z = np.load(PX.npz_path(tap), allow_pickle=True)
         M, counts, cap = z["M"].astype(np.float32), z["counts"], int(z["cap"])
         full = (counts == cap).all(0)
         flat = M[:, full]
@@ -120,6 +115,7 @@ def main():
         Mz = (M - mu) / sd
 
         mags, drank, S_lo, D_lo, S_hi, D_hi, S_res, D_res = [], [], [], [], [], [], [], []
+        S_nl, D_nl, D_rm, S_all = [], [], [], []               # curved rank regression; rank-matched other gene
         for c1, c2 in itertools.combinations(range(len(ctxs)), 2):
             keep = full[c1] & full[c2] & np.isfinite(rank[c1]) & np.isfinite(rank[c2])
             if keep.sum() < 200:
@@ -138,18 +134,40 @@ def main():
             proj = lambda V: V - A @ np.linalg.lstsq(A, V, rcond=None)[0]
             r0, r1 = proj(d0), proj(d1)
             S_res.append(cos_rows(r0, r1)); D_res.append(cos_rows(r0, r1[perm]))
+            # (added 2 Oct 2026 after review) a CURVED rank effect: squares, product and logs of the ranks
+            q1, q2, qd = rank[c1, keep] / 1000, rank[c2, keep] / 1000, dr / 1000
+            A2 = np.column_stack([np.ones(keep.sum()), q1, q2, qd, q1 ** 2, q2 ** 2, qd ** 2, q1 * q2,
+                                  np.log1p(rank[c1, keep]), np.log1p(rank[c2, keep])])
+            proj2 = lambda V: V - A2 @ np.linalg.lstsq(A2, V, rcond=None)[0]
+            n0, n1 = proj2(d0), proj2(d1)
+            S_nl.append(cos_rows(n0, n1)); D_nl.append(cos_rows(n0, n1[perm]))
+            # RANK-MATCHED other gene: pair each gene with the gene nearest to it in (rank in c1, rank in c2).
+            # If rank drove the shift, rank-matched genes would share it and this "different gene" term would rise.
+            from scipy.spatial import cKDTree
+            P2 = np.column_stack([rank[c1, keep], rank[c2, keep]])
+            nn = cKDTree(P2).query(P2, k=2)[1][:, 1]
+            D_rm.append(cos_rows(d0, d1[nn])); S_all.append(cos_rows(d0, d1))
 
         mags = np.concatenate(mags); drank = np.concatenate(drank)
         rho = float(spearmanr(mags, drank).statistic)
         ex = lambda S, D: float(np.concatenate(S).mean() - np.concatenate(D).mean())
         e_lo, e_hi, e_res = ex(S_lo, D_lo), ex(S_hi, D_hi), ex(S_res, D_res)
+        e_nl = ex(S_nl, D_nl)
+        d_rm = float(np.concatenate(D_rm).mean()); s_all = float(np.concatenate(S_all).mean())
         print(f"\n=== layer {tap} ===")
         print(f"  shift magnitude vs |rank change|        rho = {rho:+.3f}")
         print(f"  EXCESS, rank-STABLE genes (below median) : {e_lo:+.4f}")
         print(f"  EXCESS, rank-MOVING genes (above median) : {e_hi:+.4f}")
         print(f"  EXCESS after residualising on rank       : {e_res:+.4f}   <-- the honest number")
+        print(f"  EXCESS after a CURVED rank regression    : {e_nl:+.4f}")
+        print(f"  agreement with the RANK-MATCHED other gene: {d_rm:+.4f} (a random other gene gives about 0); "
+              f"same gene {s_all:+.4f}", flush=True)
         out["taps"][f"L{tap:02d}"] = dict(rho_mag_vs_rank=rho, excess_rank_stable=e_lo,
-                                          excess_rank_moving=e_hi, excess_residualised=e_res)
+                                          excess_rank_moving=e_hi, excess_residualised=e_res,
+                                          excess_residualised_curved=e_nl, diff_rank_matched=d_rm,
+                                          excess_vs_rank_matched=s_all - d_rm, same_all=s_all,
+                                          median_abs_rank_change_stable=float(np.median(drank[drank <= np.median(drank)])),
+                                          median_abs_rank_change_moving=float(np.median(drank[drank > np.median(drank)])))
 
     best = max(out["taps"].values(), key=lambda v: v["excess_residualised"])
     out["verdict"] = (
@@ -159,9 +177,57 @@ def main():
          "COLLAPSES under rank control — the apparent gene-specific context response is substantially "
          "token-rank position, which this model is already known to encode. Not biology."))
     print(f"\nVERDICT: {out['verdict']}")
-    json.dump(out, open(os.path.join(RES, "ctx_position_confound.json"), "w"), indent=1)
+    out.update({} if PX.IS_DEFAULT else {"provenance": PX.provenance()}); json.dump(out, open(PX.out("ctx_position_confound"), "w"), indent=1)
     print("[done] -> results/ctx_position_confound.json")
 
 
 if __name__ == "__main__":
     main()
+
+
+def build_covariate_cache(n_cells, path):
+    """Per (context, Ensembl gene) covariates on EXACTLY the extraction's cells (results/ctx_cell_selection.npz,
+    cells_{n_cells}): mean_rank (MaxToki rank, averaged over the cells expressing the gene -- identical to mean_ranks),
+    n_expr (cells expressing it) and mean_logcp10k_all (mean log1p CP10k over all the context's cells)."""
+    import ctx_tokenise as TK
+    from maxtoki_adapter import MaxTokiTokenizer
+    tok = MaxTokiTokenizer(model_input_size=MAX_LEN)
+    sel = np.load(os.path.join(RES, "ctx_cell_selection.npz"), allow_pickle=True)
+    cells = sel[f"cells_{n_cells}"]; panels = sel["panels"].astype(str); ctxs = list(sel["contexts"].astype(str))
+    tokmap = json.load(open(f"{MSETUP}/token_dictionary.json")); tid2ens = {int(v): k for k, v in tokmap.items()}
+    rank_sum, n_expr = collections.defaultdict(float), collections.Counter()
+    expr_sum = collections.defaultdict(float); n_cells_ctx = collections.Counter()
+    for pi, p in enumerate(panels):
+        rows = cells[cells[:, 0] == pi]
+        if not len(rows):
+            continue
+        with h5py.File(os.path.join(TS, p), "r") as f:
+            ens = np.array([x.decode() if isinstance(x, bytes) else x for x in f["var"]["_index"][:]]).astype(str)
+            ens = np.array([e.split(".")[0] for e in ens])
+            X = TK.count_matrix(f); TK.check_counts(X); indptr = X["indptr"][:]
+            var_idx, token_ids, medians = tok.make_var_mapping(list(ens))
+            pos = np.full(len(ens), -1, np.int64); pos[var_idx] = np.arange(len(var_idx))
+            for _, r, ci, _ in rows:
+                s, e = int(indptr[r]), int(indptr[r + 1])
+                idx, val = X["indices"][s:e], X["data"][s:e].astype(np.float32)
+                n_cells_ctx[ci] += 1
+                lg = TK.log_cp10k(val, val.sum())
+                for g, v in zip(ens[idx], lg):
+                    expr_sum[(ci, g)] += float(v)
+                keep = pos[idx] >= 0
+                j = pos[idx[keep]]
+                order = TK.rank_order(val[keep], medians[j])[: MAX_LEN - 2]
+                for rank, t in enumerate(token_ids[j[order]]):
+                    g = tid2ens.get(int(t))
+                    rank_sum[(ci, g)] += rank; n_expr[(ci, g)] += 1
+    genes = sorted({g for _, g in list(n_expr) + list(expr_sum)})
+    gi = {g: i for i, g in enumerate(genes)}
+    mr = np.full((len(ctxs), len(genes)), np.nan); ne = np.zeros((len(ctxs), len(genes)), np.int32)
+    me = np.zeros((len(ctxs), len(genes)))
+    for (ci, g), s in rank_sum.items():
+        mr[ci, gi[g]] = s / n_expr[(ci, g)]; ne[ci, gi[g]] = n_expr[(ci, g)]
+    for (ci, g), s in expr_sum.items():
+        me[ci, gi[g]] = s / n_cells_ctx[ci]
+    np.savez_compressed(path, contexts=np.array(ctxs), genes=np.array(genes), mean_rank=mr, n_expr=ne,
+                        mean_logcp10k_all=me, cells_ctx=n_cells)
+    print(f"[covariates] {path}: {len(ctxs)} contexts x {len(genes)} genes", flush=True)

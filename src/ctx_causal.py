@@ -46,8 +46,29 @@ AX_DEFS = {
 AXIS = os.environ.get("AXIS", "nuc_surf")
 NUC, SURF = AX_DEFS[AXIS]
 SITE = int(os.environ.get("SITE", 3))   # inject after this layer == the hidden_states[SITE+1] tap
+# MODEL=1b runs the same test on MaxToki-1B; PREFIX names the extraction the axis is built from (default ctx_maxtoki).
+MODEL = os.environ.get("MODEL", "217m"); XPREFIX = os.environ.get("PREFIX", "ctx_maxtoki")
 OUTNAME = "ctx_causal.json" if (AXIS == "nuc_surf" and SITE == 3) else f"ctx_causal_{AXIS}_L{SITE+1:02d}.json"
-N_CELLS, MAX_LEN, SEED = 30, 512, 0
+# ALPHA_UNIT=centred sets the push size from the residual norm AFTER removing the across-gene mean (averaged over 5
+# cells), instead of the raw norm of one cell. Needed to compare models: MaxToki-1B has two huge, nearly constant hidden
+# dimensions that dominate its raw norm, which would make its push ~3x larger in relative terms. Every non-default
+# run also adds a RANDOM-GENE-SPLIT axis control (the pooled pole genes split at random into groups of the same sizes,
+# fresh per cell), which is matched to the functional axis in how it is built.
+ALPHA_UNIT = os.environ.get("ALPHA_UNIT", "raw")
+ZERO_MASSIVE = os.environ.get("ZERO_MASSIVE") == "1"     # set the axis to 0 in the two largest (massive) dimensions
+if MODEL != "217m" or XPREFIX != "ctx_maxtoki" or ALPHA_UNIT != "raw" or ZERO_MASSIVE:
+    OUTNAME = (OUTNAME[:-5] + f"__{MODEL}_{XPREFIX}" + ("" if ALPHA_UNIT == "raw" else f"_{ALPHA_UNIT}")
+               + ("_nomassive" if ZERO_MASSIVE else "") + ".json")
+EXTRA = OUTNAME != ("ctx_causal.json" if (AXIS == "nuc_surf" and SITE == 3) else f"ctx_causal_{AXIS}_L{SITE+1:02d}.json")
+# SPLITS=K (added 2 Oct 2026 after review): the matched control is K FIXED random splits of the pooled pole genes
+# into groups of the pole sizes, each scored on the same cells, positions and push (strength 0.5) as the functional
+# axis. The functional mean swing is compared with the K split mean swings (p = (1 + #{|split| >= |func|})/(K + 1)).
+# This replaces the per-cell redrawn split (mean ~0 by construction, so not a valid null), which is then switched off.
+SPLITS = int(os.environ.get("SPLITS", 0))
+if SPLITS:
+    EXTRA = False
+    OUTNAME = OUTNAME[:-5] + "_splits.json"
+N_CELLS, MAX_LEN, SEED = int(os.environ.get("N_CELLS", 30)), 512, 0
 
 
 def tokenise_cells(tok, n):
@@ -75,7 +96,6 @@ def tokenise_cells(tok, n):
 
 
 def main():
-    st = SL.Steerer()                                       # MaxToki-217M
     ens2sym = {e: s.upper() for s, e in pickle.load(open(NAME_ID, "rb")).items()}
     g2g = {k.upper(): set(v) for k, v in pickle.load(open(G2G, "rb")).items() if isinstance(v, (set, list, tuple))}
     tokmap = json.load(open(f"{MSETUP}/token_dictionary.json"))
@@ -95,7 +115,7 @@ def main():
     print(f"[setup] {len(nuc_tok)} nuclear-pole tokens, {len(surf_tok)} surface-pole tokens", flush=True)
 
     # functional-context axis in RAW layer-4 hidden space (from the extraction; M is raw mean hidden state)
-    z = np.load(os.path.join(RES, f"ctx_maxtoki_L{SITE+1:02d}.npz"), allow_pickle=True)
+    z = np.load(os.path.join(RES, f"{XPREFIX}_L{SITE+1:02d}.npz"), allow_pickle=True)
     M, counts, cap, genes = z["M"].astype(np.float32), z["counts"], int(z["cap"]), z["genes"].astype(str)
     full = (counts == cap).all(0)
     araw = np.full((len(genes), M.shape[-1]), np.nan, np.float32)
@@ -121,6 +141,17 @@ def main():
                    p95_range_across_contexts=float(np.percentile(nat_rng, 95)),
                    pole_centroid_distance=float(np.linalg.norm(u)))
     del P
+    # how much of the axis lies in the few largest (massive) hidden dimensions of the gene representations
+    gm = np.nanmean(araw, 0); top2 = np.argsort(-np.abs(gm))[:2]
+    natural["massive_dims"] = [int(x) for x in top2]
+    natural["axis_share_in_massive_dims"] = float((u[top2] ** 2).sum() / (u ** 2).sum())
+    if ZERO_MASSIVE:
+        u = u.copy(); u[top2] = 0.0; natural["axis_massive_dims_zeroed"] = True
+        natural["note"] = "natural-movement numbers describe the axis before the two dimensions were zeroed"
+    pooled = np.array(ia + ib); n_a = len(ia)
+    del M, z, counts, full
+    import gc; gc.collect()
+    st = SL.Steerer(model_dir=SL.MODELS[MODEL])               # model loaded only after the big arrays are freed
     d_func = SL.Direction(vec=u, name=f"{AXIS}@L{SITE+1}", basis=f"ctx_L{SITE+1}")
     d_rand = SL.random_direction(st.xt, seed=1, name="random")
     print(f"[setup] axis from {len(ia)} nuclear / {len(ib)} surface genes; ||u_raw||={np.linalg.norm(u):.2f}", flush=True)
@@ -130,7 +161,15 @@ def main():
 
     # calibrate alpha to the residual norm at the injection site
     h = st.hidden(np.concatenate([[st.tok.BOS], seqs[0], [st.tok.EOS]]), layer=SITE + 1)
-    resnorm = float(np.linalg.norm(h[1:-1], axis=1).mean())
+    resnorm_raw = float(np.linalg.norm(h[1:-1], axis=1).mean())
+    cn = []
+    for sq in seqs[:5]:
+        hh = np.asarray(st.hidden(np.concatenate([[st.tok.BOS], sq, [st.tok.EOS]]), layer=SITE + 1))[1:-1]
+        cn.append(float(np.linalg.norm(hh - hh.mean(0), axis=1).mean()))
+    resnorm_centred = float(np.mean(cn))
+    resnorm = resnorm_raw if ALPHA_UNIT == "raw" else resnorm_centred
+    print(f"[setup] residual norm raw {resnorm_raw:.1f}, after removing the across-gene mean {resnorm_centred:.1f} "
+          f"(push unit: {ALPHA_UNIT})", flush=True)
     alphas = [0.0, 0.25, 0.5, 1.0, 2.0]
     alpha_units = [a * resnorm for a in alphas]              # in raw hidden-norm units
     print(f"[setup] residual norm at layer {SITE} ~ {resnorm:.1f}; alphas x that = {alpha_units}", flush=True)
@@ -141,14 +180,36 @@ def main():
     alphas_s = [0.25, 0.5, 1.0]
     au = [a * resnorm for a in alphas_s]
     rng = np.random.default_rng(SEED)
-    swing = {"functional": {a: [] for a in alphas_s}, "random": {a: [] for a in alphas_s}}
+    swing = {"functional": {a: [] for a in alphas_s}, "random": {a: [] for a in alphas_s},
+             "randsplit": {a: [] for a in alphas_s}}
     spec = {"functional_+": {a: [] for a in alphas_s}, "functional_-": {a: [] for a in alphas_s}}
+    split_dirs = []
+    for k in range(SPLITS):                                       # fixed splits, the same for every cell
+        pr = np.random.default_rng(7000 + k).permutation(pooled)
+        u_k = araw[pr[:n_a]].mean(0) - araw[pr[n_a:]].mean(0)
+        if ZERO_MASSIVE:
+            u_k = u_k.copy(); u_k[top2] = 0.0
+        split_dirs.append(SL.Direction(vec=u_k, name=f"split{k}", basis=f"ctx_L{SITE+1}"))
+    split_swing = np.zeros((SPLITS, len(seqs)))
+    a_mid = au[alphas_s.index(0.5)]
+
+    def spec_at(ids, d, a, steer_pos, read_pos):
+        with st.steering(d, alpha=a, positions=steer_pos, site=SITE):
+            lg = st.logits(ids)
+        return float(np.mean([SL.mean_logit(lg[p], nuc_tok) for p in read_pos])
+                     - np.mean([SL.mean_logit(lg[p], surf_tok) for p in read_pos]))
+
     for si, s in enumerate(seqs):
         ids = np.concatenate([[st.tok.BOS], s, [st.tok.EOS]]).astype(np.int64)
         gene_pos = np.arange(1, 1 + len(s)); rng.shuffle(gene_pos)
         steer_pos = list(gene_pos[: len(gene_pos) // 2]); read_pos = list(gene_pos[len(gene_pos) // 2:])
         d_rand_cell = SL.random_direction(st.xt, seed=1000 + si, name="random")   # FRESH per cell -> swing->0
-        for label, d in [("functional", d_func), ("random", d_rand_cell)]:
+        dirs = [("functional", d_func), ("random", d_rand_cell)]
+        if EXTRA:                                                 # random split of the pooled pole genes
+            pr = np.random.default_rng(5000 + si).permutation(pooled)
+            u_rs = araw[pr[:n_a]].mean(0) - araw[pr[n_a:]].mean(0)
+            dirs.append(("randsplit", SL.Direction(vec=u_rs, name="randsplit", basis=f"ctx_L{SITE+1}")))
+        for label, d in dirs:
             pos_rows = SL.dose_response(st, ids, d, steer_pos, read_pos, nuc_tok, surf_tok, au, site=SITE)
             neg_rows = SL.dose_response(st, ids, d, steer_pos, read_pos, nuc_tok, surf_tok, [-a for a in au], site=SITE)
             for k, a in enumerate(alphas_s):
@@ -156,11 +217,16 @@ def main():
                 if label == "functional":
                     spec["functional_+"][a].append(pos_rows[k]["specificity"])
                     spec["functional_-"][a].append(neg_rows[k]["specificity"])
+        for k, d in enumerate(split_dirs):                        # baseline cancels in the signed swing
+            split_swing[k, si] = (spec_at(ids, d, a_mid, steer_pos, read_pos)
+                                  - spec_at(ids, d, -a_mid, steer_pos, read_pos))
         if si % 10 == 0:
             print(f"    cell {si}/{len(seqs)}", flush=True)
 
     from math import comb
-    out = {"alphas_xResidNorm": alphas_s, "site": SITE, "n_cells": len(seqs), "resid_norm": resnorm,
+    out = {"model": MODEL, "extraction": XPREFIX, "alpha_unit": ALPHA_UNIT, "resid_norm_raw": resnorm_raw,
+           "resid_norm_centred": resnorm_centred,
+           "alphas_xResidNorm": alphas_s, "site": SITE, "n_cells": len(seqs), "resid_norm": resnorm,
            "push_size_raw": [float(a) for a in au], "natural_movement_along_axis": natural,
            "n_nuclear_tokens": len(nuc_tok), "n_surface_tokens": len(surf_tok), "signed": {}}
     print(f"\n{'alpha':<8} {'spec(+u)':<12} {'spec(-u)':<12} {'FUNC swing':<20} {'RAND swing':<18} {'func>rand'}")
@@ -172,6 +238,12 @@ def main():
         out["signed"][f"alpha_{a}"] = dict(spec_plus=float(fp.mean()), spec_minus=float(fm.mean()),
                                            func_swing=float(fs.mean()), func_swing_sem=float(fs.std()/np.sqrt(n)),
                                            rand_swing=float(rs.mean()), func_gt_rand=k, n=n, sign_p=p)
+        if EXTRA:
+            ss_ = np.array(swing["randsplit"][a]); k2 = int((fs > ss_).sum())
+            out["signed"][f"alpha_{a}"].update(
+                randsplit_swing=float(ss_.mean()), randsplit_swing_sd=float(ss_.std()), func_gt_randsplit=k2,
+                sign_p_vs_randsplit=float(sum(comb(n, i) for i in range(k2, n + 1)) / 2 ** n),
+                z_vs_randsplit=float((fs.mean() - ss_.mean()) / (np.sqrt(fs.var() / n + ss_.var() / n) + 1e-12)))
         print(f"  {a:<6} {fp.mean():+.3f}       {fm.mean():+.3f}       {fs.mean():+.4f}±{fs.std()/np.sqrt(n):.4f}     "
               f"{rs.mean():+.4f}          {k}/{n} p={p:.1e}")
 
@@ -190,9 +262,23 @@ def main():
          "random control, so the earlier apparent effect was the baseline nuclear/surface asymmetry under "
          "generic perturbation. Level 1 stands as a representation result only.")
     )
+    if SPLITS:
+        fm = float(np.mean(swing["functional"][0.5])); sm = split_swing.mean(1)
+        n_ge = int((np.abs(sm) >= abs(fm)).sum())
+        out["split_null"] = dict(
+            n_splits=SPLITS, alpha=0.5, func_mean_swing=fm, split_mean_swings=[float(x) for x in sm],
+            split_abs_mean=float(np.abs(sm).mean()), split_abs_sd=float(np.abs(sm).std()),
+            n_splits_abs_ge_func=n_ge, p_abs=float((1 + n_ge) / (SPLITS + 1)),
+            z_abs=float((abs(fm) - np.abs(sm).mean()) / (np.abs(sm).std() + 1e-12)),
+            n_splits_ge_func_signed=int((sm >= fm).sum()),
+            p_signed=float((1 + int((sm >= fm).sum())) / (SPLITS + 1)))
+        sn = out["split_null"]
+        print(f"[split null] functional mean swing {fm:+.4f}; |split| mean {sn['split_abs_mean']:.4f} "
+              f"(sd {sn['split_abs_sd']:.4f}); {n_ge}/{SPLITS} splits at least as large; p = {sn['p_abs']:.3f}; "
+              f"z = {sn['z_abs']:+.1f}", flush=True)
     print(f"\nVERDICT: {out['verdict']}")
     json.dump(out, open(os.path.join(RES, OUTNAME), "w"), indent=1)
-    print("[done] -> results/ctx_causal.json")
+    print(f"[done] -> results/{OUTNAME}")
 
 
 if __name__ == "__main__":

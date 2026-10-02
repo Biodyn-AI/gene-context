@@ -1,0 +1,24 @@
+{
+ "taps": {
+  "L00": {
+   "rho_mag_vs_rank": 0.011729348053008784,
+   "excess_rank_stable": 0.3072912096977234,
+   "excess_rank_moving": 0.3354560434818268,
+   "excess_residualised": 0.31686632661111785,
+   "excess_residualised_curved": 0.3147838135835699,
+   "diff_rank_matched": 0.02724146842956543,
+   "excess_vs_rank_matched": 0.2924470007419586,
+   "same_all": 0.31968846917152405,
+   "median_abs_rank_change_stable": 29.49138183933337,
+   "median_abs_rank_change_moving": 118.71060606060604
+  }
+ },
+ "verdict": "residualised EXCESS +0.3169. SURVIVES rank control \u2014 the gene-specific context response is not merely token-position encoding.",
+ "provenance": {
+  "prefix": "ctxexprcen50c",
+  "cells": 600,
+  "covariate": "rank",
+  "min_ctx": 9,
+  "outtag": "ctxexprcen50c"
+ }
+}

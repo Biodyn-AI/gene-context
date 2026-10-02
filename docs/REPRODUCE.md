@@ -37,10 +37,25 @@ and the build fails if any placeholder cannot be filled.
    2/4 and 4/7) and the random-weights extraction (same cells and panel); the cross-model comparison; the Setty
    extraction (all 5780 cells, spliced + unspliced) and its analysis; the full depth scan (all 12 hidden states,
    4000 genes, two passes of six layers); and, at the end, the spliced-only Setty robustness run.
-3. scGPT and STATE: `ctx_extract_scgpt.py` reformats an existing activation atlas, and `ctx_extract_state.py` reads
-   preprocessed per-tissue files (see `docs/DATA.md`); their outputs (`ctx_scgpt_L*.npz`, `ctx_state_L*.npz`) are read
-   by `ctx_cross_model.py`.
-4. Figures and manuscript as in Tier A.
+3. The multi-model comparison on identical cells (added 2 Oct 2026; about 9 hours, serial):
+
+   ```bash
+   bash src/rerun_multimodel.sh    # one command per line, in the order they were run
+   ```
+
+   `ctx_cell_selection.py` records exactly which cells the MaxToki runs used (`results/ctx_cell_selection.npz`).
+   On those 600 cells per cell type: `ctx_extract_scgpt_std.py` (scGPT with its standard binned input; also an
+   untrained scGPT), `ctx_extract_state_std.py` (STATE SE-600M through its own data collator; also an untrained
+   STATE), and `ctx_extract_expression.py` (the expression-only representations; the centroid version used in the paper is `MODE=centroid N_LANDMARK=50 CELL_CAP=50 OUTPREFIX=ctxexprcen50c`; `ctxexprcen50` is the same without the 50-cell cap, a check on sample size; the first, 512-component build `ctxexprcen` failed its positive control and is kept only for the record). `ctx_expression_cellcounts.py` counts the cells behind each uncapped vector. Every analysis then runs on any
+   extraction through environment variables read by `src/ctx_prefix.py` (`PREFIX`, `TAPS`/`TAP`, `MIN_CTX`, `COV`,
+   `RESEED_PER_TAP`); non-default runs write `results/<analysis>__<prefix>[__minctxN][__cov-expr].json` and never
+   overwrite the headline files. `ctx_cross_model.py` takes `MODELS="label:prefix:layer,..."` and `COMMON=1`
+   (entries count-balanced in every model). Steering (`ctx_causal.py`: `MODEL=1b`, `ALPHA_UNIT=centred`,
+   `ZERO_MASSIVE=1`) and the paired prediction link (`ctx_prediction_link.py`: `PAIRED=1`) cover MaxToki-1B.
+   The legacy `ctx_extract_scgpt.py` and `ctx_extract_state.py` (an old activation atlas and preprocessed files with
+   non-standard inputs) are kept only for the record; the paper no longer uses them.
+4. `ctx_context_composition.py` summarises the dataset, donor and assay of each cell type's cells (quoted in the Limitations).
+5. Figures and manuscript as in Tier A (`build/make_additional_file.py` writes Additional file 1).
 
 ## Notes
 

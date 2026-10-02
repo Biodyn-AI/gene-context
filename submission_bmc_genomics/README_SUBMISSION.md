@@ -4,21 +4,20 @@ Manuscript: *Single-cell foundation models represent genes in context, but revea
 function beyond co-expression* (I. Kendiukhov). Article type: **Research article**. Suggested section:
 **Transcriptomic Methods**.
 
-Prepared against the BMC Genomics submission guidelines (research article) as of 1 Oct 2026.
+Prepared against the BMC Genomics submission guidelines (research article) on 1 Oct 2026; rebuilt on 3 Oct 2026
+after the multi-model analyses and three rounds of claim checking (see "What changed" below).
 
 ## Files and where they go in the submission system
 
 | File | Upload as |
 |---|---|
-| `manuscript_bmc.docx` | **Manuscript** (main file; editable DOCX as BMC requires). Title page, abstract, all sections, declarations, references, table titles/legends and figure titles/legends are inside it. Double line spacing, continuous line numbers, page numbers, no page breaks. |
-| `figures/Figure1.pdf` … `figures/Figure5.pdf` | **Figures**, one file each (vector PDF, TrueType fonts embedded, no titles inside the graphic; 85 mm or 170 mm wide). |
+| `manuscript_bmc.docx` | **Manuscript** (main file; editable DOCX as BMC requires). Title page, abstract, all sections, declarations, references, Tables 1–5 with their titles and legends, and figure titles/legends are inside it. Double line spacing, continuous line numbers, page numbers, no page breaks. |
+| `figures/Figure1.pdf` … `figures/Figure5.pdf` | **Figures**, one file each (vector PDF, fonts embedded, no titles inside the graphic; 85 mm or 170 mm wide). |
+| `Additional_file_1.xlsx` | **Additional file 1** (Excel workbook): the full results of the multi-model comparison, one sheet per analysis, generated from the result files by `build/make_additional_file.py`. Its title and description are in the manuscript under "Additional files". |
 | `cover_letter_bmc.docx` / `cover_letter_bmc.pdf` | **Cover letter** (paste or upload; same text). |
 | `title_abstract_keywords.txt` | Text for the online form: line 1 title, line 2 abstract, line 3 keywords. |
 | `manuscript_bmc_preview.pdf` | For your own checking only — a PDF of the same text. Do **not** upload it as the manuscript (BMC needs the editable file). |
-| `manuscript_bmc.template.md`, `cover_letter_bmc.template.md`, `references_bmc.bib`, `build/` | Sources. Every number in the text is a `{{key}}` placeholder filled from `results/ctx_*.json` by `build/make_numbers.py`. `bash build/build_bmc.sh` regenerates the numbers, renders `manuscript_bmc.md` and `cover_letter_bmc.md`, redraws the figures and builds the DOCX, preview PDF and cover letter. |
-
-There are no additional files and no tables outside the manuscript (Tables 1–3 are each under one page and sit
-in the text).
+| `manuscript_bmc.template.md`, `cover_letter_bmc.template.md`, `references_bmc.bib`, `build/` | Sources. Every number in the text is a `{{key}}` placeholder filled from `results/ctx_*.json` by `build/make_numbers.py`. `bash build/build_bmc.sh` regenerates the numbers, renders `manuscript_bmc.md` and `cover_letter_bmc.md`, redraws the figures, writes Additional file 1 and builds the DOCX, preview PDF and cover letter. |
 
 ## BMC requirements checked
 
@@ -27,7 +26,7 @@ in the text).
 - [x] Abstract ≤ 350 words with Background / Results / Conclusions; no references (checked at every build).
 - [x] 3–10 keywords (8).
 - [x] Section order: Background, Methods, Results, Discussion (with Limitations), Conclusions, List of
-      abbreviations, Declarations, References, Figure titles and legends.
+      abbreviations, Declarations, References, Figure titles and legends, Additional files.
 - [x] All seven required declaration headings present (optional "Authors' information" omitted); "Not applicable" where relevant.
 - [x] Ethics statement for public, de-identified human data.
 - [x] Use of a large language model documented in Methods ("Use of large language models").
@@ -35,50 +34,60 @@ in the text).
       with a full persistent link; software availability block (project name, home page, archived version,
       OS, language, requirements, licence, restrictions).
 - [x] References: numbered Vancouver style in square brackets (BMC CSL); every web link is a numbered reference
-      with an access date; every DOI checked against CrossRef/DataCite on 1 Oct 2026.
-- [x] Tables: title above (≤ 15 words), legend below, no shading, plain black rules, no commas in numbers.
+      with an access date.
+- [x] Tables cited in order (1–5), title above (≤ 15 words), legend below, no shading, plain rules.
 - [x] Figures: separate files, fonts embedded, width ≤ 170 mm, titles ≤ 15 words and legends ≤ 300 words in the
       manuscript.
+- [x] Additional file: named "Additional file 1", with title and description in the manuscript, cited in the text.
 - [x] Double spacing, line numbers, page numbers, no page breaks.
 
 ## Before you submit — you must fill in or confirm
 
-1. **The date** in the cover letter. Address and email are now the Tübingen affiliation and kendiukhov@gmail.com (as
-   in your Scientific Reports package); add your ORCID in the submission system.
+1. **The date** in the cover letter, and your ORCID in the submission system.
 2. **Preprint / related submissions**: the cover letter ends its editorial-policies paragraph with one bracketed
    instruction: state the status of your sparse-autoencoder atlas paper (Research Square preprint, "In Review"), and
-   confirm this manuscript is not a preprint and the Elsevier submission was not made or was withdrawn. Then delete the
-   bracket.
-3. **Not submitted elsewhere.** The cover letter states the manuscript is not under consideration elsewhere. A separate
-   package for *Computational Biology and Chemistry* (Elsevier) was prepared earlier and is now superseded. Submit to BMC
-   only if that submission was not made or has been withdrawn.
+   confirm this manuscript is not a preprint. Then delete the bracket.
+3. **Submit to one journal only.** A second package for *Computational Biology and Chemistry* (Elsevier) is in
+   `../cbc_submission/`, built from the same manuscript. The cover letter says the manuscript is not under
+   consideration elsewhere, so use only one of the two packages at a time.
 4. **LLM statement** (Methods, "Use of large language models") — confirm the wording matches how the assistant was used.
-5. **Archived software version**: the manuscript names the git tag `bmc-submission-v1`. For a DOI, enable the
-   Zenodo–GitHub integration for `Biodyn-AI/gene-context`, make a release from that tag, and replace the line with the DOI.
+5. **Archived software version (blocking).** The Software block still says "DOI [to be added before submission]".
+   The public repository now holds the final code and result files under the tag `bmc-submission-v2` (the older tag
+   `bmc-submission-v1` points to the 1 Oct state and was left in place). To get a DOI, enable the Zenodo–GitHub
+   integration for `Biodyn-AI/gene-context`, make a release from `bmc-submission-v2`, and put the DOI and tag in the
+   "Archived version" line of the template, then run `bash build/build_bmc.sh`.
 6. **Competing interests / funding**: confirm "none" and "Not applicable".
 7. Optional: suggested reviewers (the submission system asks; BMC does not require them).
 
-## What changed relative to the earlier (Elsevier) version of the paper
+## What changed since the 1 Oct package
 
-Found while preparing this package, by checking the code and by two independent agent reviews. All are fixed here and in
-the general manuscript in the repository.
+- **Four models on the same cells.** scGPT and STATE were re-extracted with their standard inputs (scGPT: binned
+  counts of all expressed genes with `<cls>`; STATE: its own data collator), on exactly the same 600 cells per cell
+  type, partitions, gene panel and cap as MaxToki-217M and MaxToki-1B. Every Level 1 and Level 2 test (rank
+  control, all four nulls, directional congruence, curated targets) now runs on all four models (Tables 3 and 4),
+  with untrained versions of three architectures (Table 5).
+- **Direct expression-only test.** Three representations built from expression alone, with no model, go through the
+  identical pipeline. The centroid version was first built with 512 principal components; it failed the positive
+  control (the shared shift did not replicate between cell halves), so it was rebuilt with 50 components and with at
+  most 50 cells per gene, the same sample size as the models' 50 occurrences. Built this way, expression alone gives a
+  gene-specific change (EXCESS +0.32, against +0.74 for MaxToki-217M) but no functional organisation, and co-expressed
+  gene sets move no more than random ones.
+- **Steering** now has a second control matched to the axis (30 fixed random splits of the pole genes), a push unit
+  that is fair across sizes, MaxToki-1B at matched depth, and a check with the two very large hidden dimensions
+  removed.
+- **Prediction link** now uses a paired design (same cells, positions and donors for both MaxToki sizes) and a
+  same-cell-type donor arm.
+- **Three rounds of claim checking** against the result files (100, 74 and 23 confirmed issues) led to many wording changes:
+  corrected multiple-testing families, the TF-specificity results reported with their corrections, caveats on the
+  steering push sizes and on what the tests do not show, tissue and donor confounds stated with numbers, and the
+  depth pattern of each model.
+- **Additional file 1** (new) holds the full tables behind every multi-model number.
 
-- **Input encoding (the big one).** The Tabula Sapiens files store log1p(counts per 10,000) in `X`; the old code treated
-  that as counts and log-transformed it a second time before ranking, so MaxToki saw a gene order driven mostly by global
-  gene medians. All MaxToki inputs now use the model's own encoding (raw counts / gene median, `ctx_tokenise.py`,
-  checked against the MaxToki tokenizer: identical up to the order of exactly tied genes), and every MaxToki extraction
-  and analysis was re-run (`rerun_tokfix.sh`, 1 Oct 2026; the spliced-only Setty robustness steps at its end were run
-  separately on 2 Oct). Several results changed:
-  - functional organisation is now inside both co-expression nulls (matched p = 0.08–0.38; strong p = 0.70–0.80);
-  - the prediction link reversed: genes that change more with context gain more from real context (partial ρ +0.16);
-  - steering works for the nuclear/surface axis (mitochondrion/cytoskeleton: no consistent effect, significant only at the
-    largest strength, p = 0.049 uncorrected; transcription/transport: reversed);
-  - no consistent scaling from 217M to 1B once relative depth is matched (the old "0.74 → 0.88" was layer 4 vs layer 4);
-  - TFs sit slightly closer to curated targets than co-expression predicts (static), but not context-appropriately.
-- **Other method fixes:** null gene sets matched on size and co-expression (and on tightness) with disjoint poles and
-  Monte Carlo p values; gene-level bootstrap CIs; depth-matched scaling; random-weights control on the same cells and
-  panel as its comparator; the full 5,780-cell Setty data with spliced + unspliced counts (spliced-only as robustness);
-  a cleaner chimeric control for the prediction link; deterministic rank control.
-- **Text fixes:** layer peak (layers 1–2), STATE's cell types (immune, kidney, lung), scGPT and depth caveats, which
-  analyses were run on which model, reference updates (journal versions of your attention paper, UCE and STATE; your
-  BMC Bioinformatics paper added; versioned dataset links).
+## Earlier changes (relative to the Elsevier version of 30 Sep)
+
+- **Input encoding.** The Tabula Sapiens files store log1p(counts per 10,000) in `X`; the old code treated that as
+  counts and log-transformed it a second time before ranking. All MaxToki inputs now use the model's own encoding
+  (raw counts / gene median, `ctx_tokenise.py`), and every MaxToki extraction and analysis was re-run.
+- Null gene sets matched on size and co-expression (and on tightness) with disjoint poles and Monte Carlo p values;
+  gene-level bootstrap CIs; depth-matched scaling; random-weights control on the same cells and panel; the full
+  Setty data with spliced + unspliced counts; deterministic rank control.
