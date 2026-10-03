@@ -52,11 +52,12 @@ after the multi-model analyses and three rounds of claim checking (see "What cha
    consideration elsewhere, so use only one of the two packages at a time.
 4. **LLM statement** (Methods, "Use of large language models") — confirm the wording matches how the assistant was used.
 5. **Archived software version (blocking).** The Software block still says "DOI [to be added before submission]".
-   The public repository now holds the final code and result files under the tag `bmc-submission-v3`. The older tags
-   were left in place: `bmc-submission-v1` is the 1 Oct state, and `bmc-submission-v2` lacks two small fixes that let a
-   fresh clone rebuild the numbers and figures. To get a DOI, enable the Zenodo–GitHub integration for
-   `Biodyn-AI/gene-context`, make a release from `bmc-submission-v3`, and put the DOI in the "Archived version" line of
-   the template, then run `bash build/build_bmc.sh`.
+   The public repository now holds the final code and result files under the tag `bmc-submission-v3.1`. The older
+   tags were left in place: `bmc-submission-v1` is the 1 Oct state, `bmc-submission-v2` lacks two small fixes that let
+   a fresh clone rebuild the numbers and figures, and `bmc-submission-v3` has the same code and numbers but PDFs that
+   drop three symbols (∝, ⟨, ⟩). To get a DOI, enable the Zenodo–GitHub integration for `Biodyn-AI/gene-context`, make
+   a release from `bmc-submission-v3.1`, and put the DOI in the "Archived version" line of the template, then run
+   `bash build/build_bmc.sh`.
 6. **Competing interests / funding**: confirm "none" and "Not applicable".
 7. Optional: suggested reviewers (the submission system asks; BMC does not require them).
 

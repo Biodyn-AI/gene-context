@@ -22,6 +22,7 @@
 \usepackage{lmodern}
 \ifPDFTeX\else
   % xetex/luatex font selection
+  \setmainfont[]{Times New Roman}
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -101,6 +102,13 @@
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+% preprint PDFs: Times New Roman plus DejaVu Serif for the few symbols it lacks (3 Oct 2026)
+\usepackage{newunicodechar}
+\newfontfamily\symfallback{DejaVu Serif}[Scale=MatchLowercase]
+\newunicodechar{∝}{{\symfallback ∝}}
+\newunicodechar{⟨}{{\symfallback ⟨}}
+\newunicodechar{⟩}{{\symfallback ⟩}}
+\newunicodechar{∈}{{\symfallback ∈}}
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
@@ -2092,7 +2100,7 @@ Software availability:
   Project home page: \url{https://github.com/Biodyn-AI/gene-context}
 \item
   Archived version: Zenodo archive of the submitted release, DOI {[}to
-  be added before submission{]} (tag \texttt{bmc-submission-v3} in the
+  be added before submission{]} (tag \texttt{bmc-submission-v3.1} in the
   project repository)
 \item
   Operating system(s): platform independent (developed and run on macOS,
