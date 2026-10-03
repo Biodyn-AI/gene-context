@@ -43,7 +43,7 @@ after the multi-model analyses and three rounds of claim checking (see "What cha
 
 ## Before you submit — you must fill in or confirm
 
-1. **The date** in the cover letter. Your ORCID (0000-0001-5342-1499) is now in the cover letter; also enter it in the submission system.
+1. **The date** in the cover letter is set to 3 October 2026; change it if you submit on another day. Enter your ORCID (0000-0001-5342-1499) in the submission system as well.
 2. **Preprint / related submissions: done.** The cover letter names the six related papers cited in the manuscript
    (three published, three preprints; the sparse-autoencoder atlas paper's Research Square entry is a plain posted
    preprint, not under review at a journal), links your Google Scholar profile for the rest, and states that this

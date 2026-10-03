@@ -4,7 +4,7 @@ Calwerstraße 7, 72076 Tübingen, Germany\
 kendiukhov@gmail.com\
 ORCID: 0000-0001-5342-1499
 
-[Date]
+3 October 2026
 
 The Editor\
 *BMC Genomics*
