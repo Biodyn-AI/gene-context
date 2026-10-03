@@ -129,7 +129,7 @@ open(os.path.join(CBC, "declaration_of_interest.txt"), "w").write(
     "relationships that could have appeared to influence the work reported in this paper.\n\nIhor Kendiukhov\n")
 open(os.path.join(CBC, "title_page.md"), "w").write(
     f"# {title}\n\n**Ihor Kendiukhov**^a,\\*^\n\n^a^ {aff}\n\n^\\*^ Corresponding author: Ihor Kendiukhov, {aff}. "
-    f"E-mail: {corr}\n\n**Short title:** Contextual gene representations in single-cell models\n\n"
+    f"E-mail: {corr}. ORCID: 0000-0001-5342-1499\n\n**Short title:** Contextual gene representations in single-cell models\n\n"
     f"**Keywords:** {'; '.join(kw)}\n\n**Word count of the abstract:** {n_words}\n")
 print(f"manuscript_cbc.md written; abstract {n_words} words; {len(hl)} highlights (max {max(map(len, hl))} chars); "
       f"{len(kw)} keywords")

@@ -1,12 +1,16 @@
 # gene-context
 
+[![DOI](https://zenodo.org/badge/1338934365.svg)](https://doi.org/10.5281/zenodo.23119960)
+
 **Single-cell foundation models represent genes in context, but reveal no context-specific gene function beyond co-expression.**
 
 This repository contains the full analysis code, intermediate result artefacts, figures, and manuscript for a
 study of how single-cell foundation models (SCFMs) represent genes *contextually* — a gene's internal vector
 inside a particular cell — and what that representation actually encodes.
 
-Author: Ihor Kendiukhov · 2026 · [Biodyn-AI](https://github.com/Biodyn-AI)
+Author: Ihor Kendiukhov ([ORCID 0000-0001-5342-1499](https://orcid.org/0000-0001-5342-1499)) · 2026 · [Biodyn-AI](https://github.com/Biodyn-AI)
+
+Archived on Zenodo: [10.5281/zenodo.23119960](https://doi.org/10.5281/zenodo.23119960) (all versions); the submitted version is release2, [10.5281/zenodo.23119961](https://doi.org/10.5281/zenodo.23119961).
 
 ---
 

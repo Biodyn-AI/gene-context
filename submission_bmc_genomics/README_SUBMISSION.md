@@ -43,7 +43,7 @@ after the multi-model analyses and three rounds of claim checking (see "What cha
 
 ## Before you submit — you must fill in or confirm
 
-1. **The date** in the cover letter, and your ORCID in the submission system.
+1. **The date** in the cover letter. Your ORCID (0000-0001-5342-1499) is now in the cover letter; also enter it in the submission system.
 2. **Preprint / related submissions**: the cover letter ends its editorial-policies paragraph with one bracketed
    instruction: state the status of your sparse-autoencoder atlas paper (Research Square preprint, "In Review"), and
    confirm this manuscript is not a preprint. Then delete the bracket.
@@ -51,13 +51,11 @@ after the multi-model analyses and three rounds of claim checking (see "What cha
    `../cbc_submission/`, built from the same manuscript. The cover letter says the manuscript is not under
    consideration elsewhere, so use only one of the two packages at a time.
 4. **LLM statement** (Methods, "Use of large language models") — confirm the wording matches how the assistant was used.
-5. **Archived software version (blocking).** The Software block still says "DOI [to be added before submission]".
-   The public repository now holds the final code and result files under the tag `bmc-submission-v3.1`. The older
-   tags were left in place: `bmc-submission-v1` is the 1 Oct state, `bmc-submission-v2` lacks two small fixes that let
-   a fresh clone rebuild the numbers and figures, and `bmc-submission-v3` has the same code and numbers but PDFs that
-   drop three symbols (∝, ⟨, ⟩). To get a DOI, enable the Zenodo–GitHub integration for `Biodyn-AI/gene-context`, make
-   a release from `bmc-submission-v3.1`, and put the DOI in the "Archived version" line of the template, then run
-   `bash build/build_bmc.sh`.
+5. **Archived software version: done.** Zenodo archived the GitHub release `release2` (commit `509f4b9`, the same
+   code as tag `bmc-submission-v3.1`). The manuscript cites the version DOI 10.5281/zenodo.23119961 in the
+   Software block, the data availability statement and the reference list; 10.5281/zenodo.23119960 is the
+   all-versions DOI used in the repository badge. Do not make further GitHub releases before submission: each one
+   creates a new Zenodo version.
 6. **Competing interests / funding**: confirm "none" and "Not applicable".
 7. Optional: suggested reviewers (the submission system asks; BMC does not require them).
 

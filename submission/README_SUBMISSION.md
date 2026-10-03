@@ -34,13 +34,12 @@ a limit is broken. So rebuild the BMC package first if any result changes.
 
 ## Before submitting — fill in or confirm
 
-1. The date in the cover letter, and your ORCID in the submission system.
+1. The date in the cover letter; enter your ORCID in the submission system too.
 2. The bracketed instruction at the end of the cover letter's editorial-policies paragraph (status of the
    sparse-autoencoder atlas paper; confirm this manuscript is not a preprint and is not under consideration at BMC
    Genomics). Then delete the bracket.
-3. The archived-software DOI: the data availability statement still says "DOI [to be added before submission]".
-   Make a Zenodo release of the tag `bmc-submission-v3.1` of `Biodyn-AI/gene-context` and put the DOI in the BMC
-   template, then rebuild both packages.
+3. The archived-software DOI is in place (10.5281/zenodo.23119961, release `release2`), and your ORCID is on the
+   title page and in the cover letter.
 4. The generative-AI declaration and the funding / competing-interest wording.
 
 See `../bmc_submission/README_SUBMISSION.md` for what changed since the 1 Oct version.
