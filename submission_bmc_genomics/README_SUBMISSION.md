@@ -44,12 +44,13 @@ after the multi-model analyses and three rounds of claim checking (see "What cha
 ## Before you submit — you must fill in or confirm
 
 1. **The date** in the cover letter. Your ORCID (0000-0001-5342-1499) is now in the cover letter; also enter it in the submission system.
-2. **Preprint / related submissions**: the cover letter ends its editorial-policies paragraph with one bracketed
-   instruction: state the status of your sparse-autoencoder atlas paper (Research Square preprint, "In Review"), and
-   confirm this manuscript is not a preprint. Then delete the bracket.
-3. **Submit to one journal only.** A second package for *Computational Biology and Chemistry* (Elsevier) is in
-   `../cbc_submission/`, built from the same manuscript. The cover letter says the manuscript is not under
-   consideration elsewhere, so use only one of the two packages at a time.
+2. **Preprint / related submissions: done.** The cover letter names the six related papers cited in the manuscript
+   (three published, three preprints; the sparse-autoencoder atlas paper's Research Square entry is a plain posted
+   preprint, not under review at a journal), links your Google Scholar profile for the rest, and states that this
+   manuscript has not been posted as a preprint. If you opt into BMC's "In Review" service during submission, the
+   manuscript will be posted on Research Square; that is fine, because the letter describes its status at submission.
+3. **One journal only.** You did not submit to *Computational Biology and Chemistry*, so nothing needs withdrawing.
+   The package in `../cbc_submission/` stays as an alternative; do not submit both.
 4. **LLM statement** (Methods, "Use of large language models") — confirm the wording matches how the assistant was used.
 5. **Archived software version: done.** Zenodo archived the GitHub release `release2` (commit `509f4b9`, the same
    code as tag `bmc-submission-v3.1`). The manuscript cites the version DOI 10.5281/zenodo.23119961 in the

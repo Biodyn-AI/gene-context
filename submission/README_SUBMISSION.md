@@ -35,9 +35,8 @@ a limit is broken. So rebuild the BMC package first if any result changes.
 ## Before submitting — fill in or confirm
 
 1. The date in the cover letter; enter your ORCID in the submission system too.
-2. The bracketed instruction at the end of the cover letter's editorial-policies paragraph (status of the
-   sparse-autoencoder atlas paper; confirm this manuscript is not a preprint and is not under consideration at BMC
-   Genomics). Then delete the bracket.
+2. The related-papers paragraph of the cover letter is complete (six cited papers, Google Scholar link, no preprint
+   of this manuscript). The BMC Genomics package is the one planned for submission; use this one only instead of it.
 3. The archived-software DOI is in place (10.5281/zenodo.23119961, release `release2`), and your ORCID is on the
    title page and in the cover letter.
 4. The generative-AI declaration and the funding / competing-interest wording.
